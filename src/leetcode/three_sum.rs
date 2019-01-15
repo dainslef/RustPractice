@@ -125,7 +125,7 @@ fn check_duplicate(vec_list: &Vec<Vec<i32>>, vec: &Vec<i32>) -> bool {
 }
 
 #[test]
-fn test() {
+fn three_sum_test() {
   println!("Test: {:?}", three_sum(vec![]));
   println!("Test: {:?}", three_sum(vec![0, 0, 0]));
   println!(
