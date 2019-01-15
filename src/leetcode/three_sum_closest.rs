@@ -12,38 +12,33 @@ fn three_sum_closest(nums: Vec<i32>, target: i32) -> i32 {
   let mut nums = nums;
   nums.sort();
 
-  let mut close_target = 0;
-  let mut offset = std::i32::MAX;
+  let (mut close_target, mut offset, length) = (0, std::i32::MAX, nums.len());
 
-  for i in 0..nums.len() - 2 {
+  for i in 0..length - 2 {
     let a = nums[i];
-
-    let mut start = i + 1;
-    let mut end = nums.len() - 1;
+    let (mut start, mut end) = (i + 1, length - 1);
 
     while start < end {
-      let b = nums[start];
-      let c = nums[end];
-
-      let close_now = a + b + c;
-      let offset_now = (close_now - target).abs();
+      let (b, c) = (nums[start], nums[end]);
+      let sum = a + b + c;
+      let offset_now = (sum - target).abs();
 
       let mut update_offset = || {
         if offset_now < offset {
           offset = offset_now;
-          close_target = close_now;
+          close_target = sum;
         }
       };
 
-      if close_now > target {
+      if sum > target {
         update_offset();
         end -= 1;
-      } else if close_now < target {
+      } else if sum < target {
         update_offset();
         start += 1;
       } else {
         // return the answer right now, "break" can only jump out of one round of loop
-        return close_now;
+        return sum;
       }
     }
   }

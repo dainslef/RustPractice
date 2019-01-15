@@ -17,7 +17,7 @@
  */
 
 fn three_sum_1(nums: Vec<i32>) -> Vec<Vec<i32>> {
-  let mut out_nums = Vec::new();
+  let mut out_nums = vec![];
 
   if nums.len() >= 3 {
     // three times traversal, time complexity is O ^ 3, too slow
@@ -27,7 +27,7 @@ fn three_sum_1(nums: Vec<i32>) -> Vec<Vec<i32>> {
           let (a, b, c) = (nums[i_a], nums[i_b], nums[i_c]);
           let l = vec![a, b, c];
           if a + b + c == 0 && !check_duplicate(&out_nums, &l) {
-            out_nums.push(l)
+            out_nums.push(l);
           }
         }
       }
@@ -38,10 +38,10 @@ fn three_sum_1(nums: Vec<i32>) -> Vec<Vec<i32>> {
 }
 
 fn three_sum_2(nums: Vec<i32>) -> Vec<Vec<i32>> {
-  let mut out_nums = Vec::new();
+  let mut out_nums = vec![];
 
   if nums.len() >= 3 {
-    let mut temp_vec = Vec::new();
+    let mut temp_vec = vec![];
 
     for i in 0..nums.len() {
       let c = nums[i];
@@ -53,13 +53,13 @@ fn three_sum_2(nums: Vec<i32>) -> Vec<Vec<i32>> {
             let b = temp_vec[i_b];
             let l = vec![a, b, c];
             if a + b + c == 0 && !check_duplicate(&out_nums, &l) {
-              out_nums.push(l)
+              out_nums.push(l);
             }
           }
         }
       }
 
-      temp_vec.push(c)
+      temp_vec.push(c);
     }
   }
 
@@ -67,28 +67,29 @@ fn three_sum_2(nums: Vec<i32>) -> Vec<Vec<i32>> {
 }
 
 fn three_sum(nums: Vec<i32>) -> Vec<Vec<i32>> {
-  let mut out_nums = Vec::new();
+  let (mut nums, mut out_nums) = (nums, vec![]);
+  let length = nums.len();
 
-  let mut nums = nums;
   nums.sort();
 
-  if nums.len() >= 3 {
-    for i in 0..nums.len() - 2 {
+  if length >= 3 {
+    for i in 0..length - 2 {
       let a = nums[i];
-      let (mut start, mut end) = (i + 1, nums.len() - 1);
+      let (mut start, mut end) = (i + 1, length - 1);
 
       while start < end {
         let (b, c) = (nums[start], nums[end]);
-        let l = vec![a, b, c];
+        let sum = a + b + c;
 
         // If the sum of b and c is largger than -a,
         // need to get a smaller element (end -= 1).
         // Otherwise, get a bigger element (end += 1).
-        if b + c > -a {
+        if sum > 0 {
           end -= 1;
-        } else if b + c < -a {
+        } else if sum < 0 {
           start += 1;
         } else {
+          let l = vec![a, b, c];
           if !check_duplicate(&out_nums, &l) {
             out_nums.push(l);
           }
