@@ -24,9 +24,7 @@ fn three_sum_1(nums: Vec<i32>) -> Vec<Vec<i32>> {
     for i_a in 0..nums.len() - 2 {
       for i_b in i_a + 1..nums.len() - 1 {
         for i_c in i_b + 1..nums.len() {
-          let a = nums[i_a];
-          let b = nums[i_b];
-          let c = nums[i_c];
+          let (a, b, c) = (nums[i_a], nums[i_b], nums[i_c]);
           let l = vec![a, b, c];
           if a + b + c == 0 && !check_duplicate(&out_nums, &l) {
             out_nums.push(l)
@@ -61,7 +59,7 @@ fn three_sum_2(nums: Vec<i32>) -> Vec<Vec<i32>> {
         }
       }
 
-      temp_vec.push(c);
+      temp_vec.push(c)
     }
   }
 
@@ -75,15 +73,12 @@ fn three_sum(nums: Vec<i32>) -> Vec<Vec<i32>> {
   nums.sort();
 
   if nums.len() >= 3 {
-    for i_a in 0..nums.len() - 2 {
-      let a = nums[i_a];
-
-      let mut start = i_a + 1;
-      let mut end = nums.len() - 1;
+    for i in 0..nums.len() - 2 {
+      let a = nums[i];
+      let (mut start, mut end) = (i + 1, nums.len() - 1);
 
       while start < end {
-        let b = nums[start];
-        let c = nums[end];
+        let (b, c) = (nums[start], nums[end]);
         let l = vec![a, b, c];
 
         // If the sum of b and c is largger than -a,
@@ -109,33 +104,50 @@ fn three_sum(nums: Vec<i32>) -> Vec<Vec<i32>> {
 
 fn check_duplicate(vec_list: &Vec<Vec<i32>>, vec: &Vec<i32>) -> bool {
   let mut is_duplicate = false;
+
   for old_vec in vec_list {
     let mut new_vec = vec.clone();
+
     for old in old_vec {
       for i in 0..new_vec.len() {
+        // check target vec if have equal element in old_vec
         if old == &new_vec[i] {
           new_vec.remove(i);
           break;
         }
       }
     }
+
+    // if all elemnets have been removed, mean the vec is duplicate
     if new_vec.is_empty() {
       is_duplicate = true;
       break;
     }
   }
+
   is_duplicate
 }
 
 #[test]
 fn three_sum_test() {
-  println!("Test: {:?}", three_sum(vec![]));
-  println!("Test: {:?}", three_sum(vec![0, 0, 0]));
-  println!(
-    "Test: {:?}",
-    three_sum(vec![-4, -2, 1, -5, -4, -4, 4, -2, 0, 4, 0, -2, 3, 1, -5, 0])
+  let v: Vec<Vec<i32>> = Vec::new();
+  assert_eq!(three_sum(vec![]), v);
+  assert_eq!(three_sum(vec![0, 0, 0]), vec![[0, 0, 0]]);
+  assert_eq!(
+    three_sum(vec![-1, 0, 1, 2, -1, -4]),
+    vec![[-1, -1, 2], [-1, 0, 1]]
   );
-  println!("Test: {:?}", three_sum(vec![-1, 0, 1, 2, -1, -4]));
+  assert_eq!(
+    three_sum(vec![-4, -2, 1, -5, -4, -4, 4, -2, 0, 4, 0, -2, 3, 1, -5, 0]),
+    vec![
+      [-5, 1, 4],
+      [-4, 0, 4],
+      [-4, 1, 3],
+      [-2, -2, 4],
+      [-2, 1, 1],
+      [0, 0, 0]
+    ]
+  );
 }
 
 #[test]
