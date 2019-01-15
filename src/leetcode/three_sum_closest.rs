@@ -41,8 +41,9 @@ fn three_sum_closest(nums: Vec<i32>, target: i32) -> i32 {
       } else if close_now < target {
         update_offset();
         start += 1
-      } else { //break and return right now
-        return close_now
+      } else {
+        // return the answer right now, "break" can only jump out of one round of loop
+        return close_now;
       }
     }
   }

@@ -20,7 +20,7 @@ fn three_sum_1(nums: Vec<i32>) -> Vec<Vec<i32>> {
   let mut out_nums = Vec::new();
 
   if nums.len() >= 3 {
-    // 三轮遍历，时间复杂度 O^3
+    // three times traversal, time complexity is O ^ 3, too slow
     for i_a in 0..nums.len() - 2 {
       for i_b in i_a + 1..nums.len() - 1 {
         for i_c in i_b + 1..nums.len() {
@@ -86,6 +86,9 @@ fn three_sum(nums: Vec<i32>) -> Vec<Vec<i32>> {
         let c = nums[end];
         let l = vec![a, b, c];
 
+        // If the sum of b and c is largger than -a,
+        // need to get a smaller element (end -= 1).
+        // Otherwise, get a bigger element (end += 1).
         if b + c > -a {
           end -= 1;
         } else if b + c < -a {
