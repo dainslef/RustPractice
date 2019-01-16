@@ -30,12 +30,12 @@ fn three_sum_closest(nums: Vec<i32>, target: i32) -> i32 {
         }
       };
 
-      if sum > target {
-        update_offset();
-        end -= 1;
-      } else if sum < target {
+      if sum < target {
         update_offset();
         start += 1;
+      } else if sum > target {
+        update_offset();
+        end -= 1;
       } else {
         // return the answer right now, "break" can only jump out of one round of loop
         return sum;

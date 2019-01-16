@@ -50,26 +50,29 @@ fn four_sum(nums: Vec<i32>, target: i32) -> Vec<Vec<i32>> {
   nums.sort();
 
   if length >= 4 {
-    for i in 0..length - 3 {
-      let (mut start, mut middle, mut end) = (i + 1, i + 2, length - 1);
-      let a = nums[i];
+    for i_a in 0..length - 3 {
+      let a = nums[i_a];
 
-      while middle < end {
-        let (b, c, d) = (nums[start], nums[middle], nums[end]);
-        let sum = a + b + c + d;
-        if sum > target {
-          end -= 1;
-        } else if sum < target {
-          start += 1;
-          middle += 1;
-        } else {
-          let l = vec![a, b, c, d];
-          if !check_duplicate(&out_nums, &l) {
-            out_nums.push(l);
+      for i_b in i_a + 1..length - 2 {
+        let b = nums[i_b];
+        let (mut start, mut end) = (i_b + 1, length - 1);
+
+        while start < end {
+          let (c, d) = (nums[start], nums[end]);
+          let sum = a + b + c + d;
+
+          if sum < target {
+            start += 1;
+          } else if sum > target {
+            end -= 1;
+          } else {
+            let l = vec![a, b, c, d];
+            if !check_duplicate(&out_nums, &l) {
+              out_nums.push(l);
+            }
+            start += 1;
+            end -= 1;
           }
-          start += 1;
-          middle += 1;
-          end -= 1;
         }
       }
     }
@@ -83,5 +86,26 @@ fn four_sum_test() {
   assert_eq!(
     four_sum(vec![1, 0, -1, 0, -2, 2], 0),
     vec![[-2, -1, 1, 2], [-2, 0, 0, 2], [-1, 0, 0, 1]]
+  );
+  assert_eq!(
+    four_sum(vec![-4, -3, -2, -1, 0, 0, 1, 2, 3, 4], 0),
+    vec![
+      [-4, -3, 3, 4],
+      [-4, -2, 2, 4],
+      [-4, -1, 1, 4],
+      [-4, -1, 2, 3],
+      [-4, 0, 0, 4],
+      [-4, 0, 1, 3],
+      [-3, -2, 1, 4],
+      [-3, -2, 2, 3],
+      [-3, -1, 0, 4],
+      [-3, -1, 1, 3],
+      [-3, 0, 0, 3],
+      [-3, 0, 1, 2],
+      [-2, -1, 0, 3],
+      [-2, -1, 1, 2],
+      [-2, 0, 0, 2],
+      [-1, 0, 0, 1]
+    ]
   );
 }

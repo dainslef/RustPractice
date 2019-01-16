@@ -30,3 +30,9 @@ fn reverse(x: i32) -> i32 {
 
   new_str.parse::<i32>().unwrap_or(0)
 }
+
+#[test]
+fn reverse_integer_test() {
+  assert_eq!(reverse(123), 321);
+  assert_eq!(reverse(87654321), 12345678);
+}
