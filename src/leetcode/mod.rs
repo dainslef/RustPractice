@@ -6,10 +6,10 @@
 */
 
 #[cfg(test)]
-mod four_sum;
+mod q7_reverse_integer;
 #[cfg(test)]
-mod reverse_integer;
+mod q15_three_sum;
 #[cfg(test)]
-mod three_sum;
+mod q16_three_sum_closest;
 #[cfg(test)]
-mod three_sum_closest;
+mod q18_four_sum;
