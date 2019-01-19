@@ -82,7 +82,7 @@ fn four_sum(nums: Vec<i32>, target: i32) -> Vec<Vec<i32>> {
 }
 
 #[test]
-fn four_sum_test() {
+fn test_four_sum() {
   assert_eq!(
     four_sum(vec![1, 0, -1, 0, -2, 2], 0),
     vec![[-2, -1, 1, 2], [-2, 0, 0, 2], [-1, 0, 0, 1]]

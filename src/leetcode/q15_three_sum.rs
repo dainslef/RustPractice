@@ -151,14 +151,14 @@ fn function_test(f: impl Fn(Vec<i32>) -> Vec<Vec<i32>>) {
 }
 
 #[test]
-fn three_sum_test() {
+fn test_three_sum() {
   function_test(three_sum);
   function_test(three_sum_1);
   function_test(three_sum_2);
 }
 
 #[test]
-fn test_large_args() {
+fn test_three_sum_with_large_args() {
   println!(
     "Test: {:?}",
     three_sum(vec![

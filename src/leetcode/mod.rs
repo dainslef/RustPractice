@@ -6,6 +6,8 @@
 */
 
 #[cfg(test)]
+mod q2_add_two_numbers;
+#[cfg(test)]
 mod q7_reverse_integer;
 #[cfg(test)]
 mod q15_three_sum;

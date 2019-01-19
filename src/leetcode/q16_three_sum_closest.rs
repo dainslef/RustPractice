@@ -47,7 +47,7 @@ fn three_sum_closest(nums: Vec<i32>, target: i32) -> i32 {
 }
 
 #[test]
-fn three_sum_closest_test() {
+fn test_three_sum_closest() {
   assert_eq!(three_sum_closest(vec![-1, 2, 1, -4], 1), 2);
   assert_eq!(three_sum_closest(vec![4, -1, -4, 4], -1), -1);
   assert_eq!(three_sum_closest(vec![-1, 2, 1, -4, 5, 9, 20, -100], 1), 0);

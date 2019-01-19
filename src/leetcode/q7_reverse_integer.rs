@@ -32,7 +32,7 @@ fn reverse(x: i32) -> i32 {
 }
 
 #[test]
-fn reverse_integer_test() {
+fn test_reverse_integer() {
   assert_eq!(reverse(123), 321);
   assert_eq!(reverse(87654321), 12345678);
 }
