@@ -20,7 +20,7 @@ fn three_sum_1(nums: Vec<i32>) -> Vec<Vec<i32>> {
   let mut out_nums = vec![];
 
   if nums.len() >= 3 {
-    // three times traversal, time complexity is O ^ 3, too slow
+    // three times traversal, time complexity is O(n ^ 3), too slow
     for i_a in 0..nums.len() - 2 {
       for i_b in i_a + 1..nums.len() - 1 {
         for i_c in i_b + 1..nums.len() {
@@ -109,10 +109,10 @@ fn check_duplicate(vec_list: &Vec<Vec<i32>>, vec: &Vec<i32>) -> bool {
   for old_vec in vec_list {
     let mut new_vec = vec.clone();
 
-    for old in old_vec {
+    for old_val in old_vec {
       for i in 0..new_vec.len() {
         // check target vec if have equal element in old_vec
-        if old == &new_vec[i] {
+        if old_val == &new_vec[i] {
           new_vec.remove(i);
           break;
         }

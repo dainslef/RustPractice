@@ -15,3 +15,5 @@ mod q15_three_sum;
 mod q16_three_sum_closest;
 #[cfg(test)]
 mod q18_four_sum;
+#[cfg(test)]
+mod q454_four_sum_two;

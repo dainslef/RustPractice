@@ -25,12 +25,12 @@ fn add_two_numbers(l1: Option<Box<ListNode>>, l2: Option<Box<ListNode>>) -> Opti
     let result = num + if is_carry { 1 } else { 0 };
 
     // if the result is larger than 10, set the carry
-    if result >= 10 {
+    is_carry = if result >= 10 {
       vec.push(result - 10);
-      is_carry = true;
+      true
     } else {
       vec.push(result);
-      is_carry = false;
+      false
     }
   };
 
@@ -54,19 +54,17 @@ fn add_two_numbers(l1: Option<Box<ListNode>>, l2: Option<Box<ListNode>>) -> Opti
         if is_carry {
           vec.push(1);
         }
-        break;
+        break {
+          vec.reverse();
+          for i in vec {
+            let next = temp;
+            temp = Some(Box::new(ListNode { val: i, next }));
+          }
+          temp
+        };
       }
     }
   }
-
-  vec.reverse();
-
-  for i in vec {
-    let next = temp;
-    temp = Some(Box::new(ListNode { val: i, next }));
-  }
-
-  temp
 }
 
 #[test]
