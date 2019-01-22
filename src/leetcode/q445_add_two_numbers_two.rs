@@ -15,8 +15,7 @@ use super::ListNode;
 
 fn add_two_numbers(l1: Option<Box<ListNode>>, l2: Option<Box<ListNode>>) -> Option<Box<ListNode>> {
   fn get_vec(l: Option<Box<ListNode>>) -> Vec<i32> {
-    let mut vec = vec![];
-    let mut temp = &l;
+    let (mut vec, mut temp) = (vec![], &l);
     while let Some(n) = temp {
       vec.push(n.val);
       temp = &n.next;
@@ -34,20 +33,19 @@ fn add_two_numbers(l1: Option<Box<ListNode>>, l2: Option<Box<ListNode>>) -> Opti
   let (mut temp, mut carry) = (None, 0);
 
   for i in (0..v1.len()).rev() {
-    let mut re = carry
-      + if (i) >= (offset) {
-        (v1[i]) + (v2[i - offset])
-      } else {
-        v1[i]
-      };
-    carry = if (re) >= 10 {
-      re = re - 10;
+    let mut val = if i >= offset {
+      v1[i] + v2[i - offset]
+    } else {
+      v1[i]
+    } + carry;
+    carry = if val >= 10 {
+      val -= 10;
       1
     } else {
       0
     };
     let next = temp;
-    temp = Some(Box::new(ListNode { val: re, next }));
+    temp = Some(Box::new(ListNode { val, next }));
   }
 
   if carry > 0 {

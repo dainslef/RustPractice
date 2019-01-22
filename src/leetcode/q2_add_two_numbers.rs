@@ -74,9 +74,9 @@ fn test_add_two_numbers() {
     vec.push(num % 10);
     vec.reverse();
 
-    for i in vec {
+    for val in vec {
       let next = temp;
-      temp = Some(Box::new(ListNode { val: i, next }));
+      temp = Some(Box::new(ListNode { val, next }));
     }
 
     temp
