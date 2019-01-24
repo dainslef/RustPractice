@@ -20,9 +20,22 @@
  */
 
 fn length_of_longest_substring(s: String) -> i32 {
-  let mut count = 0;
+  use std::collections::VecDeque;
 
-  count
+  let mut count = 0;
+  let mut temp = VecDeque::new();
+
+  for c in s.chars() {
+    while temp.contains(&c) {
+      temp.pop_front();
+    }
+    temp.push_back(c);
+    if temp.len() > count {
+      count = temp.len();
+    }
+  }
+
+  count as i32
 }
 
 #[test]
