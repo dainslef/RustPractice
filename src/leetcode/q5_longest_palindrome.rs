@@ -12,7 +12,7 @@
  * Output: "bb"
  */
 
-fn longest_palindrome(s: String) -> String {
+fn longest_palindrome_back(s: String) -> String {
   use std::collections::HashMap;
 
   let mut temp = "".to_string();
@@ -32,22 +32,29 @@ fn longest_palindrome(s: String) -> String {
   for (_, mut v) in chars_map {
     while v.len() >= 2 {
       for i_a in 0..v.len() - 1 {
-        for i_b in i_a + 1..v.len() {
+        for i_b in (i_a + 1..v.len()).rev() {
           let (first, last) = (v[i_a], v[i_b]);
-          let length = last - first + 1;
-          if length > temp.len() {
-            let (mut first_index, mut last_index) = (first, last);
-            while last_index >= first_index
-              && s.get(first_index..=first_index) == s.get(last_index..=last_index)
-            {
-              first_index += 1;
-              last_index -= 1;
-            }
-            let offset = (last_index + 1) - (first_index - 1);
-            if offset == 0 || offset == 1 {
-              if let Some(c) = s.get(first..=last) {
-                temp = c.to_string();
-              }
+
+          if last - first < temp.len() {
+            break;
+          }
+
+          let sum = first + last + 1;
+          let average = sum / 2;
+          let (middle1, middle2) = if sum % 2 == 0 {
+            (average - 1, average)
+          } else {
+            (average, average)
+          };
+
+          let left = s.get(first..=middle1).map(|s| s.to_string());
+          let right = s
+            .get(middle2..=last)
+            .map(|s| s.chars().rev().collect::<String>());
+
+          if left == right {
+            if let Some(c) = s.get(first..=last) {
+              temp = c.to_string();
             }
           }
         }
@@ -56,11 +63,44 @@ fn longest_palindrome(s: String) -> String {
     }
   }
 
-  if s.len() >= 1 && temp.len() == 0 {
+  if s.len() == 1 && temp.len() == 0 {
     temp = s.chars().last().unwrap().to_string();
   }
 
   temp
+}
+
+fn longest_palindrome(s: String) -> String {
+  let mut temp = "";
+  let chars = s.chars().collect::<Vec<char>>();
+
+  let check_chars = |i, has_offset| {
+    let (mut start, mut end) = (i, i + if has_offset { 1 } else { 0 });
+    loop {
+      if end < chars.len() && chars[start] == chars[end] {
+        if start > 0 && end < chars.len() - 1 {
+          start -= 1;
+          end += 1;
+        } else {
+          break (start, end, end - start + 1);
+        }
+      } else {
+        break (start + 1, end - 1, end - start - 1);
+      }
+    }
+  };
+
+  for i in 0..chars.len() {
+    let (re1, re2) = (check_chars(i, false), check_chars(i, true));
+    let re = if re1.2 > re2.2 { re1 } else { re2 };
+    if re.2 > temp.len() {
+      if let Some(ss) = s.get(re.0..=re.1) {
+        temp = ss;
+      }
+    }
+  }
+
+  temp.to_string()
 }
 
 #[test]
@@ -71,6 +111,7 @@ fn test_longest_palindrome() {
   assert_eq!(longest_palindrome("babasssss".to_string()), "sssss");
   assert_eq!(longest_palindrome("\" \"".to_string()), "\" \"");
   assert_eq!(longest_palindrome("asdasdasdasdsad".to_string()), "dasdsad");
-  assert_eq!(longest_palindrome("".to_string()), "");
+  assert_eq!(longest_palindrome("asskassa".to_string()), "assa");
   assert_eq!(longest_palindrome("a".to_string()), "a");
+  assert_eq!(longest_palindrome("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabcaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa".to_string()), "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
 }
