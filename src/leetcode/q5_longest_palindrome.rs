@@ -18,6 +18,7 @@ fn longest_palindrome_back(s: String) -> String {
   let mut temp = "".to_string();
   let mut chars_map = HashMap::new();
 
+  // group by chars
   for (i, c) in s.char_indices() {
     match chars_map.get_mut(&c) {
       None => {
@@ -74,24 +75,27 @@ fn longest_palindrome(s: String) -> String {
   let mut temp = "";
   let chars = s.chars().collect::<Vec<char>>();
 
-  let check_chars = |i, has_offset| {
-    let (mut start, mut end) = (i, i + if has_offset { 1 } else { 0 });
-    loop {
-      if end < chars.len() && chars[start] == chars[end] {
-        if start > 0 && end < chars.len() - 1 {
-          start -= 1;
-          end += 1;
-        } else {
-          break (start, end, end - start + 1);
-        }
-      } else {
-        break (start + 1, end - 1, end - start - 1);
-      }
-    }
-  };
-
   for i in 0..chars.len() {
-    let (re1, re2) = (check_chars(i, false), check_chars(i, true));
+    // compute the target substring by the index and return the range and length
+    let check_chars = |has_offset| {
+      // if has_offset is "false", the structure of string might like "aba"
+      // if has_offset is "true", the structure of string might like "abba"
+      let (mut start, mut end) = (i, i + if has_offset { 1 } else { 0 });
+      loop {
+        if end < chars.len() && chars[start] == chars[end] {
+          if start > 0 && end < chars.len() - 1 {
+            start -= 1;
+            end += 1;
+          } else {
+            break (start, end, end - start + 1);
+          }
+        } else {
+          break (start + 1, end - 1, end - start - 1);
+        }
+      }
+    };
+
+    let (re1, re2) = (check_chars(false), check_chars(true));
     let re = if re1.2 > re2.2 { re1 } else { re2 };
     if re.2 > temp.len() {
       if let Some(ss) = s.get(re.0..=re.1) {
