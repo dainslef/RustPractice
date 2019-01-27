@@ -10,6 +10,8 @@ mod q2_add_two_numbers;
 #[cfg(test)]
 mod q3_length_of_longest_substring;
 #[cfg(test)]
+mod q4_find_median_sorted_arrays;
+#[cfg(test)]
 mod q5_longest_palindrome;
 #[cfg(test)]
 mod q7_reverse_integer;
