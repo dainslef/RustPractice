@@ -20,18 +20,16 @@
  */
 
 fn find_median_sorted_arrays(nums1: Vec<i32>, nums2: Vec<i32>) -> f64 {
-  let mut temp = vec![];
-  let (mut index1, mut index2) = (0, 0);
   let length = nums1.len() + nums2.len();
+  let (mut temp, mut index1, mut index2) = (vec![], 0, 0);
+
+  let mut deal_value = |v: &i32, index: &mut usize| {
+    temp.push(*v);
+    *index += 1;
+  };
 
   loop {
-    if temp.len() == length {
-      break;
-    }
-    let mut deal_value = |v: &i32, index: &mut usize| {
-      temp.push(*v);
-      *index += 1;
-    };
+    // put the elements which in nums1 or nums2 into new Vec
     match (nums1.get(index1), nums2.get(index2)) {
       (Some(v1), Some(v2)) => {
         if v1 < v2 {
@@ -42,10 +40,11 @@ fn find_median_sorted_arrays(nums1: Vec<i32>, nums2: Vec<i32>) -> f64 {
       }
       (Some(v), None) => deal_value(v, &mut index1),
       (None, Some(v)) => deal_value(v, &mut index2),
-      _ => {},
-    };
+      _ => break,
+    }
   }
 
+  // check whether the length is odd or even, then compute the median
   if length % 2 == 0 {
     (temp[length / 2 - 1] + temp[length / 2]) as f64 / 2_f64
   } else {
