@@ -43,9 +43,11 @@
  */
 
 fn my_atoi(s: String) -> i32 {
-  let (mut temp, mut nums, mut is_valid, mut is_negative) = (Some(0), vec![], true, false);
+  let (mut temp, mut nums, mut is_negative) = (Some(0), vec![], false);
 
   if let Some(num_str) = s.split_whitespace().next() {
+    let mut not_zero = false;
+
     for (i, c) in num_str.char_indices() {
       if i == 0 && (c == '+' || c == '-') {
         if c == '-' {
@@ -55,11 +57,11 @@ fn my_atoi(s: String) -> i32 {
       }
 
       if let Some(n) = c.to_digit(10) {
-        nums.push(n as i32);
-      } else {
-        if c != '.' {
-          is_valid = false;
+        if n > 0 || not_zero {
+          nums.push(n as i32);
+          not_zero = true;
         }
+      } else {
         break;
       }
     }
@@ -83,27 +85,27 @@ fn my_atoi(s: String) -> i32 {
     Some(acc)
   }
 
-  if is_valid {
-    nums.reverse();
-    for i in 0..nums.len() {
-      let update_temp = || checked_pow(i)?.checked_mul(nums[i])?.checked_add(temp?);
-      temp = update_temp();
-    }
+  nums.reverse();
+  for i in 0..nums.len() {
+    temp = { || checked_pow(i)?.checked_mul(nums[i])?.checked_add(temp?) }();
   }
 
   temp
     .map(|v| if is_negative { 0 - v } else { v })
-    .unwrap_or(std::i32::MIN)
+    .unwrap_or(if is_negative { std::i32::MIN } else { std::i32::MAX })
 }
 
 #[test]
 fn test_my_atoi() {
   assert_eq!(my_atoi("".to_string()), 0);
-  assert_eq!(my_atoi("   ".to_string()), 0);
-  assert_eq!(my_atoi("42".to_string()), 42);
+  assert_eq!(my_atoi(" 010  ".to_string()), 10);
+  assert_eq!(my_atoi("  -0012a42".to_string()), -12);
+  assert_eq!(my_atoi("   00000420000".to_string()), 420000);
+  assert_eq!(my_atoi("  0000000000012345678".to_string()), 12345678);
   assert_eq!(my_atoi("3.14159".to_string()), 3);
   assert_eq!(my_atoi("      -42".to_string()), -42);
   assert_eq!(my_atoi("4193 with words".to_string()), 4193);
   assert_eq!(my_atoi("words and 987".to_string()), 0);
-  assert_eq!(my_atoi("91283472332".to_string()), -2147483648);
+  assert_eq!(my_atoi("-91283472332".to_string()), -2147483648);
+  assert_eq!(my_atoi("2147483648".to_string()), 2147483647);
 }
