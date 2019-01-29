@@ -57,6 +57,7 @@ fn test_find_median_sorted_arrays() {
   assert_eq!(find_median_sorted_arrays(vec![], vec![1]), 1.0);
   assert_eq!(find_median_sorted_arrays(vec![1, 3], vec![2]), 2.0);
   assert_eq!(find_median_sorted_arrays(vec![1, 2], vec![2, 4]), 2.0);
+  assert_eq!(find_median_sorted_arrays(vec![], vec![2, 21, 20, 30]), 20.5);
   assert_eq!(
     find_median_sorted_arrays(vec![1, 3, 6, 7, 8, 10, 20, 20, 20, 20], vec![]),
     9.0
@@ -65,5 +66,4 @@ fn test_find_median_sorted_arrays() {
     find_median_sorted_arrays(vec![1, 3, 6, 7, 8, 10, 20, 20, 20, 20], vec![2, 20, 20, 30]),
     15.0
   );
-  assert_eq!(find_median_sorted_arrays(vec![], vec![2, 21, 20, 30]), 20.5);
 }

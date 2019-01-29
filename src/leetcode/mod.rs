@@ -16,6 +16,8 @@ mod q5_longest_palindrome;
 #[cfg(test)]
 mod q7_reverse_integer;
 #[cfg(test)]
+mod q8_my_atoi;
+#[cfg(test)]
 mod q15_three_sum;
 #[cfg(test)]
 mod q16_three_sum_closest;
