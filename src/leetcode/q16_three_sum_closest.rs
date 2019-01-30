@@ -28,14 +28,15 @@ fn three_sum_closest(nums: Vec<i32>, target: i32) -> i32 {
         return sum;
       } else {
         if offset_now < offset {
+          // update the offset and the value which closest to target
           offset = offset_now;
           close_target = sum;
         }
         if sum < target {
-          start += 1
+          start += 1;
         } else {
-          end -= 1
-        };
+          end -= 1;
+        }
       }
     }
   }

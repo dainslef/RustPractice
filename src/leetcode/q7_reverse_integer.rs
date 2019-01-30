@@ -21,11 +21,11 @@ fn reverse(x: i32) -> i32 {
   let mut new_str = String::new();
 
   for (_, c) in x.abs().to_string().char_indices() {
-    new_str.insert(0, c)
+    new_str.insert(0, c);
   }
 
   if x < 0 {
-    new_str.insert(0, '-')
+    new_str.insert(0, '-');
   }
 
   new_str.parse::<i32>().unwrap_or(0)
