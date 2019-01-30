@@ -45,18 +45,18 @@
 fn my_atoi(s: String) -> i32 {
   let (mut temp, mut nums, mut is_negative) = (Some(0), vec![], false);
 
+  // split context by space, get the first substring
   if let Some(num_str) = s.split_whitespace().next() {
     let mut not_zero = false;
 
     for (i, c) in num_str.char_indices() {
       if i == 0 && (c == '+' || c == '-') {
+        // check the first char
         if c == '-' {
           is_negative = true;
         }
-        continue;
-      }
-
-      if let Some(n) = c.to_digit(10) {
+      } else if let Some(n) = c.to_digit(10) {
+        // check other chars
         if n > 0 || not_zero {
           nums.push(n as i32);
           not_zero = true;
@@ -67,32 +67,36 @@ fn my_atoi(s: String) -> i32 {
     }
   }
 
-  fn checked_pow(mut exp: usize) -> Option<i32> {
-    let (mut base, mut acc) = (10, 1_i32);
+  for i in 0..nums.len() {
+    let num = nums[nums.len() - i - 1];
+    let checked_pow = || {
+      let (mut exp, mut base, mut acc) = (i, 10, 1_i32);
 
-    while exp > 1 {
-      if (exp & 1) == 1 {
+      while exp > 1 {
+        if (exp & 1) == 1 {
+          acc = acc.checked_mul(base)?;
+        }
+        exp /= 2;
+        base = base.checked_mul(base)?;
+      }
+
+      if exp == 1 {
         acc = acc.checked_mul(base)?;
       }
-      exp /= 2;
-      base = base.checked_mul(base)?;
-    }
 
-    if exp == 1 {
-      acc = acc.checked_mul(base)?;
-    }
+      Some(acc)
+    };
 
-    Some(acc)
-  }
-
-  nums.reverse();
-  for i in 0..nums.len() {
-    temp = { || checked_pow(i)?.checked_mul(nums[i])?.checked_add(temp?) }();
+    temp = { || checked_pow()?.checked_mul(num)?.checked_add(temp?) }();
   }
 
   temp
     .map(|v| if is_negative { 0 - v } else { v })
-    .unwrap_or(if is_negative { std::i32::MIN } else { std::i32::MAX })
+    .unwrap_or(if is_negative {
+      std::i32::MIN
+    } else {
+      std::i32::MAX
+    })
 }
 
 #[test]
