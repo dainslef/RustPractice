@@ -31,15 +31,9 @@ fn find_median_sorted_arrays(nums1: Vec<i32>, nums2: Vec<i32>) -> f64 {
   loop {
     // put the elements which in nums1 or nums2 into new Vec
     match (nums1.get(index1), nums2.get(index2)) {
-      (Some(v1), Some(v2)) => {
-        if v1 < v2 {
-          deal_value(v1, &mut index1);
-        } else {
-          deal_value(v2, &mut index2);
-        }
-      }
+      (Some(v1), Some(v2)) if v1 < v2 => deal_value(v1, &mut index1),
       (Some(v), None) => deal_value(v, &mut index1),
-      (None, Some(v)) => deal_value(v, &mut index2),
+      (_, Some(v)) => deal_value(v, &mut index2),
       _ => break,
     }
   }

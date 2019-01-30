@@ -59,19 +59,17 @@ fn four_sum(nums: Vec<i32>, target: i32) -> Vec<Vec<i32>> {
 
         while start < end {
           let (c, d) = (nums[start], nums[end]);
-          let sum = a + b + c + d;
-
-          if sum < target {
-            start += 1;
-          } else if sum > target {
-            end -= 1;
-          } else {
-            let l = vec![a, b, c, d];
-            if !check_duplicate(&out_nums, &l) {
-              out_nums.push(l);
+          match a + b + c + d {
+            sum if sum < target => start += 1,
+            sum if sum > target => end -= 1,
+            _ => {
+              let l = vec![a, b, c, d];
+              if !check_duplicate(&out_nums, &l) {
+                out_nums.push(l);
+              }
+              start += 1;
+              end -= 1;
             }
-            start += 1;
-            end -= 1;
           }
         }
       }

@@ -79,22 +79,21 @@ fn three_sum(nums: Vec<i32>) -> Vec<Vec<i32>> {
 
       while start < end {
         let (b, c) = (nums[start], nums[end]);
-        let sum = a + b + c;
 
         // If the sum of b and c is largger than -a,
         // need to get a smaller element (end -= 1).
         // Otherwise, get a bigger element (end += 1).
-        if sum < 0 {
-          start += 1;
-        } else if sum > 0 {
-          end -= 1;
-        } else {
-          let l = vec![a, b, c];
-          if !check_duplicate(&out_nums, &l) {
-            out_nums.push(l);
+        match a + b + c {
+          sum if sum < 0 => start += 1,
+          sum if sum > 0 => end -= 1,
+          _ => {
+            let l = vec![a, b, c];
+            if !check_duplicate(&out_nums, &l) {
+              out_nums.push(l);
+            }
+            start += 1;
+            end -= 1;
           }
-          start += 1;
-          end -= 1;
         }
       }
     }
@@ -133,10 +132,7 @@ fn function_test(f: impl Fn(Vec<i32>) -> Vec<Vec<i32>>) {
   let v: Vec<Vec<i32>> = vec![];
   assert_eq!(f(vec![]), v);
   assert_eq!(f(vec![0, 0, 0]), vec![[0, 0, 0]]);
-  assert_eq!(
-    f(vec![-1, 0, 1, 2, -1, -4]),
-    vec![[-1, -1, 2], [-1, 0, 1]]
-  );
+  assert_eq!(f(vec![-1, 0, 1, 2, -1, -4]), vec![[-1, -1, 2], [-1, 0, 1]]);
   assert_eq!(
     f(vec![-4, -2, 1, -5, -4, -4, 4, -2, 0, 4, 0, -2, 3, 1, -5, 0]),
     vec![

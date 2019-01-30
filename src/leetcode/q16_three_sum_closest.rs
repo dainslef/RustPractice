@@ -23,22 +23,19 @@ fn three_sum_closest(nums: Vec<i32>, target: i32) -> i32 {
       let sum = a + b + c;
       let offset_now = (sum - target).abs();
 
-      let mut update_offset = || {
+      if sum == target {
+        // return the answer right now, "break" can only jump out of one round of loop
+        return sum;
+      } else {
         if offset_now < offset {
           offset = offset_now;
           close_target = sum;
         }
-      };
-
-      if sum < target {
-        update_offset();
-        start += 1;
-      } else if sum > target {
-        update_offset();
-        end -= 1;
-      } else {
-        // return the answer right now, "break" can only jump out of one round of loop
-        return sum;
+        if sum < target {
+          start += 1
+        } else {
+          end -= 1
+        };
       }
     }
   }
