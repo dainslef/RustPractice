@@ -15,6 +15,7 @@ mod q15_three_sum;
 mod q16_three_sum_closest;
 mod q18_four_sum;
 mod q126_find_ladders;
+mod q127_word_ladder;
 mod q445_add_two_numbers_two;
 mod q454_four_sum_two;
 
