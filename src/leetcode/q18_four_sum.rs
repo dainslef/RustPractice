@@ -18,32 +18,6 @@
  */
 
 fn four_sum(nums: Vec<i32>, target: i32) -> Vec<Vec<i32>> {
-  fn check_duplicate(vec_list: &Vec<Vec<i32>>, vec: &Vec<i32>) -> bool {
-    let mut is_duplicate = false;
-
-    for old_vec in vec_list {
-      let mut new_vec = vec.clone();
-
-      for old in old_vec {
-        for i in 0..new_vec.len() {
-          // check target vec if have equal element in old_vec
-          if old == &new_vec[i] {
-            new_vec.remove(i);
-            break;
-          }
-        }
-      }
-
-      // if all elemnets have been removed, mean the vec is duplicate
-      if new_vec.is_empty() {
-        is_duplicate = true;
-        break;
-      }
-    }
-
-    is_duplicate
-  }
-
   let (mut nums, mut out_nums) = (nums, vec![]);
   let length = nums.len();
 
@@ -64,7 +38,7 @@ fn four_sum(nums: Vec<i32>, target: i32) -> Vec<Vec<i32>> {
             sum if sum > target => end -= 1,
             _ => {
               let l = vec![a, b, c, d];
-              if !check_duplicate(&out_nums, &l) {
+              if !super::check_duplicate(&out_nums, &l) {
                 out_nums.push(l);
               }
               start += 1;

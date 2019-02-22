@@ -26,7 +26,7 @@ fn three_sum_1(nums: Vec<i32>) -> Vec<Vec<i32>> {
         for i_c in i_b + 1..nums.len() {
           let (a, b, c) = (nums[i_a], nums[i_b], nums[i_c]);
           let l = vec![a, b, c];
-          if a + b + c == 0 && !check_duplicate(&out_nums, &l) {
+          if a + b + c == 0 && !super::check_duplicate(&out_nums, &l) {
             out_nums.push(l);
           }
         }
@@ -52,7 +52,7 @@ fn three_sum_2(nums: Vec<i32>) -> Vec<Vec<i32>> {
             let a = temp_vec[i_a];
             let b = temp_vec[i_b];
             let l = vec![a, b, c];
-            if a + b + c == 0 && !check_duplicate(&out_nums, &l) {
+            if a + b + c == 0 && !super::check_duplicate(&out_nums, &l) {
               out_nums.push(l);
             }
           }
@@ -88,7 +88,7 @@ fn three_sum(nums: Vec<i32>) -> Vec<Vec<i32>> {
           sum if sum > 0 => end -= 1,
           _ => {
             let l = vec![a, b, c];
-            if !check_duplicate(&out_nums, &l) {
+            if !super::check_duplicate(&out_nums, &l) {
               out_nums.push(l);
             }
             start += 1;
@@ -100,32 +100,6 @@ fn three_sum(nums: Vec<i32>) -> Vec<Vec<i32>> {
   }
 
   out_nums
-}
-
-fn check_duplicate(vec_list: &Vec<Vec<i32>>, vec: &Vec<i32>) -> bool {
-  let mut is_duplicate = false;
-
-  for old_vec in vec_list {
-    let mut new_vec = vec.clone();
-
-    for old_val in old_vec {
-      for i in 0..new_vec.len() {
-        // check target vec if have equal element in old_vec
-        if old_val == &new_vec[i] {
-          new_vec.remove(i);
-          break;
-        }
-      }
-    }
-
-    // if all elemnets have been removed, mean the vec is duplicate
-    if new_vec.is_empty() {
-      is_duplicate = true;
-      break;
-    }
-  }
-
-  is_duplicate
 }
 
 fn function_test(f: impl Fn(Vec<i32>) -> Vec<Vec<i32>>) {

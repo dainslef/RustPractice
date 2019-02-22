@@ -42,23 +42,6 @@ fn find_ladders_dfs(
   let mut temp: Vec<Vec<String>> = Vec::new();
   let mut min_size = 0;
 
-  fn check_word(old_word: &String, new_word: &String) -> bool {
-    let mut count = 0;
-    let (old_chars, new_chars) = (
-      old_word.chars().collect::<Vec<char>>(),
-      new_word.chars().collect::<Vec<char>>(),
-    );
-    for i in 0..old_chars.len() {
-      if old_chars[i] != new_chars[i] {
-        count += 1;
-        if count > 1 {
-          return false;
-        }
-      }
-    }
-    count == 1
-  }
-
   fn dfs(
     current: &String,
     input_list: Vec<String>,
@@ -67,7 +50,7 @@ fn find_ladders_dfs(
     temp: &mut Vec<Vec<String>>,
     min_size: &mut usize,
   ) {
-    if check_word(&current, end_word) {
+    if super::check_word(&current, end_word) {
       output_list.push(end_word.clone());
       let size = output_list.len();
       if *min_size == 0 || size < *min_size {
@@ -78,7 +61,7 @@ fn find_ladders_dfs(
     }
     for i in 0..input_list.len() {
       let next = &input_list[i];
-      if check_word(&current, &next) {
+      if super::check_word(&current, &next) {
         let (mut new_output_list, mut new_input_list) = (output_list.clone(), input_list.clone());
         new_output_list.push(next.clone());
         new_input_list.remove(i);
@@ -109,7 +92,7 @@ fn find_ladders_dfs(
 
   temp
     .into_iter()
-    .filter(|v| v.len() == min_size && v.last().map(|s| s == &end_word).unwrap_or(false))
+    .filter(|v| v.len() == min_size && v.last() == Some(&end_word))
     .collect()
 }
 
@@ -117,11 +100,11 @@ fn find_ladders(begin_word: String, end_word: String, word_list: Vec<String>) ->
   use std::collections::{HashSet, VecDeque};
   use std::iter::FromIterator;
 
-  let mut word_set: HashSet<String> = HashSet::from_iter(word_list);
-  let mut paths: VecDeque<Vec<String>> = VecDeque::new();
   let mut result: Vec<Vec<String>> = vec![];
   let mut currents: HashSet<String> = HashSet::new();
+  let mut word_set: HashSet<String> = HashSet::from_iter(word_list);
 
+  let mut paths = VecDeque::new();
   paths.push_back(vec![begin_word]);
 
   if word_set.contains(&end_word) {
@@ -172,32 +155,7 @@ fn test_find_ladders() {
     str_array.iter().map(|v| v.to_string()).collect()
   }
 
-  fn is_same(input1: Vec<Vec<String>>, input2: Vec<Vec<String>>) -> bool {
-    use std::collections::HashSet;
-    fn vec_to_set(input: Vec<Vec<String>>) -> HashSet<Vec<String>> {
-      let mut set = HashSet::new();
-      for i in input {
-        set.insert(i);
-      }
-      set
-    }
-    dbg!((&input1, &input2));
-    vec_to_set(input1) == vec_to_set(input2)
-  }
-
   let empty: Vec<Vec<String>> = vec![];
-
-  assert!(is_same(
-    find_ladders(
-      "hit".to_string(),
-      "cog".to_string(),
-      vec_string(&["hot", "dot", "dog", "lot", "log", "cog"])
-    ),
-    vec![
-      vec_string(&["hit", "hot", "lot", "log", "cog"]),
-      vec_string(&["hit", "hot", "dot", "dog", "cog"])
-    ]
-  ));
 
   assert_eq!(
     find_ladders(
@@ -235,8 +193,37 @@ fn test_find_ladders() {
     empty
   );
 
-  println!(
-    "{:?}",
+  fn is_same(input1: Vec<Vec<String>>, input2: Vec<Vec<String>>) -> bool {
+    use std::collections::HashSet;
+    fn vec_to_set(input: &Vec<Vec<String>>) -> HashSet<&Vec<String>> {
+      let mut set = HashSet::new();
+      for i in input {
+        set.insert(i);
+      }
+      set
+    }
+    match vec_to_set(&input1) == vec_to_set(&input2) {
+      true => true,
+      false => {
+        dbg!((&input1, &input2));
+        false
+      }
+    }
+  }
+
+  assert!(is_same(
+    find_ladders(
+      "hit".to_string(),
+      "cog".to_string(),
+      vec_string(&["hot", "dot", "dog", "lot", "log", "cog"])
+    ),
+    vec![
+      vec_string(&["hit", "hot", "lot", "log", "cog"]),
+      vec_string(&["hit", "hot", "dot", "dog", "cog"])
+    ]
+  ));
+
+  assert!(is_same(
     find_ladders(
       "qa".to_string(),
       "sq".to_string(),
@@ -249,11 +236,63 @@ fn test_find_ladders() {
         "er", "sc", "ne", "mn", "mi", "am", "ex", "pt", "io", "be", "fm", "ta", "tb", "ni", "mr",
         "pa", "he", "lr", "sq", "ye"
       ])
-    )
-  );
+    ),
+    vec![
+      vec_string(&["qa", "ba", "be", "se", "sq"]),
+      vec_string(&["qa", "ba", "bi", "si", "sq"]),
+      vec_string(&["qa", "ba", "br", "sr", "sq"]),
+      vec_string(&["qa", "ca", "ci", "si", "sq"]),
+      vec_string(&["qa", "ca", "cm", "sm", "sq"]),
+      vec_string(&["qa", "ca", "co", "so", "sq"]),
+      vec_string(&["qa", "ca", "cr", "sr", "sq"]),
+      vec_string(&["qa", "fa", "fe", "se", "sq"]),
+      vec_string(&["qa", "fa", "fm", "sm", "sq"]),
+      vec_string(&["qa", "fa", "fr", "sr", "sq"]),
+      vec_string(&["qa", "ga", "ge", "se", "sq"]),
+      vec_string(&["qa", "ga", "go", "so", "sq"]),
+      vec_string(&["qa", "ha", "he", "se", "sq"]),
+      vec_string(&["qa", "ha", "hi", "si", "sq"]),
+      vec_string(&["qa", "ha", "ho", "so", "sq"]),
+      vec_string(&["qa", "la", "le", "se", "sq"]),
+      vec_string(&["qa", "la", "li", "si", "sq"]),
+      vec_string(&["qa", "la", "ln", "sn", "sq"]),
+      vec_string(&["qa", "la", "lo", "so", "sq"]),
+      vec_string(&["qa", "la", "lr", "sr", "sq"]),
+      vec_string(&["qa", "la", "lt", "st", "sq"]),
+      vec_string(&["qa", "ma", "mb", "sb", "sq"]),
+      vec_string(&["qa", "ma", "me", "se", "sq"]),
+      vec_string(&["qa", "ma", "mi", "si", "sq"]),
+      vec_string(&["qa", "ma", "mn", "sn", "sq"]),
+      vec_string(&["qa", "ma", "mo", "so", "sq"]),
+      vec_string(&["qa", "ma", "mr", "sr", "sq"]),
+      vec_string(&["qa", "ma", "mt", "st", "sq"]),
+      vec_string(&["qa", "na", "nb", "sb", "sq"]),
+      vec_string(&["qa", "na", "ne", "se", "sq"]),
+      vec_string(&["qa", "na", "ni", "si", "sq"]),
+      vec_string(&["qa", "na", "no", "so", "sq"]),
+      vec_string(&["qa", "pa", "pb", "sb", "sq"]),
+      vec_string(&["qa", "pa", "ph", "sh", "sq"]),
+      vec_string(&["qa", "pa", "pi", "si", "sq"]),
+      vec_string(&["qa", "pa", "pm", "sm", "sq"]),
+      vec_string(&["qa", "pa", "po", "so", "sq"]),
+      vec_string(&["qa", "pa", "pt", "st", "sq"]),
+      vec_string(&["qa", "ra", "rb", "sb", "sq"]),
+      vec_string(&["qa", "ra", "re", "se", "sq"]),
+      vec_string(&["qa", "ra", "rh", "sh", "sq"]),
+      vec_string(&["qa", "ra", "rn", "sn", "sq"]),
+      vec_string(&["qa", "ta", "tb", "sb", "sq"]),
+      vec_string(&["qa", "ta", "tc", "sc", "sq"]),
+      vec_string(&["qa", "ta", "th", "sh", "sq"]),
+      vec_string(&["qa", "ta", "ti", "si", "sq"]),
+      vec_string(&["qa", "ta", "tm", "sm", "sq"]),
+      vec_string(&["qa", "ta", "to", "so", "sq"]),
+      vec_string(&["qa", "ya", "yb", "sb", "sq"]),
+      vec_string(&["qa", "ya", "ye", "se", "sq"]),
+      vec_string(&["qa", "ya", "yo", "so", "sq"]),
+    ]
+  ));
 
-  println!(
-    "{:?}",
+  assert!(is_same(
     find_ladders(
       "cet".to_string(),
       "ism".to_string(),
@@ -306,6 +345,11 @@ fn test_find_ladders() {
         "pox", "vow", "got", "meg", "zoe", "amp", "ale", "bud", "gee", "pin", "dun", "pat", "ten",
         "mob"
       ])
-    )
-  )
+    ),
+    vec![
+      vec_string(&["cet", "get", "gee", "gte", "ate", "ats", "its", "ito", "ibo", "ibm", "ism",]),
+      vec_string(&["cet", "cat", "can", "ian", "inn", "ins", "its", "ito", "ibo", "ibm", "ism",]),
+      vec_string(&["cet", "cot", "con", "ion", "inn", "ins", "its", "ito", "ibo", "ibm", "ism",])
+    ]
+  ));
 }

@@ -34,20 +34,6 @@
  */
 
 fn ladder_length(begin_word: String, end_word: String, word_list: Vec<String>) -> i32 {
-  fn check_word(old_word: &String, new_word: &String) -> bool {
-    let mut count = 0;
-    let (old_u8s, new_u8s): (&[u8], &[u8]) = (old_word.as_ref(), new_word.as_ref());
-    for i in 0..old_u8s.len() {
-      if old_u8s[i] != new_u8s[i] {
-        count += 1;
-        if count > 1 {
-          return false;
-        }
-      }
-    }
-    count == 1
-  }
-
   use std::collections::HashSet;
   use std::iter::FromIterator;
 
@@ -64,7 +50,7 @@ fn ladder_length(begin_word: String, end_word: String, word_list: Vec<String>) -
       for current in &currents {
         word_set.remove(current);
         for next in &word_set {
-          if check_word(current, next) {
+          if super::check_word(current, next) {
             if *next == &end_word {
               return level;
             }
