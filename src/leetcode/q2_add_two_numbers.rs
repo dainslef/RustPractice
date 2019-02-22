@@ -64,30 +64,10 @@ fn add_two_numbers(l1: Option<Box<ListNode>>, l2: Option<Box<ListNode>>) -> Opti
 
 #[test]
 fn test_add_two_numbers() {
-  fn build_nodes(mut num: i32) -> Option<Box<ListNode>> {
-    let (mut temp, mut vec) = (None, vec![]);
-
-    while num / 10 > 0 {
-      vec.push(num % 10);
-      num /= 10;
-    }
-    vec.push(num % 10);
-    vec.reverse();
-
-    for val in vec {
-      let next = temp;
-      temp = Some(Box::new(ListNode { val, next }));
-    }
-
-    temp
-  }
-
-  println!(
-    "{:?}",
-    add_two_numbers(build_nodes(1234), build_nodes(11111))
+  assert_eq!(add_two_numbers(super::build_nodes(1234, true), super::build_nodes(11111, true)),
+    super::build_nodes(12345, true)
   );
-  println!(
-    "{:?}",
-    add_two_numbers(build_nodes(9), build_nodes(999999991))
+  assert_eq!(add_two_numbers(super::build_nodes(9, true), super::build_nodes(999999991, true)),
+    super::build_nodes(1000000000, true)
   );
 }

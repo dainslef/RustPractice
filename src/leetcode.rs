@@ -18,6 +18,7 @@ mod q445_add_two_numbers_two;
 mod q454_four_sum_two;
 mod q7_reverse_integer;
 mod q8_my_atoi;
+// mod q97_interleaving_string;
 
 #[derive(PartialEq, Eq, Debug)]
 struct ListNode {
@@ -30,6 +31,22 @@ impl ListNode {
   fn new(val: i32) -> Self {
     ListNode { next: None, val }
   }
+}
+
+fn build_nodes(mut num: i32, reserve: bool) -> Option<Box<ListNode>> {
+  let (mut next, mut vec) = (None, vec![]);
+  while num / 10 > 0 {
+    vec.push(num % 10);
+    num /= 10;
+  }
+  vec.push(num % 10);
+  if reserve {
+    vec.reverse();
+  }
+  for val in vec {
+    next = Some(Box::new(ListNode { val, next }));
+  }
+  next
 }
 
 // for q15 and q18, check if the target "vec" is equal to some element in "vec_list"

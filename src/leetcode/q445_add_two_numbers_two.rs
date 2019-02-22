@@ -30,7 +30,7 @@ fn add_two_numbers(l1: Option<Box<ListNode>>, l2: Option<Box<ListNode>>) -> Opti
     (v2, v1)
   };
   let offset = v1.len() - v2.len();
-  let (mut temp, mut carry) = (None, 0);
+  let (mut next, mut carry) = (None, 0);
 
   for i in (0..v1.len()).rev() {
     let mut val = if i >= offset {
@@ -44,45 +44,34 @@ fn add_two_numbers(l1: Option<Box<ListNode>>, l2: Option<Box<ListNode>>) -> Opti
     } else {
       0
     };
-    let next = temp;
-    temp = Some(Box::new(ListNode { val, next }));
+    next = Some(Box::new(ListNode { val, next }));
   }
 
   if carry > 0 {
-    let next = temp;
-    temp = Some(Box::new(ListNode { val: carry, next }));
+    next = Some(Box::new(ListNode { val: carry, next }));
   }
 
-  temp
+  next
 }
 
 #[test]
 fn test_add_two_numbers_two() {
-  fn build_nodes(vec: Vec<i32>) -> Option<Box<ListNode>> {
-    let mut head = None;
-    let mut temp: &mut Option<Box<ListNode>> = &mut None;
-    for i in vec {
-      if let Some(n) = temp {
-        n.next = Some(Box::new(ListNode::new(i)));
-        temp = &mut n.next;
-      } else {
-        head = Some(Box::new(ListNode::new(i)));
-        temp = &mut head;
-      }
-    }
-    head
-  }
-
   assert_eq!(
-    add_two_numbers(build_nodes(vec![7, 2, 4, 3]), build_nodes(vec![5, 6, 4])),
-    build_nodes(vec![7, 8, 0, 7])
+    add_two_numbers(
+      super::build_nodes(7243, false),
+      super::build_nodes(564, false)
+    ),
+    super::build_nodes(7807, false)
   );
   assert_eq!(
-    add_two_numbers(build_nodes(vec![9, 9, 9]), build_nodes(vec![1])),
-    build_nodes(vec![1, 0, 0, 0])
+    add_two_numbers(super::build_nodes(999, false), super::build_nodes(1, false)),
+    super::build_nodes(1000, false)
   );
   assert_eq!(
-    add_two_numbers(build_nodes(vec![2]), build_nodes(vec![1, 0, 9, 9, 8])),
-    build_nodes(vec![1, 1, 0, 0, 0])
+    add_two_numbers(
+      super::build_nodes(2, false),
+      super::build_nodes(10998, false)
+    ),
+    super::build_nodes(11000, false)
   );
 }
