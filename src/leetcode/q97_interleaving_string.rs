@@ -11,7 +11,33 @@
  * Output: false
  */
 
+// use recursion
 fn is_interleave(s1: String, s2: String, s3: String) -> bool {
+  fn check(u1s: Vec<u8>, u2s: Vec<u8>, mut u3s: Vec<u8>) -> bool {
+    if u1s.len() == 0 && u2s.len() == 0 && u3s.len() == 0 {
+      true
+    } else {
+      let u3 = u3s.pop();
+      let (mut new_u1s, mut new_u2s) = (u1s.clone(), u2s.clone());
+      let (mut condition1, mut condition2) = (false, false);
+      if new_u1s.pop() == u3 {
+        condition1 = check(new_u1s, u2s, u3s.clone());
+      }
+      if new_u2s.pop() == u3 {
+        condition2 = check(u1s, new_u2s, u3s);
+      }
+      condition1 || condition2
+    }
+  }
+
+  if s1.len() + s2.len() == s3.len() {
+    check(s1.into_bytes(), s2.into_bytes(), s3.into_bytes())
+  } else {
+    false
+  }
+}
+
+fn is_interleave_loop(s1: String, s2: String, s3: String) -> bool {
   let (len1, len2, len3) = (s1.len(), s2.len(), s3.len());
 
   if len1 + len2 == len3 {
