@@ -39,9 +39,10 @@ fn find_ladders_dfs(
   end_word: String,
   word_list: Vec<String>,
 ) -> Vec<Vec<String>> {
-  let mut temp: Vec<Vec<String>> = Vec::new();
+  let mut temp: Vec<Vec<String>> = vec![];
   let mut min_size = 0;
 
+  // use recursion to find out all path
   fn dfs(
     current: &String,
     input_list: Vec<String>,
@@ -50,21 +51,29 @@ fn find_ladders_dfs(
     temp: &mut Vec<Vec<String>>,
     min_size: &mut usize,
   ) {
+    // check if find out the target path
     if super::check_word(&current, end_word) {
       output_list.push(end_word.clone());
       let size = output_list.len();
+      // check and update the path size
       if *min_size == 0 || size < *min_size {
         *min_size = size;
       }
+      // add the path to the temp
       temp.push(output_list);
+      // find the target, finish this recursion
       return;
     }
     for i in 0..input_list.len() {
+      // get the next word
       let next = &input_list[i];
+      // check the next word if match the condition
       if super::check_word(&current, &next) {
+        // copy and update the input/ouput list
         let (mut new_output_list, mut new_input_list) = (output_list.clone(), input_list.clone());
         new_output_list.push(next.clone());
         new_input_list.remove(i);
+        // recursively check the next word until find all the paths
         dfs(
           next,
           new_input_list,
@@ -88,8 +97,7 @@ fn find_ladders_dfs(
     );
   }
 
-  dbg!((min_size, &temp));
-
+  // filter results, only return the list which have least size
   temp
     .into_iter()
     .filter(|v| v.len() == min_size && v.last() == Some(&end_word))
@@ -100,31 +108,40 @@ fn find_ladders(begin_word: String, end_word: String, word_list: Vec<String>) ->
   use std::collections::{HashSet, VecDeque};
   use std::iter::FromIterator;
 
+  // save all of the target paths which match the condition
   let mut result: Vec<Vec<String>> = vec![];
+  // save the words which last level has used
   let mut currents: HashSet<String> = HashSet::new();
+  // use hash set to save the all input word list, check if the word in the list under the time complexity of O(1)
   let mut word_set: HashSet<String> = HashSet::from_iter(word_list);
 
+  // save the temp paths
   let mut paths = VecDeque::new();
   paths.push_back(vec![begin_word]);
 
   if word_set.contains(&end_word) {
     let (mut level, mut min_level) = (1, word_set.len());
     while let Some(path) = paths.pop_front() {
+      // if the length of temp list bigger than the value of level, it means reaching a deeper level
       if path.len() > level {
         for word in &currents {
+          // clean up the words which have been checked, the target path won't have the duplicate words
           word_set.remove(word);
         }
+        // clean up the old words and update the value of level
         currents.clear();
         level = path.len();
         if level > min_level {
+          // break out if current level is deeper than the min level
           break;
         }
       }
       if let Some(current) = path.last() {
-        let bytes: Vec<u8> = current.bytes().collect();
+        let bytes = current.clone().into_bytes();
         for i in 0..bytes.len() {
           // 'a' .. 'z' ASCII number
           for u in 97_u8..=122_u8 {
+            // change a character in the word and check if the new word is contained by the word set
             let mut bytes = bytes.clone();
             bytes[i] = u;
             if let Ok(next) = String::from_utf8(bytes) {
@@ -193,16 +210,12 @@ fn test_find_ladders() {
     empty
   );
 
-  fn is_same(input1: Vec<Vec<String>>, input2: Vec<Vec<String>>) -> bool {
+  fn is_same(input1: &Vec<Vec<String>>, input2: &Vec<Vec<String>>) -> bool {
     use std::collections::HashSet;
-    fn vec_to_set(input: &Vec<Vec<String>>) -> HashSet<&Vec<String>> {
-      let mut set = HashSet::new();
-      for i in input {
-        set.insert(i);
-      }
-      set
-    }
-    match vec_to_set(&input1) == vec_to_set(&input2) {
+    use std::iter::FromIterator;
+    let (target1, target2): (HashSet<&Vec<String>>, HashSet<&Vec<String>>) =
+      (HashSet::from_iter(input1), HashSet::from_iter(input2));
+    match target1 == target2 {
       true => true,
       false => {
         dbg!((&input1, &input2));
@@ -212,19 +225,19 @@ fn test_find_ladders() {
   }
 
   assert!(is_same(
-    find_ladders(
+    &find_ladders(
       "hit".to_string(),
       "cog".to_string(),
       vec_string(&["hot", "dot", "dog", "lot", "log", "cog"])
     ),
-    vec![
+    &vec![
       vec_string(&["hit", "hot", "lot", "log", "cog"]),
       vec_string(&["hit", "hot", "dot", "dog", "cog"])
     ]
   ));
 
   assert!(is_same(
-    find_ladders(
+    &find_ladders(
       "qa".to_string(),
       "sq".to_string(),
       vec_string(&[
@@ -237,7 +250,7 @@ fn test_find_ladders() {
         "pa", "he", "lr", "sq", "ye"
       ])
     ),
-    vec![
+    &vec![
       vec_string(&["qa", "ba", "be", "se", "sq"]),
       vec_string(&["qa", "ba", "bi", "si", "sq"]),
       vec_string(&["qa", "ba", "br", "sr", "sq"]),
@@ -293,7 +306,7 @@ fn test_find_ladders() {
   ));
 
   assert!(is_same(
-    find_ladders(
+    &find_ladders(
       "cet".to_string(),
       "ism".to_string(),
       vec_string(&[
@@ -346,7 +359,7 @@ fn test_find_ladders() {
         "mob"
       ])
     ),
-    vec![
+    &vec![
       vec_string(&["cet", "get", "gee", "gte", "ate", "ats", "its", "ito", "ibo", "ibm", "ism",]),
       vec_string(&["cet", "cat", "can", "ian", "inn", "ins", "its", "ito", "ibo", "ibm", "ism",]),
       vec_string(&["cet", "cot", "con", "ion", "inn", "ins", "its", "ito", "ibo", "ibm", "ism",])
