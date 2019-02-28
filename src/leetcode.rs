@@ -8,7 +8,7 @@ mod q2_add_two_numbers;
 mod q3_length_of_longest_substring;
 mod q4_find_median_sorted_arrays;
 mod q5_longest_palindrome;
-// mod q6_zipzag_conversion;
+mod q6_zipzag_conversion;
 mod q126_word_ladder_two;
 mod q127_word_ladder;
 // mod q11_container_with_most_water;
