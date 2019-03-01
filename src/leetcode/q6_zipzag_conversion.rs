@@ -26,27 +26,23 @@
  */
 
 fn convert(s: String, num_rows: i32) -> String {
-  match num_rows {
+  match num_rows as usize {
     n if n > 1 => {
-      let num_rows = num_rows as usize;
-      let mut rows = (0..num_rows).map(|_| vec![]).collect::<Vec<Vec<char>>>();
-      let unit_size = (num_rows - 1) * 2;
+      let mut zipzag_rows = (0..n).map(|_| vec![]).collect::<Vec<Vec<char>>>();
+      let unit_size = (n - 1) * 2;
 
       for (i, c) in s.char_indices() {
-        let m = i % unit_size;
-        let row_index = match m {
-          m if m < num_rows => m,
-          m => 2 * (num_rows - 1) - m
+        let zipzag_index = match i % unit_size {
+          m if m < n => m,
+          m => unit_size - m,
         };
-        rows[row_index].push(c);
+        zipzag_rows[zipzag_index].push(c);
       }
 
-      let row_all = rows.iter().flat_map(|v| v).collect::<Vec<&char>>();
-
       use std::iter::FromIterator;
-      String::from_iter(row_all)
+      String::from_iter(zipzag_rows.iter().flat_map(|v| v).collect::<Vec<&char>>())
     }
-    _ => s
+    _ => s,
   }
 }
 
