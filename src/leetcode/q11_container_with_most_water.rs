@@ -28,6 +28,31 @@ fn max_area(height: Vec<i32>) -> i32 {
   area
 }
 
+fn max_area_two_side(height: Vec<i32>) -> i32 {
+  let len = height.len();
+  let (mut area, mut left, mut right) = (0, 0, len - 1);
+
+  while right > left {
+    let width = right - left;
+    let (left_height, right_height) = (height[left], height[right]);
+    // compare the height of left and right line, increase the index on the smaller side(the area is determined by the height of the smaller side)
+    let new_area = width as i32
+      * if left_height > right_height {
+        right -= 1;
+        right_height
+      } else {
+        left += 1;
+        left_height
+      };
+    // update the area when the new area is larger than old
+    if new_area > area {
+      area = new_area;
+    }
+  }
+
+  area
+}
+
 #[test]
 fn test_max_area() {
   assert_eq!(max_area(vec![1, 0]), 0);
