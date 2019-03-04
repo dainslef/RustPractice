@@ -37,7 +37,8 @@ fn is_interleave(s1: String, s2: String, s3: String) -> bool {
   }
 }
 
-fn is_interleave_loop(s1: String, s2: String, s3: String) -> bool {
+// use a HashMap to record the interleave status of the word
+fn is_interleave_map(s1: String, s2: String, s3: String) -> bool {
   let (len1, len2, len3) = (s1.len(), s2.len(), s3.len());
 
   if len1 + len2 == len3 {

@@ -36,14 +36,13 @@ fn max_area_two_side(height: Vec<i32>) -> i32 {
     let width = right - left;
     let (left_height, right_height) = (height[left], height[right]);
     // compare the height of left and right line, increase the index on the smaller side(the area is determined by the height of the smaller side)
-    let new_area = width as i32
-      * if left_height > right_height {
-        right -= 1;
-        right_height
-      } else {
-        left += 1;
-        left_height
-      };
+    let new_area = if left_height > right_height {
+      right -= 1;
+      right_height
+    } else {
+      left += 1;
+      left_height
+    } * width as i32;
     // update the area when the new area is larger than old
     if new_area > area {
       area = new_area;

@@ -14,7 +14,8 @@
 use super::ListNode;
 
 fn add_two_numbers(l1: Option<Box<ListNode>>, l2: Option<Box<ListNode>>) -> Option<Box<ListNode>> {
-  fn get_vec(l: Option<Box<ListNode>>) -> Vec<i32> {
+  // build the vector of the number from the number list
+  fn number_vec(l: Option<Box<ListNode>>) -> Vec<i32> {
     let (mut vec, mut temp) = (vec![], &l);
     while let Some(n) = temp {
       vec.push(n.val);
@@ -23,32 +24,42 @@ fn add_two_numbers(l1: Option<Box<ListNode>>, l2: Option<Box<ListNode>>) -> Opti
     vec
   }
 
-  let (v1, v2) = (get_vec(l1), get_vec(l2));
-  let (v1, v2) = if v1.len() > v2.len() {
-    (v1, v2)
-  } else {
-    (v2, v1)
+  // get the long number vector, the short number vector and the offset
+  let (v_long, v_short, offset) = {
+    let (v1, v2) = (number_vec(l1), number_vec(l2));
+    let (len1, len2) = (v1.len(), v2.len());
+    if len1 > len2 {
+      (v1, v2, len1 - len2)
+    } else {
+      (v2, v1, len2 - len1)
+    }
   };
-  let offset = v1.len() - v2.len();
-  let (mut next, mut carry) = (None, 0);
+  let (mut next, mut carry) = (None, false);
 
-  for i in (0..v1.len()).rev() {
+  for i in (0..v_long.len()).rev() {
+    // check the offset, and calculate the sum of the values of the nodes at the same position in two lists
     let mut val = if i >= offset {
-      v1[i] + v2[i - offset]
+      v_long[i] + v_short[i - offset]
     } else {
-      v1[i]
-    } + carry;
-    carry = if val >= 10 {
+      v_long[i]
+    } + carry as i32;
+
+    // check if the value needs to be carried
+    carry = val >= 10;
+    if carry {
+      // recalculate the value after the value is carried
       val -= 10;
-      1
-    } else {
-      0
-    };
+    }
+
     next = Some(Box::new(ListNode { val, next }));
   }
 
-  if carry > 0 {
-    next = Some(Box::new(ListNode { val: carry, next }));
+  // if the list is ended, check and set the carry
+  if carry {
+    next = Some(Box::new(ListNode {
+      val: carry as i32,
+      next,
+    }));
   }
 
   next
