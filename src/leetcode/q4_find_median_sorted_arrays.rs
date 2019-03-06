@@ -34,15 +34,15 @@ fn find_median_sorted_arrays(nums1: Vec<i32>, nums2: Vec<i32>) -> f64 {
       (Some(v1), Some(v2)) if v1 < v2 => deal_value(v1, &mut index1),
       (Some(v), None) => deal_value(v, &mut index1),
       (_, Some(v)) => deal_value(v, &mut index2),
-      _ => break,
+      _ => {
+        // check whether the length is odd or even, then compute the median
+        break if length % 2 == 0 {
+          (temp[length / 2 - 1] + temp[length / 2]) as f64 / 2_f64
+        } else {
+          temp[length / 2] as f64
+        };
+      }
     }
-  }
-
-  // check whether the length is odd or even, then compute the median
-  if length % 2 == 0 {
-    (temp[length / 2 - 1] + temp[length / 2]) as f64 / 2_f64
-  } else {
-    temp[length / 2] as f64
   }
 }
 

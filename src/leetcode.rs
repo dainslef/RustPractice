@@ -78,7 +78,7 @@ fn check_duplicate(vec_list: &Vec<Vec<i32>>, vec: &Vec<i32>) -> bool {
 }
 
 // for q126 and q127, check if two words differ by only one character
-fn check_word(old_word: &String, new_word: &String) -> bool {
+fn check_diff_one_char(old_word: &String, new_word: &String) -> bool {
   let mut count = 0;
   let (old_u8s, new_u8s): (&[u8], &[u8]) = (old_word.as_ref(), new_word.as_ref());
   for i in 0..old_u8s.len() {
@@ -90,4 +90,26 @@ fn check_word(old_word: &String, new_word: &String) -> bool {
     }
   }
   count == 1
+}
+
+fn check_vec_val_eq<T: Eq + std::hash::Hash + std::fmt::Debug>(
+  vec1: &Vec<T>,
+  vec2: &Vec<T>,
+) -> bool {
+  use std::collections::HashSet;
+  use std::iter::FromIterator;
+
+  let set1: HashSet<&T> = HashSet::from_iter(vec1);
+  let set2 = HashSet::from_iter(vec2);
+
+  let eq = set1 == set2;
+  if !eq {
+    dbg!((&set1, &set2));
+  }
+
+  eq
+}
+
+fn string_vec(str_array: &[&str]) -> Vec<String> {
+  str_array.iter().map(|v| v.to_string()).collect()
 }

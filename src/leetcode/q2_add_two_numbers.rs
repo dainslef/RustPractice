@@ -64,10 +64,18 @@ fn add_two_numbers(l1: Option<Box<ListNode>>, l2: Option<Box<ListNode>>) -> Opti
 
 #[test]
 fn test_add_two_numbers() {
-  assert_eq!(add_two_numbers(super::build_nodes(1234, true), super::build_nodes(11111, true)),
+  assert_eq!(
+    add_two_numbers(
+      super::build_nodes(1234, true),
+      super::build_nodes(11111, true)
+    ),
     super::build_nodes(12345, true)
   );
-  assert_eq!(add_two_numbers(super::build_nodes(9, true), super::build_nodes(999999991, true)),
+  assert_eq!(
+    add_two_numbers(
+      super::build_nodes(9, true),
+      super::build_nodes(999999991, true)
+    ),
     super::build_nodes(1000000000, true)
   );
 }
