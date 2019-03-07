@@ -13,20 +13,15 @@ use super::ListNode;
 
 fn add_two_numbers(l1: Option<Box<ListNode>>, l2: Option<Box<ListNode>>) -> Option<Box<ListNode>> {
   let (mut l1, mut l2) = (&l1, &l2);
-  let (mut temp, mut vec, mut carry) = (None, vec![], 0);
+  let (mut vec, mut carry) = (vec![], false);
 
   let mut deal_result = |num| {
     // compute the result by carry
-    let result = num + carry;
+    let result = num + carry as i32;
 
     // if the result is larger than 10, set the carry
-    carry = if result >= 10 {
-      vec.push(result - 10);
-      1
-    } else {
-      vec.push(result);
-      0
-    }
+    carry = result >= 10;
+    vec.push(if carry { result - 10 } else { result });
   };
 
   loop {
@@ -46,17 +41,10 @@ fn add_two_numbers(l1: Option<Box<ListNode>>, l2: Option<Box<ListNode>>) -> Opti
       }
       (None, None) => {
         // if the list is ended, check the carry
-        if carry > 0 {
-          vec.push(carry);
+        if carry {
+          vec.push(carry as i32);
         }
-        break {
-          vec.reverse();
-          for val in vec {
-            let next = temp;
-            temp = Some(Box::new(ListNode { val, next }));
-          }
-          temp
-        };
+        break super::vec_to_nodes(vec, true);
       }
     }
   }
@@ -66,16 +54,16 @@ fn add_two_numbers(l1: Option<Box<ListNode>>, l2: Option<Box<ListNode>>) -> Opti
 fn test_add_two_numbers() {
   assert_eq!(
     add_two_numbers(
-      super::build_nodes(1234, true),
-      super::build_nodes(11111, true)
+      super::num_to_nodes(1234, true),
+      super::num_to_nodes(11111, true)
     ),
-    super::build_nodes(12345, true)
+    super::num_to_nodes(12345, true)
   );
   assert_eq!(
     add_two_numbers(
-      super::build_nodes(9, true),
-      super::build_nodes(999999991, true)
+      super::num_to_nodes(9, true),
+      super::num_to_nodes(999999991, true)
     ),
-    super::build_nodes(1000000000, true)
+    super::num_to_nodes(1000000000, true)
   );
 }

@@ -37,13 +37,12 @@ fn ladder_length(begin_word: String, end_word: String, word_list: Vec<String>) -
   use std::collections::HashSet;
   use std::iter::FromIterator;
 
-  let mut level = 0;
   let mut word_set: HashSet<&String> = HashSet::from_iter(&word_list);
   let mut currents = HashSet::new();
   currents.insert(&begin_word);
 
   if word_set.contains(&end_word) {
-    level = 1;
+    let mut level = 1;
     while !currents.is_empty() {
       level += 1;
       let mut nexts = HashSet::new();
@@ -60,10 +59,9 @@ fn ladder_length(begin_word: String, end_word: String, word_list: Vec<String>) -
       }
       currents = nexts;
     }
-    level = 0
   }
 
-  level
+  0 // if the loop is over, it means the target path doesn't exist
 }
 
 #[test]

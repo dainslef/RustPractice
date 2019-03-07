@@ -31,16 +31,11 @@ fn remove_nth_from_end(head: Option<Box<ListNode>>, n: i32) -> Option<Box<ListNo
   vals.reverse();
   vals.remove(n as usize - 1);
 
-  let mut next = None;
-  for val in vals {
-    next = Some(Box::new(ListNode { val, next }));
-  }
-
-  next
+  super::vec_to_nodes(vals, false)
 }
 
 #[test]
 fn test_remove_nth_from_end() {
-  assert_eq!(remove_nth_from_end(super::build_nodes(1, false), 1), None);
-  assert_eq!(remove_nth_from_end(super::build_nodes(12345, false), 2), super::build_nodes(1235, false));
+  assert_eq!(remove_nth_from_end(super::num_to_nodes(1, false), 1), None);
+  assert_eq!(remove_nth_from_end(super::num_to_nodes(12345, false), 2), super::num_to_nodes(1235, false));
 }

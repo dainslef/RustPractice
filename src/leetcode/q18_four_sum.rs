@@ -38,7 +38,7 @@ fn four_sum(nums: Vec<i32>, target: i32) -> Vec<Vec<i32>> {
             sum if sum > target => end -= 1,
             _ => {
               let l = vec![a, b, c, d];
-              if !super::check_duplicate(&out_nums, &l) {
+              if !super::check_vecs_contain_target(&out_nums, &l) {
                 out_nums.push(l);
               }
               start += 1;

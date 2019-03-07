@@ -13,6 +13,7 @@ mod q15_three_sum;
 mod q16_three_sum_closest;
 // mod q17_letter_combinations_of_a_phone_number;
 mod q18_four_sum;
+// mod q22_generate_parentheses;
 mod q2_add_two_numbers;
 mod q3_length_of_longest_substring;
 // mod q42_trapping_rain_water;
@@ -38,13 +39,18 @@ impl ListNode {
   }
 }
 
-fn build_nodes(mut num: i32, reserve: bool) -> Option<Box<ListNode>> {
-  let (mut next, mut vec) = (None, vec![]);
+fn num_to_nodes(mut num: i32, reserve: bool) -> Option<Box<ListNode>> {
+  let mut vec = vec![];
   while num / 10 > 0 {
     vec.push(num % 10);
     num /= 10;
   }
   vec.push(num % 10);
+  vec_to_nodes(vec, reserve)
+}
+
+fn vec_to_nodes(mut vec: Vec<i32>, reserve: bool) -> Option<Box<ListNode>> {
+  let mut next = None;
   if reserve {
     vec.reverse();
   }
@@ -54,11 +60,10 @@ fn build_nodes(mut num: i32, reserve: bool) -> Option<Box<ListNode>> {
   next
 }
 
-// for q15 and q18, check if the target "vec" is equal to some element in "vec_list"
-fn check_duplicate(vec_list: &Vec<Vec<i32>>, vec: &Vec<i32>) -> bool {
-  let mut is_duplicate = false;
+// for q15 and q18, check if the target is included in the "vec_list"
+fn check_vecs_contain_target(vec_list: &Vec<Vec<i32>>, target: &Vec<i32>) -> bool {
   for old_vec in vec_list {
-    let mut new_vec = vec.clone();
+    let mut new_vec = target.clone();
     for old_val in old_vec {
       for i in 0..new_vec.len() {
         // check target vec if have equal element in old_vec
@@ -70,11 +75,10 @@ fn check_duplicate(vec_list: &Vec<Vec<i32>>, vec: &Vec<i32>) -> bool {
     }
     // if all elemnets have been removed, mean the vec is duplicate
     if new_vec.is_empty() {
-      is_duplicate = true;
-      break;
+      return true;
     }
   }
-  is_duplicate
+  false
 }
 
 // for q126 and q127, check if two words differ by only one character

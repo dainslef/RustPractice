@@ -21,12 +21,8 @@ fn longest_palindrome_back(s: String) -> String {
   // group by chars
   for (i, c) in s.char_indices() {
     match chars_map.get_mut(&c) {
-      None => {
-        chars_map.insert(c, vec![i]);
-      }
-      Some(v) => {
-        v.push(i);
-      }
+      None => drop(chars_map.insert(c, vec![i])),
+      Some(v) => v.push(i),
     }
   }
 
@@ -65,7 +61,7 @@ fn longest_palindrome_back(s: String) -> String {
   }
 
   if s.len() == 1 && temp.len() == 0 {
-    temp = s.chars().last().unwrap().to_string();
+    temp = s;
   }
 
   temp
@@ -98,8 +94,8 @@ fn longest_palindrome(s: String) -> String {
     let (re1, re2) = (check_chars(false), check_chars(true));
     let re = if re1.2 > re2.2 { re1 } else { re2 };
     if re.2 > temp.len() {
-      if let Some(ss) = s.get(re.0..=re.1) {
-        temp = ss;
+      if let Some(substring) = s.get(re.0..=re.1) {
+        temp = substring;
       }
     }
   }

@@ -69,20 +69,20 @@ fn add_two_numbers(l1: Option<Box<ListNode>>, l2: Option<Box<ListNode>>) -> Opti
 fn test_add_two_numbers_two() {
   assert_eq!(
     add_two_numbers(
-      super::build_nodes(7243, false),
-      super::build_nodes(564, false)
+      super::num_to_nodes(7243, false),
+      super::num_to_nodes(564, false)
     ),
-    super::build_nodes(7807, false)
+    super::num_to_nodes(7807, false)
   );
   assert_eq!(
-    add_two_numbers(super::build_nodes(999, false), super::build_nodes(1, false)),
-    super::build_nodes(1000, false)
+    add_two_numbers(super::num_to_nodes(999, false), super::num_to_nodes(1, false)),
+    super::num_to_nodes(1000, false)
   );
   assert_eq!(
     add_two_numbers(
-      super::build_nodes(2, false),
-      super::build_nodes(10998, false)
+      super::num_to_nodes(2, false),
+      super::num_to_nodes(10998, false)
     ),
-    super::build_nodes(11000, false)
+    super::num_to_nodes(11000, false)
   );
 }
