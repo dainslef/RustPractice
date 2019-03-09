@@ -32,6 +32,7 @@
  *
  * Explanation: The endWord "cog" is not in wordList, therefore no possible transformation.
  */
+use super::*;
 
 fn ladder_length(begin_word: String, end_word: String, word_list: Vec<String>) -> i32 {
   use std::collections::HashSet;
@@ -49,7 +50,7 @@ fn ladder_length(begin_word: String, end_word: String, word_list: Vec<String>) -
       for current in &currents {
         word_set.remove(current);
         for next in &word_set {
-          if super::check_diff_one_char(current, next) {
+          if check_diff_one_char(current, next) {
             if *next == &end_word {
               return level;
             }
@@ -70,7 +71,7 @@ fn test_ladder_length() {
     ladder_length(
       "hot".to_string(),
       "dog".to_string(),
-      super::string_vec(&["hot", "dog", "dot"])
+      strs_vec(&["hot", "dog", "dot"])
     ),
     3
   );
@@ -79,7 +80,7 @@ fn test_ladder_length() {
     ladder_length(
       "hot".to_string(),
       "dog".to_string(),
-      super::string_vec(&["hot", "dog"])
+      strs_vec(&["hot", "dog"])
     ),
     0
   );
@@ -88,7 +89,7 @@ fn test_ladder_length() {
     ladder_length(
       "a".to_string(),
       "c".to_string(),
-      super::string_vec(&["a", "b", "c"])
+      strs_vec(&["a", "b", "c"])
     ),
     2
   );
@@ -97,7 +98,7 @@ fn test_ladder_length() {
     ladder_length(
       "hit".to_string(),
       "cog".to_string(),
-      super::string_vec(&["hot", "dot", "dog", "lot", "log"])
+      strs_vec(&["hot", "dot", "dog", "lot", "log"])
     ),
     0
   );
@@ -106,7 +107,7 @@ fn test_ladder_length() {
     ladder_length(
       "hit".to_string(),
       "cog".to_string(),
-      super::string_vec(&["hot", "dot", "dog", "lot", "log", "cog"])
+      strs_vec(&["hot", "dot", "dog", "lot", "log", "cog"])
     ),
     5
   );
@@ -115,7 +116,7 @@ fn test_ladder_length() {
     ladder_length(
       "qa".to_string(),
       "sq".to_string(),
-      super::string_vec(&[
+      strs_vec(&[
         "si", "go", "se", "cm", "so", "ph", "mt", "db", "mb", "sb", "kr", "ln", "tm", "le", "av",
         "sm", "ar", "ci", "ca", "br", "ti", "ba", "to", "ra", "fa", "yo", "ow", "sn", "ya", "cr",
         "po", "fe", "ho", "ma", "re", "or", "rn", "au", "ur", "rh", "sr", "tc", "lt", "lo", "as",
@@ -132,7 +133,7 @@ fn test_ladder_length() {
     ladder_length(
       "cet".to_string(),
       "ism".to_string(),
-      super::string_vec(&[
+      strs_vec(&[
         "kid", "tag", "pup", "ail", "tun", "woo", "erg", "luz", "brr", "gay", "sip", "kay", "per",
         "val", "mes", "ohs", "now", "boa", "cet", "pal", "bar", "die", "war", "hay", "eco", "pub",
         "lob", "rue", "fry", "lit", "rex", "jan", "cot", "bid", "ali", "pay", "col", "gum", "ger",

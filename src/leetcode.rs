@@ -14,7 +14,9 @@ mod q19_remove_nth_node_from_end_of_list;
 // mod q17_letter_combinations_of_a_phone_number;
 mod q18_four_sum;
 // mod q22_generate_parentheses;
+// mod q24_swap_nodes_in_pairs;
 mod q2_add_two_numbers;
+// mod q29_divide_two_integers;
 mod q3_length_of_longest_substring;
 // mod q42_trapping_rain_water;
 mod q445_add_two_numbers_two;
@@ -46,18 +48,29 @@ fn num_to_nodes(mut num: i32, reserve: bool) -> Option<Box<ListNode>> {
     num /= 10;
   }
   vec.push(num % 10);
-  vec_to_nodes(vec, reserve)
+  // the sequence of the vec is opposite of the number
+  vec_to_nodes(vec, !reserve)
 }
 
 fn vec_to_nodes(mut vec: Vec<i32>, reserve: bool) -> Option<Box<ListNode>> {
   let mut next = None;
-  if reserve {
+  if !reserve {
     vec.reverse();
   }
   for val in vec {
     next = Some(Box::new(ListNode { val, next }));
   }
   next
+}
+
+// build the vector of the number from the number list
+fn nodes_to_vec(node: Option<Box<ListNode>>) -> Vec<i32> {
+  let (mut vec, mut temp) = (vec![], &node);
+  while let Some(n) = temp {
+    vec.push(n.val);
+    temp = &n.next;
+  }
+  vec
 }
 
 // for q15 and q18, check if the target is included in the "vec_list"
@@ -114,6 +127,6 @@ fn check_vec_val_eq<T: Eq + std::hash::Hash + std::fmt::Debug>(
   eq
 }
 
-fn string_vec(str_array: &[&str]) -> Vec<String> {
+fn strs_vec(str_array: &[&str]) -> Vec<String> {
   str_array.iter().map(|v| v.to_string()).collect()
 }

@@ -14,28 +14,17 @@
  *
  * Could you do this in one pass?
  */
-use super::ListNode;
+use super::*;
 
 fn remove_nth_from_end(head: Option<Box<ListNode>>, n: i32) -> Option<Box<ListNode>> {
-  // build the vector of the number from the number list
-  fn number_vec(l: Option<Box<ListNode>>) -> Vec<i32> {
-    let (mut vec, mut temp) = (vec![], &l);
-    while let Some(n) = temp {
-      vec.push(n.val);
-      temp = &n.next;
-    }
-    vec
-  }
-
-  let mut vals = number_vec(head);
+  let mut vals = nodes_to_vec(head);
   vals.reverse();
   vals.remove(n as usize - 1);
-
-  super::vec_to_nodes(vals, false)
+  vec_to_nodes(vals, true)
 }
 
 #[test]
 fn test_remove_nth_from_end() {
-  assert_eq!(remove_nth_from_end(super::num_to_nodes(1, false), 1), None);
-  assert_eq!(remove_nth_from_end(super::num_to_nodes(12345, false), 2), super::num_to_nodes(1235, false));
+  assert_eq!(remove_nth_from_end(num_to_nodes(1, false), 1), None);
+  assert_eq!(remove_nth_from_end(num_to_nodes(12345, false), 2), num_to_nodes(1235, false));
 }

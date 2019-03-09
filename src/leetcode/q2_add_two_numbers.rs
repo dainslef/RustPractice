@@ -9,7 +9,7 @@
  * Output: 7 -> 0 -> 8
  * Explanation: 342 + 465 = 807.
  */
-use super::ListNode;
+use super::*;
 
 fn add_two_numbers(l1: Option<Box<ListNode>>, l2: Option<Box<ListNode>>) -> Option<Box<ListNode>> {
   let (mut l1, mut l2) = (&l1, &l2);
@@ -44,7 +44,7 @@ fn add_two_numbers(l1: Option<Box<ListNode>>, l2: Option<Box<ListNode>>) -> Opti
         if carry {
           vec.push(carry as i32);
         }
-        break super::vec_to_nodes(vec, true);
+        break vec_to_nodes(vec, true);
       }
     }
   }
@@ -54,16 +54,16 @@ fn add_two_numbers(l1: Option<Box<ListNode>>, l2: Option<Box<ListNode>>) -> Opti
 fn test_add_two_numbers() {
   assert_eq!(
     add_two_numbers(
-      super::num_to_nodes(1234, true),
-      super::num_to_nodes(11111, true)
+      num_to_nodes(1234, true),
+      num_to_nodes(11111, true)
     ),
-    super::num_to_nodes(12345, true)
+    num_to_nodes(12345, true)
   );
   assert_eq!(
     add_two_numbers(
-      super::num_to_nodes(9, true),
-      super::num_to_nodes(999999991, true)
+      num_to_nodes(9, true),
+      num_to_nodes(999999991, true)
     ),
-    super::num_to_nodes(1000000000, true)
+    num_to_nodes(1000000000, true)
   );
 }

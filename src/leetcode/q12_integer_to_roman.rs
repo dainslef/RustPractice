@@ -46,20 +46,23 @@ fn int_to_roman(num: i32) -> String {
   use std::collections::HashMap;
 
   let (mut re, mut temp, mut values) = (num, vec![], vec![1, 10, 100, 1000]);
-  let mut char_to_value = HashMap::new();
-  char_to_value.insert(1, "I");
-  char_to_value.insert(4, "IV");
-  char_to_value.insert(5, "V");
-  char_to_value.insert(9, "IX");
-  char_to_value.insert(10, "X");
-  char_to_value.insert(40, "XL");
-  char_to_value.insert(50, "L");
-  char_to_value.insert(90, "XC");
-  char_to_value.insert(100, "C");
-  char_to_value.insert(400, "CD");
-  char_to_value.insert(500, "D");
-  char_to_value.insert(900, "CM");
-  char_to_value.insert(1000, "M");
+  let char_to_value = vec![
+    (1, "I"),
+    (4, "IV"),
+    (5, "V"),
+    (9, "IX"),
+    (10, "X"),
+    (40, "XL"),
+    (50, "L"),
+    (90, "XC"),
+    (100, "C"),
+    (400, "CD"),
+    (500, "D"),
+    (900, "CM"),
+    (1000, "M"),
+  ]
+  .into_iter()
+  .collect::<HashMap<_, _>>();
 
   while let Some(step) = values.pop() {
     while re / step > 0 {

@@ -11,22 +11,12 @@
  * Input: (7 -> 2 -> 4 -> 3) + (5 -> 6 -> 4)
  * Output: 7 -> 8 -> 0 -> 7
  */
-use super::ListNode;
+use super::*;
 
 fn add_two_numbers(l1: Option<Box<ListNode>>, l2: Option<Box<ListNode>>) -> Option<Box<ListNode>> {
-  // build the vector of the number from the number list
-  fn number_vec(l: Option<Box<ListNode>>) -> Vec<i32> {
-    let (mut vec, mut temp) = (vec![], &l);
-    while let Some(n) = temp {
-      vec.push(n.val);
-      temp = &n.next;
-    }
-    vec
-  }
-
   // get the long number vector, the short number vector and the offset
   let (v_long, v_short, offset) = {
-    let (v1, v2) = (number_vec(l1), number_vec(l2));
+    let (v1, v2) = (nodes_to_vec(l1), nodes_to_vec(l2));
     let (len1, len2) = (v1.len(), v2.len());
     if len1 > len2 {
       (v1, v2, len1 - len2)
@@ -69,20 +59,23 @@ fn add_two_numbers(l1: Option<Box<ListNode>>, l2: Option<Box<ListNode>>) -> Opti
 fn test_add_two_numbers_two() {
   assert_eq!(
     add_two_numbers(
-      super::num_to_nodes(7243, false),
-      super::num_to_nodes(564, false)
+      num_to_nodes(7243, false),
+      num_to_nodes(564, false)
     ),
-    super::num_to_nodes(7807, false)
-  );
-  assert_eq!(
-    add_two_numbers(super::num_to_nodes(999, false), super::num_to_nodes(1, false)),
-    super::num_to_nodes(1000, false)
+    num_to_nodes(7807, false)
   );
   assert_eq!(
     add_two_numbers(
-      super::num_to_nodes(2, false),
-      super::num_to_nodes(10998, false)
+      num_to_nodes(999, false),
+      num_to_nodes(1, false)
     ),
-    super::num_to_nodes(11000, false)
+    num_to_nodes(1000, false)
+  );
+  assert_eq!(
+    add_two_numbers(
+      num_to_nodes(2, false),
+      num_to_nodes(10998, false)
+    ),
+    num_to_nodes(11000, false)
   );
 }
