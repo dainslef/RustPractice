@@ -16,17 +16,20 @@ fn letter_combinations(digits: String) -> Vec<String> {
   let nums = digits.bytes().map(|v| v - 48).collect::<Vec<u8>>();
 
   use std::collections::HashMap;
-  let mut number_map = HashMap::new();
-  number_map.insert(0, vec![' ']);
-  number_map.insert(1, vec!['*']);
-  number_map.insert(2, vec!['a', 'b', 'c']);
-  number_map.insert(3, vec!['d', 'e', 'f']);
-  number_map.insert(4, vec!['g', 'h', 'i']);
-  number_map.insert(5, vec!['j', 'k', 'l']);
-  number_map.insert(6, vec!['m', 'n', 'o']);
-  number_map.insert(7, vec!['p', 'q', 'r', 's']);
-  number_map.insert(8, vec!['t', 'u', 'v']);
-  number_map.insert(9, vec!['w', 'x', 'y', 'z']);
+  let number_map = vec![
+    (0, vec![' ']),
+    (1, vec!['*']),
+    (2, vec!['a', 'b', 'c']),
+    (3, vec!['d', 'e', 'f']),
+    (4, vec!['g', 'h', 'i']),
+    (5, vec!['j', 'k', 'l']),
+    (6, vec!['m', 'n', 'o']),
+    (7, vec!['p', 'q', 'r', 's']),
+    (8, vec!['t', 'u', 'v']),
+    (9, vec!['w', 'x', 'y', 'z']),
+  ]
+  .into_iter()
+  .collect::<HashMap<_, _>>();
 
   for n in nums {
     let mut out = vec![];
@@ -49,20 +52,22 @@ fn letter_combinations(digits: String) -> Vec<String> {
 
 #[test]
 fn test_letter_combinations() {
-  assert!(super::check_vec_val_eq(
+  use super::*;
+
+  assert!(check_vec_val_eq(
     &letter_combinations("23".to_string()),
-    &super::string_vec(&["ad", "ae", "af", "bd", "be", "bf", "cd", "ce", "cf"])
+    &strs_to_vec(&["ad", "ae", "af", "bd", "be", "bf", "cd", "ce", "cf"])
   ));
-  assert!(super::check_vec_val_eq(
+  assert!(check_vec_val_eq(
     &letter_combinations("".to_string()),
-    &super::string_vec(&[])
+    &strs_to_vec(&[])
   ));
-  assert!(super::check_vec_val_eq(
+  assert!(check_vec_val_eq(
     &letter_combinations("01".to_string()),
-    &super::string_vec(&[" *"])
+    &strs_to_vec(&[" *"])
   ));
-  assert!(super::check_vec_val_eq(
+  assert!(check_vec_val_eq(
     &letter_combinations("1210".to_string()),
-    &super::string_vec(&["*a* ", "*b* ", "*c* "])
+    &strs_to_vec(&["*a* ", "*b* ", "*c* "])
   ));
 }

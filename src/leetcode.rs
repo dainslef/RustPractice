@@ -10,11 +10,13 @@ mod q127_word_ladder;
 mod q12_integer_to_roman;
 mod q15_three_sum;
 mod q16_three_sum_closest;
-mod q19_remove_nth_node_from_end_of_list;
 mod q17_letter_combinations_of_a_phone_number;
 mod q18_four_sum;
+mod q19_remove_nth_node_from_end_of_list;
 // mod q22_generate_parentheses;
 // mod q24_swap_nodes_in_pairs;
+// mod q23_merge_k_sorted_lists;
+// mod q25_reverse_nodes_in_k_group;
 mod q2_add_two_numbers;
 // mod q29_divide_two_integers;
 mod q3_length_of_longest_substring;
@@ -127,6 +129,6 @@ fn check_vec_val_eq<T: Eq + std::hash::Hash + std::fmt::Debug>(
   eq
 }
 
-fn strs_vec(str_array: &[&str]) -> Vec<String> {
+fn strs_to_vec(str_array: &[&str]) -> Vec<String> {
   str_array.iter().map(|v| v.to_string()).collect()
 }

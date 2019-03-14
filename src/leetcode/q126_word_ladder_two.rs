@@ -175,16 +175,16 @@ fn test_find_ladders() {
     find_ladders(
       "hot".to_string(),
       "dog".to_string(),
-      strs_vec(&["hot", "dog", "dot"])
+      strs_to_vec(&["hot", "dog", "dot"])
     ),
-    vec![strs_vec(&["hot", "dot", "dog"])]
+    vec![strs_to_vec(&["hot", "dot", "dog"])]
   );
 
   assert_eq!(
     find_ladders(
       "hot".to_string(),
       "dog".to_string(),
-      strs_vec(&["hot", "dog"])
+      strs_to_vec(&["hot", "dog"])
     ),
     empty
   );
@@ -193,16 +193,16 @@ fn test_find_ladders() {
     find_ladders(
       "a".to_string(),
       "c".to_string(),
-      strs_vec(&["a", "b", "c"])
+      strs_to_vec(&["a", "b", "c"])
     ),
-    vec![strs_vec(&["a", "c"])]
+    vec![strs_to_vec(&["a", "c"])]
   );
 
   assert_eq!(
     find_ladders(
       "hit".to_string(),
       "cog".to_string(),
-      strs_vec(&["hot", "dot", "dog", "lot", "log"])
+      strs_to_vec(&["hot", "dot", "dog", "lot", "log"])
     ),
     empty
   );
@@ -211,11 +211,11 @@ fn test_find_ladders() {
     &find_ladders(
       "hit".to_string(),
       "cog".to_string(),
-      strs_vec(&["hot", "dot", "dog", "lot", "log", "cog"])
+      strs_to_vec(&["hot", "dot", "dog", "lot", "log", "cog"])
     ),
     &vec![
-      strs_vec(&["hit", "hot", "lot", "log", "cog"]),
-      strs_vec(&["hit", "hot", "dot", "dog", "cog"])
+      strs_to_vec(&["hit", "hot", "lot", "log", "cog"]),
+      strs_to_vec(&["hit", "hot", "dot", "dog", "cog"])
     ]
   ));
 
@@ -223,7 +223,7 @@ fn test_find_ladders() {
     &find_ladders(
       "qa".to_string(),
       "sq".to_string(),
-      strs_vec(&[
+      strs_to_vec(&[
         "si", "go", "se", "cm", "so", "ph", "mt", "db", "mb", "sb", "kr", "ln", "tm", "le", "av",
         "sm", "ar", "ci", "ca", "br", "ti", "ba", "to", "ra", "fa", "yo", "ow", "sn", "ya", "cr",
         "po", "fe", "ho", "ma", "re", "or", "rn", "au", "ur", "rh", "sr", "tc", "lt", "lo", "as",
@@ -234,57 +234,57 @@ fn test_find_ladders() {
       ])
     ),
     &vec![
-      strs_vec(&["qa", "ba", "be", "se", "sq"]),
-      strs_vec(&["qa", "ba", "bi", "si", "sq"]),
-      strs_vec(&["qa", "ba", "br", "sr", "sq"]),
-      strs_vec(&["qa", "ca", "ci", "si", "sq"]),
-      strs_vec(&["qa", "ca", "cm", "sm", "sq"]),
-      strs_vec(&["qa", "ca", "co", "so", "sq"]),
-      strs_vec(&["qa", "ca", "cr", "sr", "sq"]),
-      strs_vec(&["qa", "fa", "fe", "se", "sq"]),
-      strs_vec(&["qa", "fa", "fm", "sm", "sq"]),
-      strs_vec(&["qa", "fa", "fr", "sr", "sq"]),
-      strs_vec(&["qa", "ga", "ge", "se", "sq"]),
-      strs_vec(&["qa", "ga", "go", "so", "sq"]),
-      strs_vec(&["qa", "ha", "he", "se", "sq"]),
-      strs_vec(&["qa", "ha", "hi", "si", "sq"]),
-      strs_vec(&["qa", "ha", "ho", "so", "sq"]),
-      strs_vec(&["qa", "la", "le", "se", "sq"]),
-      strs_vec(&["qa", "la", "li", "si", "sq"]),
-      strs_vec(&["qa", "la", "ln", "sn", "sq"]),
-      strs_vec(&["qa", "la", "lo", "so", "sq"]),
-      strs_vec(&["qa", "la", "lr", "sr", "sq"]),
-      strs_vec(&["qa", "la", "lt", "st", "sq"]),
-      strs_vec(&["qa", "ma", "mb", "sb", "sq"]),
-      strs_vec(&["qa", "ma", "me", "se", "sq"]),
-      strs_vec(&["qa", "ma", "mi", "si", "sq"]),
-      strs_vec(&["qa", "ma", "mn", "sn", "sq"]),
-      strs_vec(&["qa", "ma", "mo", "so", "sq"]),
-      strs_vec(&["qa", "ma", "mr", "sr", "sq"]),
-      strs_vec(&["qa", "ma", "mt", "st", "sq"]),
-      strs_vec(&["qa", "na", "nb", "sb", "sq"]),
-      strs_vec(&["qa", "na", "ne", "se", "sq"]),
-      strs_vec(&["qa", "na", "ni", "si", "sq"]),
-      strs_vec(&["qa", "na", "no", "so", "sq"]),
-      strs_vec(&["qa", "pa", "pb", "sb", "sq"]),
-      strs_vec(&["qa", "pa", "ph", "sh", "sq"]),
-      strs_vec(&["qa", "pa", "pi", "si", "sq"]),
-      strs_vec(&["qa", "pa", "pm", "sm", "sq"]),
-      strs_vec(&["qa", "pa", "po", "so", "sq"]),
-      strs_vec(&["qa", "pa", "pt", "st", "sq"]),
-      strs_vec(&["qa", "ra", "rb", "sb", "sq"]),
-      strs_vec(&["qa", "ra", "re", "se", "sq"]),
-      strs_vec(&["qa", "ra", "rh", "sh", "sq"]),
-      strs_vec(&["qa", "ra", "rn", "sn", "sq"]),
-      strs_vec(&["qa", "ta", "tb", "sb", "sq"]),
-      strs_vec(&["qa", "ta", "tc", "sc", "sq"]),
-      strs_vec(&["qa", "ta", "th", "sh", "sq"]),
-      strs_vec(&["qa", "ta", "ti", "si", "sq"]),
-      strs_vec(&["qa", "ta", "tm", "sm", "sq"]),
-      strs_vec(&["qa", "ta", "to", "so", "sq"]),
-      strs_vec(&["qa", "ya", "yb", "sb", "sq"]),
-      strs_vec(&["qa", "ya", "ye", "se", "sq"]),
-      strs_vec(&["qa", "ya", "yo", "so", "sq"]),
+      strs_to_vec(&["qa", "ba", "be", "se", "sq"]),
+      strs_to_vec(&["qa", "ba", "bi", "si", "sq"]),
+      strs_to_vec(&["qa", "ba", "br", "sr", "sq"]),
+      strs_to_vec(&["qa", "ca", "ci", "si", "sq"]),
+      strs_to_vec(&["qa", "ca", "cm", "sm", "sq"]),
+      strs_to_vec(&["qa", "ca", "co", "so", "sq"]),
+      strs_to_vec(&["qa", "ca", "cr", "sr", "sq"]),
+      strs_to_vec(&["qa", "fa", "fe", "se", "sq"]),
+      strs_to_vec(&["qa", "fa", "fm", "sm", "sq"]),
+      strs_to_vec(&["qa", "fa", "fr", "sr", "sq"]),
+      strs_to_vec(&["qa", "ga", "ge", "se", "sq"]),
+      strs_to_vec(&["qa", "ga", "go", "so", "sq"]),
+      strs_to_vec(&["qa", "ha", "he", "se", "sq"]),
+      strs_to_vec(&["qa", "ha", "hi", "si", "sq"]),
+      strs_to_vec(&["qa", "ha", "ho", "so", "sq"]),
+      strs_to_vec(&["qa", "la", "le", "se", "sq"]),
+      strs_to_vec(&["qa", "la", "li", "si", "sq"]),
+      strs_to_vec(&["qa", "la", "ln", "sn", "sq"]),
+      strs_to_vec(&["qa", "la", "lo", "so", "sq"]),
+      strs_to_vec(&["qa", "la", "lr", "sr", "sq"]),
+      strs_to_vec(&["qa", "la", "lt", "st", "sq"]),
+      strs_to_vec(&["qa", "ma", "mb", "sb", "sq"]),
+      strs_to_vec(&["qa", "ma", "me", "se", "sq"]),
+      strs_to_vec(&["qa", "ma", "mi", "si", "sq"]),
+      strs_to_vec(&["qa", "ma", "mn", "sn", "sq"]),
+      strs_to_vec(&["qa", "ma", "mo", "so", "sq"]),
+      strs_to_vec(&["qa", "ma", "mr", "sr", "sq"]),
+      strs_to_vec(&["qa", "ma", "mt", "st", "sq"]),
+      strs_to_vec(&["qa", "na", "nb", "sb", "sq"]),
+      strs_to_vec(&["qa", "na", "ne", "se", "sq"]),
+      strs_to_vec(&["qa", "na", "ni", "si", "sq"]),
+      strs_to_vec(&["qa", "na", "no", "so", "sq"]),
+      strs_to_vec(&["qa", "pa", "pb", "sb", "sq"]),
+      strs_to_vec(&["qa", "pa", "ph", "sh", "sq"]),
+      strs_to_vec(&["qa", "pa", "pi", "si", "sq"]),
+      strs_to_vec(&["qa", "pa", "pm", "sm", "sq"]),
+      strs_to_vec(&["qa", "pa", "po", "so", "sq"]),
+      strs_to_vec(&["qa", "pa", "pt", "st", "sq"]),
+      strs_to_vec(&["qa", "ra", "rb", "sb", "sq"]),
+      strs_to_vec(&["qa", "ra", "re", "se", "sq"]),
+      strs_to_vec(&["qa", "ra", "rh", "sh", "sq"]),
+      strs_to_vec(&["qa", "ra", "rn", "sn", "sq"]),
+      strs_to_vec(&["qa", "ta", "tb", "sb", "sq"]),
+      strs_to_vec(&["qa", "ta", "tc", "sc", "sq"]),
+      strs_to_vec(&["qa", "ta", "th", "sh", "sq"]),
+      strs_to_vec(&["qa", "ta", "ti", "si", "sq"]),
+      strs_to_vec(&["qa", "ta", "tm", "sm", "sq"]),
+      strs_to_vec(&["qa", "ta", "to", "so", "sq"]),
+      strs_to_vec(&["qa", "ya", "yb", "sb", "sq"]),
+      strs_to_vec(&["qa", "ya", "ye", "se", "sq"]),
+      strs_to_vec(&["qa", "ya", "yo", "so", "sq"]),
     ]
   ));
 
@@ -292,7 +292,7 @@ fn test_find_ladders() {
     &find_ladders(
       "cet".to_string(),
       "ism".to_string(),
-      strs_vec(&[
+      strs_to_vec(&[
         "kid", "tag", "pup", "ail", "tun", "woo", "erg", "luz", "brr", "gay", "sip", "kay", "per",
         "val", "mes", "ohs", "now", "boa", "cet", "pal", "bar", "die", "war", "hay", "eco", "pub",
         "lob", "rue", "fry", "lit", "rex", "jan", "cot", "bid", "ali", "pay", "col", "gum", "ger",
@@ -343,9 +343,9 @@ fn test_find_ladders() {
       ])
     ),
     &vec![
-      strs_vec(&["cet", "get", "gee", "gte", "ate", "ats", "its", "ito", "ibo", "ibm", "ism",]),
-      strs_vec(&["cet", "cat", "can", "ian", "inn", "ins", "its", "ito", "ibo", "ibm", "ism",]),
-      strs_vec(&["cet", "cot", "con", "ion", "inn", "ins", "its", "ito", "ibo", "ibm", "ism",])
+      strs_to_vec(&["cet", "get", "gee", "gte", "ate", "ats", "its", "ito", "ibo", "ibm", "ism",]),
+      strs_to_vec(&["cet", "cat", "can", "ian", "inn", "ins", "its", "ito", "ibo", "ibm", "ism",]),
+      strs_to_vec(&["cet", "cot", "con", "ion", "inn", "ins", "its", "ito", "ibo", "ibm", "ism",])
     ]
   ));
 }

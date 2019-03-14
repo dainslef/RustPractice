@@ -71,7 +71,7 @@ fn test_ladder_length() {
     ladder_length(
       "hot".to_string(),
       "dog".to_string(),
-      strs_vec(&["hot", "dog", "dot"])
+      strs_to_vec(&["hot", "dog", "dot"])
     ),
     3
   );
@@ -80,7 +80,7 @@ fn test_ladder_length() {
     ladder_length(
       "hot".to_string(),
       "dog".to_string(),
-      strs_vec(&["hot", "dog"])
+      strs_to_vec(&["hot", "dog"])
     ),
     0
   );
@@ -89,7 +89,7 @@ fn test_ladder_length() {
     ladder_length(
       "a".to_string(),
       "c".to_string(),
-      strs_vec(&["a", "b", "c"])
+      strs_to_vec(&["a", "b", "c"])
     ),
     2
   );
@@ -98,7 +98,7 @@ fn test_ladder_length() {
     ladder_length(
       "hit".to_string(),
       "cog".to_string(),
-      strs_vec(&["hot", "dot", "dog", "lot", "log"])
+      strs_to_vec(&["hot", "dot", "dog", "lot", "log"])
     ),
     0
   );
@@ -107,7 +107,7 @@ fn test_ladder_length() {
     ladder_length(
       "hit".to_string(),
       "cog".to_string(),
-      strs_vec(&["hot", "dot", "dog", "lot", "log", "cog"])
+      strs_to_vec(&["hot", "dot", "dog", "lot", "log", "cog"])
     ),
     5
   );
@@ -116,7 +116,7 @@ fn test_ladder_length() {
     ladder_length(
       "qa".to_string(),
       "sq".to_string(),
-      strs_vec(&[
+      strs_to_vec(&[
         "si", "go", "se", "cm", "so", "ph", "mt", "db", "mb", "sb", "kr", "ln", "tm", "le", "av",
         "sm", "ar", "ci", "ca", "br", "ti", "ba", "to", "ra", "fa", "yo", "ow", "sn", "ya", "cr",
         "po", "fe", "ho", "ma", "re", "or", "rn", "au", "ur", "rh", "sr", "tc", "lt", "lo", "as",
@@ -133,7 +133,7 @@ fn test_ladder_length() {
     ladder_length(
       "cet".to_string(),
       "ism".to_string(),
-      strs_vec(&[
+      strs_to_vec(&[
         "kid", "tag", "pup", "ail", "tun", "woo", "erg", "luz", "brr", "gay", "sip", "kay", "per",
         "val", "mes", "ohs", "now", "boa", "cet", "pal", "bar", "die", "war", "hay", "eco", "pub",
         "lob", "rue", "fry", "lit", "rex", "jan", "cot", "bid", "ali", "pay", "col", "gum", "ger",
