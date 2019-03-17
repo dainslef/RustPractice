@@ -19,6 +19,7 @@ mod q25_reverse_nodes_in_k_group;
 // mod q23_merge_k_sorted_lists;
 mod q2_add_two_numbers;
 // mod q29_divide_two_integers;
+// mod q30_substring_with_concatenation_of_all_words;
 mod q3_length_of_longest_substring;
 // mod q42_trapping_rain_water;
 mod q445_add_two_numbers_two;
@@ -43,7 +44,7 @@ impl ListNode {
   }
 }
 
-fn num_to_nodes(mut num: i32, reserve: bool) -> Option<Box<ListNode>> {
+fn num_to_nodes(mut num: i32, reverse: bool) -> Option<Box<ListNode>> {
   let mut vec = vec![];
   while num / 10 > 0 {
     vec.push(num % 10);
@@ -51,12 +52,12 @@ fn num_to_nodes(mut num: i32, reserve: bool) -> Option<Box<ListNode>> {
   }
   vec.push(num % 10);
   // the sequence of the vec is opposite of the number
-  vec_to_nodes(vec, !reserve)
+  vec_to_nodes(vec, !reverse)
 }
 
-fn vec_to_nodes(mut vec: Vec<i32>, reserve: bool) -> Option<Box<ListNode>> {
+fn vec_to_nodes(mut vec: Vec<i32>, reverse: bool) -> Option<Box<ListNode>> {
   let mut next = None;
-  if !reserve {
+  if !reverse {
     vec.reverse();
   }
   for val in vec {
@@ -73,6 +74,10 @@ fn nodes_to_vec(node: Option<Box<ListNode>>) -> Vec<i32> {
     temp = &n.next;
   }
   vec
+}
+
+fn strs_to_vec(str_array: &[&str]) -> Vec<String> {
+  str_array.iter().map(|v| v.to_string()).collect()
 }
 
 // for q15 and q18, check if the target is included in the "vec_list"
@@ -100,6 +105,7 @@ fn check_vecs_contain_target(vec_list: &Vec<Vec<i32>>, target: &Vec<i32>) -> boo
 fn check_diff_one_char(old_word: &String, new_word: &String) -> bool {
   let mut count = 0;
   let (old_u8s, new_u8s): (&[u8], &[u8]) = (old_word.as_ref(), new_word.as_ref());
+
   for i in 0..old_u8s.len() {
     if old_u8s[i] != new_u8s[i] {
       count += 1;
@@ -108,18 +114,20 @@ fn check_diff_one_char(old_word: &String, new_word: &String) -> bool {
       }
     }
   }
+
   count == 1
 }
 
-fn check_vec_val_eq<T: Eq + std::hash::Hash + std::fmt::Debug>(
-  vec1: &Vec<T>,
-  vec2: &Vec<T>,
-) -> bool {
+fn check_element_eq<T>(v1: T, v2: T) -> bool
+where
+  T: IntoIterator,
+  T::Item: Eq + std::hash::Hash + std::fmt::Debug,
+{
   use std::collections::HashSet;
   use std::iter::FromIterator;
 
-  let set1: HashSet<&T> = HashSet::from_iter(vec1);
-  let set2 = HashSet::from_iter(vec2);
+  let set1: HashSet<T::Item> = HashSet::from_iter(v1);
+  let set2 = HashSet::from_iter(v2);
 
   let eq = set1 == set2;
   if !eq {
@@ -127,8 +135,4 @@ fn check_vec_val_eq<T: Eq + std::hash::Hash + std::fmt::Debug>(
   }
 
   eq
-}
-
-fn strs_to_vec(str_array: &[&str]) -> Vec<String> {
-  str_array.iter().map(|v| v.to_string()).collect()
 }

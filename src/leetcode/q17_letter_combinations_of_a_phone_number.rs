@@ -12,11 +12,12 @@
  */
 
 fn letter_combinations(digits: String) -> Vec<String> {
+  use std::collections::HashMap;
+
   let mut temp: Vec<String> = vec![];
   let nums = digits.bytes().map(|v| v - 48).collect::<Vec<u8>>();
 
-  use std::collections::HashMap;
-  let number_map = vec![
+  let number_to_chars = vec![
     (0, vec![' ']),
     (1, vec!['*']),
     (2, vec!['a', 'b', 'c']),
@@ -33,7 +34,7 @@ fn letter_combinations(digits: String) -> Vec<String> {
 
   for n in nums {
     let mut out = vec![];
-    for c in &number_map[&n] {
+    for c in &number_to_chars[&n] {
       if temp.is_empty() {
         out.push(c.to_string());
       } else {
@@ -54,19 +55,19 @@ fn letter_combinations(digits: String) -> Vec<String> {
 fn test_letter_combinations() {
   use super::*;
 
-  assert!(check_vec_val_eq(
+  assert!(check_element_eq(
     &letter_combinations("23".to_string()),
     &strs_to_vec(&["ad", "ae", "af", "bd", "be", "bf", "cd", "ce", "cf"])
   ));
-  assert!(check_vec_val_eq(
+  assert!(check_element_eq(
     &letter_combinations("".to_string()),
     &strs_to_vec(&[])
   ));
-  assert!(check_vec_val_eq(
+  assert!(check_element_eq(
     &letter_combinations("01".to_string()),
     &strs_to_vec(&[" *"])
   ));
-  assert!(check_vec_val_eq(
+  assert!(check_element_eq(
     &letter_combinations("1210".to_string()),
     &strs_to_vec(&["*a* ", "*b* ", "*c* "])
   ));

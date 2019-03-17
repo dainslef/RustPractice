@@ -20,7 +20,6 @@
 fn four_sum(nums: Vec<i32>, target: i32) -> Vec<Vec<i32>> {
   let (mut nums, mut out_nums) = (nums, vec![]);
   let length = nums.len();
-
   nums.sort();
 
   if length >= 4 {

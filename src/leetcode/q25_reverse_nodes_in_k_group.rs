@@ -19,22 +19,26 @@
 use super::*;
 
 fn reverse_k_group(head: Option<Box<ListNode>>, k: i32) -> Option<Box<ListNode>> {
-  let (mut temp, nodes) = (vec![], nodes_to_vec(head));
+  let (mut temp, mut merage_size, nodes) = (vec![], 0, nodes_to_vec(head));
   let (k, count) = (k as usize, nodes.len());
 
-  for end in (k..=nodes.len()).step_by(k) {
-    let o: Option<Vec<i32>> = nodes.get((end - k)..end).map(|v| v.into());
-    if let Some(mut v) = o {
-      v.reverse();
+  let mut merage = |range: std::ops::Range<usize>, reverse| {
+    let merage_val: Option<Vec<i32>> = nodes.get(range).map(|v| v.into());
+    if let Some(mut v) = merage_val {
+      if reverse {
+        v.reverse();
+      }
       temp.append(&mut v);
     }
+  };
+
+  for i in (k..=count).step_by(k) {
+    merage_size = i;
+    merage((i - k)..i, true);
   }
 
-  if temp.len() < count {
-    let o: Option<Vec<i32>> = nodes.get(temp.len()..count).map(|v| v.into());
-    if let Some(mut v) = o {
-      temp.append(&mut v);
-    }
+  if merage_size < count {
+    merage(merage_size..count, false);
   }
 
   vec_to_nodes(temp, false)

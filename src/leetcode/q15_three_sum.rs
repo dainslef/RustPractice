@@ -102,15 +102,16 @@ fn three_sum(nums: Vec<i32>) -> Vec<Vec<i32>> {
 }
 
 fn function_test(f: impl Fn(Vec<i32>) -> Vec<Vec<i32>>) {
-  let empty: Vec<Vec<i32>> = vec![];
+  use super::check_element_eq;
 
+  let empty: Vec<Vec<i32>> = vec![];
   assert_eq!(f(vec![]), empty);
   assert_eq!(f(vec![0, 0, 0]), vec![[0, 0, 0]]);
-  assert!(super::check_vec_val_eq(
+  assert!(check_element_eq(
     &f(vec![-1, 0, 1, 2, -1, -4]),
     &vec![vec![-1, -1, 2], vec![-1, 0, 1]]
   ));
-  assert!(super::check_vec_val_eq(
+  assert!(check_element_eq(
     &f(vec![-4, -2, 1, -5, -4, -4, 4, -2, 0, 4, 0, -2, 3, 1, -5, 0]),
     &vec![
       vec![-5, 1, 4],

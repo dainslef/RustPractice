@@ -207,7 +207,7 @@ fn test_find_ladders() {
     empty
   );
 
-  assert!(check_vec_val_eq(
+  assert!(check_element_eq(
     &find_ladders(
       "hit".to_string(),
       "cog".to_string(),
@@ -219,7 +219,7 @@ fn test_find_ladders() {
     ]
   ));
 
-  assert!(check_vec_val_eq(
+  assert!(check_element_eq(
     &find_ladders(
       "qa".to_string(),
       "sq".to_string(),
@@ -288,7 +288,7 @@ fn test_find_ladders() {
     ]
   ));
 
-  assert!(check_vec_val_eq(
+  assert!(check_element_eq(
     &find_ladders(
       "cet".to_string(),
       "ism".to_string(),
