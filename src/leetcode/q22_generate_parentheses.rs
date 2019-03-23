@@ -18,23 +18,26 @@ fn generate_parenthesis(n: i32) -> Vec<String> {
   for i in 0..2 * n {
     let mut next = vec![];
     for v in &temp {
+      let mut add_parentheses = |is_left| {
+        let mut new_item = v.clone();
+        let (c, index) = if is_left {
+          ('(', &mut new_item.1)
+        } else {
+          (')', &mut new_item.2)
+        };
+        new_item.0.push(c);
+        *index += 1;
+        next.push(new_item);
+      };
+
       let (left, right) = (v.1, v.2);
       if left > right {
         if left < n || i < n {
-          let mut val = v.clone();
-          val.0.push('(');
-          val.1 += 1;
-          next.push(val);
+          add_parentheses(true);
         }
-        let mut val = v.clone();
-        val.0.push(')');
-        val.2 += 1;
-        next.push(val);
+        add_parentheses(false);
       } else {
-        let mut val = v.clone();
-        val.0.push('(');
-        val.1 += 1;
-        next.push(val);
+        add_parentheses(true);
       }
     }
     temp = next;

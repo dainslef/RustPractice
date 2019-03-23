@@ -37,7 +37,7 @@ fn three_sum_normal(nums: Vec<i32>) -> Vec<Vec<i32>> {
   out_nums
 }
 
-fn three_sum_2(nums: Vec<i32>) -> Vec<Vec<i32>> {
+fn three_sum_normal_2(nums: Vec<i32>) -> Vec<Vec<i32>> {
   let mut out_nums = vec![];
 
   if nums.len() >= 3 {
@@ -101,19 +101,18 @@ fn three_sum(nums: Vec<i32>) -> Vec<Vec<i32>> {
   out_nums
 }
 
-fn function_test(f: impl Fn(Vec<i32>) -> Vec<Vec<i32>>) {
-  use super::check_element_eq;
-
+#[test]
+fn test_three_sum() {
   let empty: Vec<Vec<i32>> = vec![];
-  assert_eq!(f(vec![]), empty);
-  assert_eq!(f(vec![0, 0, 0]), vec![[0, 0, 0]]);
-  assert!(check_element_eq(
-    &f(vec![-1, 0, 1, 2, -1, -4]),
-    &vec![vec![-1, -1, 2], vec![-1, 0, 1]]
-  ));
-  assert!(check_element_eq(
-    &f(vec![-4, -2, 1, -5, -4, -4, 4, -2, 0, 4, 0, -2, 3, 1, -5, 0]),
-    &vec![
+  assert_eq!(three_sum(vec![]), empty);
+  assert_eq!(three_sum(vec![0, 0, 0]), vec![[0, 0, 0]]);
+  assert_eq!(
+    three_sum(vec![-1, 0, 1, 2, -1, -4]),
+    vec![vec![-1, -1, 2], vec![-1, 0, 1]]
+  );
+  assert_eq!(
+    three_sum(vec![-4, -2, 1, -5, -4, -4, 4, -2, 0, 4, 0, -2, 3, 1, -5, 0]),
+    vec![
       vec![-5, 1, 4],
       vec![-4, 0, 4],
       vec![-4, 1, 3],
@@ -121,14 +120,7 @@ fn function_test(f: impl Fn(Vec<i32>) -> Vec<Vec<i32>>) {
       vec![-2, 1, 1],
       vec![0, 0, 0]
     ]
-  ));
-}
-
-#[test]
-fn test_three_sum() {
-  function_test(three_sum);
-  function_test(three_sum_normal);
-  function_test(three_sum_2);
+  );
 }
 
 #[test]
