@@ -16,7 +16,6 @@ fn letter_combinations(digits: String) -> Vec<String> {
 
   let mut temp: Vec<String> = vec![];
   let nums = digits.bytes().map(|v| v - 48).collect::<Vec<u8>>();
-
   let number_to_chars = vec![
     (0, vec![' ']),
     (1, vec!['*']),
