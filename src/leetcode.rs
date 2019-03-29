@@ -23,6 +23,7 @@ mod q2_add_two_numbers;
 mod q3_length_of_longest_substring;
 // mod q42_trapping_rain_water;
 // mod q31_next_permutation;
+// mod q46_permutations;
 mod q445_add_two_numbers_two;
 mod q454_four_sum_two;
 mod q4_find_median_sorted_arrays;
@@ -122,18 +123,20 @@ fn check_diff_one_char(old_word: &String, new_word: &String) -> bool {
 
 fn check_element_eq<T>(v1: T, v2: T) -> bool
 where
-  T: IntoIterator,
+  T: ExactSizeIterator,
   T::Item: Eq + std::hash::Hash + std::fmt::Debug,
 {
   use std::collections::HashSet;
   use std::iter::FromIterator;
 
+  let (len1, len2) = (v1.len(), v2.len());
   let set1: HashSet<T::Item> = HashSet::from_iter(v1);
   let set2 = HashSet::from_iter(v2);
 
-  let eq = set1 == set2;
+  let eq = set1 == set2 && len1 == len2;
   if !eq {
-    dbg!((&set1, &set2));
+    println!("Elements are different!\nLength 1: {}, Length 2: {}", len1, len2);
+    println!("Content 1: {:?}\nContent 2: {:?}", set1, set2);
   }
 
   eq

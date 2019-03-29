@@ -15,7 +15,7 @@ use super::*;
 
 fn add_two_numbers(l1: Option<Box<ListNode>>, l2: Option<Box<ListNode>>) -> Option<Box<ListNode>> {
   // get the long number vector, the short number vector and the offset
-  let (v_long, v_short, offset) = {
+  let (long, short, offset) = {
     let (v1, v2) = (nodes_to_vec(l1), nodes_to_vec(l2));
     let (len1, len2) = (v1.len(), v2.len());
     if len1 > len2 {
@@ -26,12 +26,12 @@ fn add_two_numbers(l1: Option<Box<ListNode>>, l2: Option<Box<ListNode>>) -> Opti
   };
   let (mut next, mut carry) = (None, false);
 
-  for i in (0..v_long.len()).rev() {
+  for i in (0..long.len()).rev() {
     // check the offset, and calculate the sum of the values of the nodes at the same position in two lists
     let mut val = if i >= offset {
-      v_long[i] + v_short[i - offset]
+      long[i] + short[i - offset]
     } else {
-      v_long[i]
+      long[i]
     } + carry as i32;
 
     // check if the value needs to be carried

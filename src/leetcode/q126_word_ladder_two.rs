@@ -208,19 +208,21 @@ fn test_find_ladders() {
   );
 
   assert!(check_element_eq(
-    &find_ladders(
+    find_ladders(
       "hit".to_string(),
       "cog".to_string(),
       strs_to_vec(&["hot", "dot", "dog", "lot", "log", "cog"])
-    ),
-    &vec![
+    )
+    .iter(),
+    vec![
       strs_to_vec(&["hit", "hot", "lot", "log", "cog"]),
       strs_to_vec(&["hit", "hot", "dot", "dog", "cog"])
     ]
+    .iter()
   ));
 
   assert!(check_element_eq(
-    &find_ladders(
+    find_ladders(
       "qa".to_string(),
       "sq".to_string(),
       strs_to_vec(&[
@@ -232,8 +234,9 @@ fn test_find_ladders() {
         "er", "sc", "ne", "mn", "mi", "am", "ex", "pt", "io", "be", "fm", "ta", "tb", "ni", "mr",
         "pa", "he", "lr", "sq", "ye"
       ])
-    ),
-    &vec![
+    )
+    .iter(),
+    vec![
       strs_to_vec(&["qa", "ba", "be", "se", "sq"]),
       strs_to_vec(&["qa", "ba", "bi", "si", "sq"]),
       strs_to_vec(&["qa", "ba", "br", "sr", "sq"]),
@@ -286,10 +289,11 @@ fn test_find_ladders() {
       strs_to_vec(&["qa", "ya", "ye", "se", "sq"]),
       strs_to_vec(&["qa", "ya", "yo", "so", "sq"]),
     ]
+    .iter()
   ));
 
   assert!(check_element_eq(
-    &find_ladders(
+    find_ladders(
       "cet".to_string(),
       "ism".to_string(),
       strs_to_vec(&[
@@ -341,11 +345,13 @@ fn test_find_ladders() {
         "pox", "vow", "got", "meg", "zoe", "amp", "ale", "bud", "gee", "pin", "dun", "pat", "ten",
         "mob"
       ])
-    ),
-    &vec![
+    )
+    .iter(),
+    vec![
       strs_to_vec(&["cet", "get", "gee", "gte", "ate", "ats", "its", "ito", "ibo", "ibm", "ism",]),
       strs_to_vec(&["cet", "cat", "can", "ian", "inn", "ins", "its", "ito", "ibo", "ibm", "ism",]),
       strs_to_vec(&["cet", "cot", "con", "ion", "inn", "ins", "its", "ito", "ibo", "ibm", "ism",])
     ]
+    .iter()
   ));
 }

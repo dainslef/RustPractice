@@ -55,19 +55,19 @@ fn test_letter_combinations() {
   use super::*;
 
   assert!(check_element_eq(
-    &letter_combinations("23".to_string()),
-    &strs_to_vec(&["ad", "ae", "af", "bd", "be", "bf", "cd", "ce", "cf"])
+    letter_combinations("23".to_string()).iter(),
+    strs_to_vec(&["ad", "ae", "af", "bd", "be", "bf", "cd", "ce", "cf"]).iter()
   ));
   assert!(check_element_eq(
-    &letter_combinations("".to_string()),
-    &strs_to_vec(&[])
+    letter_combinations("".to_string()).iter(),
+    strs_to_vec(&[]).iter()
   ));
   assert!(check_element_eq(
-    &letter_combinations("01".to_string()),
-    &strs_to_vec(&[" *"])
+    letter_combinations("01".to_string()).iter(),
+    strs_to_vec(&[" *"]).iter()
   ));
   assert!(check_element_eq(
-    &letter_combinations("1210".to_string()),
-    &strs_to_vec(&["*a* ", "*b* ", "*c* "])
+    letter_combinations("1210".to_string()).iter(),
+    strs_to_vec(&["*a* ", "*b* ", "*c* "]).iter()
   ));
 }
