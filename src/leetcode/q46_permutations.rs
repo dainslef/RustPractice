@@ -16,15 +16,14 @@
  */
 
 // use recursion
-fn permute(nums: Vec<i32>) -> Vec<Vec<i32>> {
+fn permute_recursion(nums: Vec<i32>) -> Vec<Vec<i32>> {
   let mut temp = vec![];
 
   fn deal_nums(input: Vec<i32>, output: Vec<i32>, result: &mut Vec<Vec<i32>>) {
     // find all possible numbers for next index
     for i in 0..input.len() {
       let (mut next_input, mut next_output) = (input.clone(), output.clone());
-      next_input.remove(i);
-      next_output.push(input[i]);
+      next_output.push(next_input.remove(i));
       deal_nums(next_input, next_output, result);
     }
     // check input vector, if all numbers are added, push the answer to the result
@@ -36,6 +35,26 @@ fn permute(nums: Vec<i32>) -> Vec<Vec<i32>> {
   deal_nums(nums, vec![], &mut temp);
 
   temp
+}
+
+// use loop
+fn permute(nums: Vec<i32>) -> Vec<Vec<i32>> {
+  let length = nums.len();
+  let mut input_to_output = vec![(nums, vec![])];
+
+  for _ in 0..length {
+    let mut next_input_to_output = vec![];
+    for (input, output) in &input_to_output {
+      for i in 0..input.len() {
+        let (mut next_input, mut next_output) = (input.clone(), output.clone());
+        next_output.push(next_input.remove(i));
+        next_input_to_output.push((next_input, next_output));
+      }
+    }
+    input_to_output = next_input_to_output;
+  }
+
+  input_to_output.into_iter().map(|(_, v)| v).collect()
 }
 
 #[test]
