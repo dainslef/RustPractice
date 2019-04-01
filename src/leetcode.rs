@@ -5,7 +5,7 @@
  * warnning message like "warning: function is never used: `...`".
  */
 mod q11_container_with_most_water;
-mod q126_word_ladder_two;
+mod q126_word_ladder_ii;
 mod q127_word_ladder;
 mod q12_integer_to_roman;
 mod q15_three_sum;
@@ -23,11 +23,13 @@ mod q2_add_two_numbers;
 mod q3_length_of_longest_substring;
 // mod q42_trapping_rain_water;
 // mod q31_next_permutation;
-mod q46_permutations;
 mod q445_add_two_numbers_two;
 mod q454_four_sum_two;
+mod q46_permutations;
+// mod q47_permutations_ii;
 mod q4_find_median_sorted_arrays;
 mod q5_longest_palindrome;
+// mod q60_permutation_sequence;
 mod q6_zipzag_conversion;
 mod q76_minimum_window_substring;
 mod q7_reverse_integer;
@@ -135,7 +137,10 @@ where
 
   let eq = set1 == set2 && len1 == len2;
   if !eq {
-    println!("Elements are different!\nLength 1: {}, Length 2: {}", len1, len2);
+    println!(
+      "Elements are different!\nLength 1: {}, Length 2: {}",
+      len1, len2
+    );
     println!("Content 1: {:?}\nContent 2: {:?}", set1, set2);
   }
 

@@ -40,45 +40,44 @@ fn find_ladders_dfs(
   end_word: String,
   word_list: Vec<String>,
 ) -> Vec<Vec<String>> {
-  let mut temp: Vec<Vec<String>> = vec![];
-  let mut min_size = 0;
+  let (mut temp, mut min_size) = (vec![], 0);
 
   // use recursion to find out all path
   fn dfs(
-    current: &String,
-    input_list: Vec<String>,
-    mut output_list: Vec<String>,
+    current_word: &String,
+    input: Vec<String>,
+    mut output: Vec<String>,
     end_word: &String,
     temp: &mut Vec<Vec<String>>,
     min_size: &mut usize,
   ) {
     // check if find out the target path
-    if check_diff_one_char(&current, end_word) {
-      output_list.push(end_word.clone());
-      let size = output_list.len();
+    if check_diff_one_char(&current_word, end_word) {
+      output.push(end_word.clone());
+      let size = output.len();
       // check and update the path size
       if *min_size == 0 || size < *min_size {
         *min_size = size;
       }
       // add the path to the temp
-      temp.push(output_list);
+      temp.push(output);
       // find the target, finish this recursion
       return;
     }
-    for i in 0..input_list.len() {
+    for i in 0..input.len() {
       // get the next word
-      let next = &input_list[i];
+      let next_word = &input[i];
       // check the next word if match the condition
-      if check_diff_one_char(&current, &next) {
+      if check_diff_one_char(&current_word, &next_word) {
         // copy and update the input/ouput list
-        let (mut new_output_list, mut new_input_list) = (output_list.clone(), input_list.clone());
-        new_output_list.push(next.clone());
-        new_input_list.remove(i);
+        let (mut next_output, mut next_input) = (output.clone(), input.clone());
+        next_output.push(next_word.clone());
+        next_input.remove(i);
         // recursively check the next word until find all the paths
         dfs(
-          next,
-          new_input_list,
-          new_output_list,
+          next_word,
+          next_input,
+          next_output,
           end_word,
           temp,
           min_size,
@@ -110,7 +109,7 @@ fn find_ladders(begin_word: String, end_word: String, word_list: Vec<String>) ->
   use std::iter::FromIterator;
 
   // save all of the target paths which match the condition
-  let mut result: Vec<Vec<String>> = vec![];
+  let mut results: Vec<Vec<String>> = vec![];
   // save the words which last level has used
   let mut currents: HashSet<String> = HashSet::new();
   // use hash set to save the all input word list, check if the word in the list under the time complexity of O(1)
@@ -137,22 +136,22 @@ fn find_ladders(begin_word: String, end_word: String, word_list: Vec<String>) ->
           break;
         }
       }
-      if let Some(current) = path.last() {
-        let bytes = current.clone().into_bytes();
+      if let Some(current_word) = path.last() {
+        let bytes = current_word.clone().into_bytes();
         for i in 0..bytes.len() {
           // 'a' .. 'z' ASCII number
           for u in 97_u8..=122_u8 {
             // change a character in the word and check if the new word is contained by the word set
             let mut bytes = bytes.clone();
             bytes[i] = u;
-            if let Ok(next) = String::from_utf8(bytes) {
-              if word_set.contains(&next) {
-                currents.insert(next.clone());
+            if let Ok(next_word) = String::from_utf8(bytes) {
+              if word_set.contains(&next_word) {
+                currents.insert(next_word.clone());
                 let mut new_path = path.clone();
-                new_path.push(next.clone());
-                if next == end_word {
+                new_path.push(next_word.clone());
+                if next_word == end_word {
                   min_level = new_path.len();
-                  result.push(new_path);
+                  results.push(new_path);
                 } else {
                   paths.push_back(new_path);
                 }
@@ -164,7 +163,7 @@ fn find_ladders(begin_word: String, end_word: String, word_list: Vec<String>) ->
     }
   }
 
-  result
+  results
 }
 
 #[test]

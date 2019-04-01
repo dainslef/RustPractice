@@ -40,7 +40,7 @@ fn convert(s: String, num_rows: i32) -> String {
       }
 
       use std::iter::FromIterator;
-      String::from_iter(zipzag_rows.iter().flat_map(|v| v).collect::<Vec<&char>>())
+      String::from_iter(zipzag_rows.into_iter().flat_map(|v| v).collect::<Vec<char>>())
     }
     _ => s,
   }

@@ -2,7 +2,7 @@
 Repo for my rust language practice code.
 
 ## LeetCode
-Solutions for `LeetCode` problems.
+Solutions for [`LeetCode`](https://leetcode.com/problems) problems.
 
 - [`2. Add Two Numbers`](src/leetcode/q2_add_two_numbers.rs)
 - [`3. Length of Longest Substring`](src/leetcode/q3_length_of_longest_substring.rs)

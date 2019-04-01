@@ -15,6 +15,7 @@
  *   [-1, -1, 2]
  * ]
  */
+use super::*;
 
 fn three_sum_normal(nums: Vec<i32>) -> Vec<Vec<i32>> {
   let mut out_nums = vec![];
@@ -26,7 +27,7 @@ fn three_sum_normal(nums: Vec<i32>) -> Vec<Vec<i32>> {
         for i_c in i_b + 1..nums.len() {
           let (a, b, c) = (nums[i_a], nums[i_b], nums[i_c]);
           let l = vec![a, b, c];
-          if a + b + c == 0 && !super::check_vecs_contain_target(&out_nums, &l) {
+          if a + b + c == 0 && !check_vecs_contain_target(&out_nums, &l) {
             out_nums.push(l);
           }
         }
@@ -52,7 +53,7 @@ fn three_sum_normal_2(nums: Vec<i32>) -> Vec<Vec<i32>> {
             let a = temp[i_a];
             let b = temp[i_b];
             let l = vec![a, b, c];
-            if a + b + c == 0 && !super::check_vecs_contain_target(&out_nums, &l) {
+            if a + b + c == 0 && !check_vecs_contain_target(&out_nums, &l) {
               out_nums.push(l);
             }
           }
