@@ -16,7 +16,7 @@ mod q19_remove_nth_node_from_end_of_list;
 mod q22_generate_parentheses;
 mod q25_reverse_nodes_in_k_group;
 // mod q24_swap_nodes_in_pairs;
-// mod q23_merge_k_sorted_lists;
+mod q23_merge_k_sorted_lists;
 mod q2_add_two_numbers;
 // mod q29_divide_two_integers;
 // mod q30_substring_with_concatenation_of_all_words;
