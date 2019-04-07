@@ -14,6 +14,7 @@
 use super::*;
 
 fn add_two_numbers(l1: Option<Box<ListNode>>, l2: Option<Box<ListNode>>) -> Option<Box<ListNode>> {
+  let (mut next, mut carry) = (None, false);
   // get the long number vector, the short number vector and the offset
   let (long, short, offset) = {
     let (v1, v2) = (nodes_to_vec(l1), nodes_to_vec(l2));
@@ -24,7 +25,6 @@ fn add_two_numbers(l1: Option<Box<ListNode>>, l2: Option<Box<ListNode>>) -> Opti
       (v2, v1, len2 - len1)
     }
   };
-  let (mut next, mut carry) = (None, false);
 
   for i in (0..long.len()).rev() {
     // check the offset, and calculate the sum of the values of the nodes at the same position in two lists
@@ -58,24 +58,15 @@ fn add_two_numbers(l1: Option<Box<ListNode>>, l2: Option<Box<ListNode>>) -> Opti
 #[test]
 fn test_add_two_numbers_two() {
   assert_eq!(
-    add_two_numbers(
-      num_to_nodes(7243, false),
-      num_to_nodes(564, false)
-    ),
+    add_two_numbers(num_to_nodes(7243, false), num_to_nodes(564, false)),
     num_to_nodes(7807, false)
   );
   assert_eq!(
-    add_two_numbers(
-      num_to_nodes(999, false),
-      num_to_nodes(1, false)
-    ),
+    add_two_numbers(num_to_nodes(999, false), num_to_nodes(1, false)),
     num_to_nodes(1000, false)
   );
   assert_eq!(
-    add_two_numbers(
-      num_to_nodes(2, false),
-      num_to_nodes(10998, false)
-    ),
+    add_two_numbers(num_to_nodes(2, false), num_to_nodes(10998, false)),
     num_to_nodes(11000, false)
   );
 }

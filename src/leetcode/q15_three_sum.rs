@@ -74,22 +74,20 @@ fn three_sum(nums: Vec<i32>) -> Vec<Vec<i32>> {
 
   if length >= 3 {
     for i in 0..length - 2 {
-      let a = nums[i];
-      let (mut start, mut end) = (i + 1, length - 1);
-
+      let (a, mut start, mut end) = (nums[i], i + 1, length - 1);
       while start < end {
         let (b, c) = (nums[start], nums[end]);
-
-        // If the sum of b and c is largger than -a,
-        // need to get a smaller element (end -= 1).
-        // Otherwise, get a bigger element (end += 1).
+        /* If the sum of b and c is largger than -a,
+         * need to get a smaller element (end -= 1).
+         * Otherwise, get a bigger element (end += 1).
+         */
         match a + b + c {
           sum if sum < 0 => start += 1,
           sum if sum > 0 => end -= 1,
           _ => {
-            let l = vec![a, b, c];
-            if !super::check_vecs_contain_target(&out_nums, &l) {
-              out_nums.push(l);
+            let new = vec![a, b, c];
+            if !check_vecs_contain_target(&out_nums, &new) {
+              out_nums.push(new);
             }
             start += 1;
             end -= 1;
@@ -106,20 +104,20 @@ fn three_sum(nums: Vec<i32>) -> Vec<Vec<i32>> {
 fn test_three_sum() {
   let empty: Vec<Vec<i32>> = vec![];
   assert_eq!(three_sum(vec![]), empty);
-  assert_eq!(three_sum(vec![0, 0, 0]), vec![[0, 0, 0]]);
+  assert_eq!(three_sum(vec![0, 0, 0]), [[0, 0, 0]]);
   assert_eq!(
     three_sum(vec![-1, 0, 1, 2, -1, -4]),
-    vec![vec![-1, -1, 2], vec![-1, 0, 1]]
+    [[-1, -1, 2], [-1, 0, 1]]
   );
   assert_eq!(
     three_sum(vec![-4, -2, 1, -5, -4, -4, 4, -2, 0, 4, 0, -2, 3, 1, -5, 0]),
-    vec![
-      vec![-5, 1, 4],
-      vec![-4, 0, 4],
-      vec![-4, 1, 3],
-      vec![-2, -2, 4],
-      vec![-2, 1, 1],
-      vec![0, 0, 0]
+    [
+      [-5, 1, 4],
+      [-4, 0, 4],
+      [-4, 1, 3],
+      [-2, -2, 4],
+      [-2, 1, 1],
+      [0, 0, 0]
     ]
   );
 }

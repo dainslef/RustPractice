@@ -75,7 +75,6 @@ fn test_ladder_length() {
     ),
     3
   );
-
   assert_eq!(
     ladder_length(
       "hot".to_string(),
@@ -84,7 +83,6 @@ fn test_ladder_length() {
     ),
     0
   );
-
   assert_eq!(
     ladder_length(
       "a".to_string(),
@@ -93,7 +91,6 @@ fn test_ladder_length() {
     ),
     2
   );
-
   assert_eq!(
     ladder_length(
       "hit".to_string(),
@@ -102,7 +99,6 @@ fn test_ladder_length() {
     ),
     0
   );
-
   assert_eq!(
     ladder_length(
       "hit".to_string(),
@@ -111,7 +107,6 @@ fn test_ladder_length() {
     ),
     5
   );
-
   assert_eq!(
     ladder_length(
       "qa".to_string(),
@@ -128,7 +123,6 @@ fn test_ladder_length() {
     ),
     5
   );
-
   assert_eq!(
     ladder_length(
       "cet".to_string(),

@@ -48,7 +48,6 @@ fn my_atoi(s: String) -> i32 {
   // split context by space, get the first substring
   if let Some(num_str) = s.split_whitespace().next() {
     let mut not_zero = false;
-
     for (i, c) in num_str.char_indices() {
       if i == 0 && (c == '+' || c == '-') {
         // check the first char
@@ -71,7 +70,6 @@ fn my_atoi(s: String) -> i32 {
     let num = nums[nums.len() - i - 1];
     let checked_pow = || {
       let (mut exp, mut base, mut acc) = (i, 10, 1_i32);
-
       while exp > 1 {
         if (exp & 1) == 1 {
           acc = acc.checked_mul(base)?;
@@ -79,11 +77,9 @@ fn my_atoi(s: String) -> i32 {
         exp /= 2;
         base = base.checked_mul(base)?;
       }
-
       if exp == 1 {
         acc = acc.checked_mul(base)?;
       }
-
       Some(acc)
     };
 

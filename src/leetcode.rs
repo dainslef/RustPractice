@@ -14,9 +14,9 @@ mod q17_letter_combinations_of_a_phone_number;
 mod q18_four_sum;
 mod q19_remove_nth_node_from_end_of_list;
 mod q22_generate_parentheses;
-mod q25_reverse_nodes_in_k_group;
-mod q24_swap_nodes_in_pairs;
 mod q23_merge_k_sorted_lists;
+mod q24_swap_nodes_in_pairs;
+mod q25_reverse_nodes_in_k_group;
 mod q2_add_two_numbers;
 // mod q29_divide_two_integers;
 // mod q30_substring_with_concatenation_of_all_words;
@@ -125,6 +125,7 @@ fn check_diff_one_char(old_word: &String, new_word: &String) -> bool {
   count == 1
 }
 
+// check element content equivalence without element order
 fn check_element_eq<T>(v1: T, v2: T) -> bool
 where
   T: ExactSizeIterator,
