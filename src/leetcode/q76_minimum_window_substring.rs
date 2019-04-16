@@ -59,7 +59,7 @@ fn min_window(s: String, t: String) -> String {
           char_indexes.get_mut(&new_first.0).map(|v| *v -= 1);
           new_first = *char_sequence.front().unwrap();
         }
-        if (last.1 - new_first.1) < (range.unwrap().1 - range.unwrap().0) {
+        if last.1 - new_first.1 < range.unwrap().1 - range.unwrap().0 {
           range = Some((new_first.1, last.1));
         }
       }
