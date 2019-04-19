@@ -12,7 +12,7 @@
 use super::*;
 
 fn swap_pairs(head: Option<Box<ListNode>>) -> Option<Box<ListNode>> {
-  let mut vals = nodes_to_vec(head);
+  let mut vals = nodes_to_num_vec(head);
 
   for i in (1..vals.len()).step_by(2) {
     let temp = vals[i];
@@ -20,7 +20,7 @@ fn swap_pairs(head: Option<Box<ListNode>>) -> Option<Box<ListNode>> {
     vals[i - 1] = temp;
   }
 
-  vec_to_nodes(vals, false)
+  num_vec_to_nodes(vals, false)
 }
 
 #[test]

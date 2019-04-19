@@ -4,6 +4,7 @@
  * Functions used by tests but not used by other modules will not receive
  * warnning message like "warning: function is never used: `...`".
  */
+// mod q10_regular_expression_matching;
 mod q11_container_with_most_water;
 mod q126_word_ladder_ii;
 mod q127_word_ladder;
@@ -32,6 +33,8 @@ mod q46_permutations;
 mod q4_find_median_sorted_arrays;
 mod q5_longest_palindrome;
 // mod q60_permutation_sequence;
+mod q143_recoder_list;
+// mod q32_longest_valid_parentheses;
 mod q6_zipzag_conversion;
 mod q76_minimum_window_substring;
 mod q7_reverse_integer;
@@ -60,10 +63,10 @@ fn num_to_nodes(mut num: i32, reverse: bool) -> Option<Box<ListNode>> {
   }
   vec.push(num % 10);
   // the sequence of the vec is opposite of the number
-  vec_to_nodes(vec, !reverse)
+  num_vec_to_nodes(vec, !reverse)
 }
 
-fn vec_to_nodes(mut vec: Vec<i32>, reverse: bool) -> Option<Box<ListNode>> {
+fn num_vec_to_nodes(mut vec: Vec<i32>, reverse: bool) -> Option<Box<ListNode>> {
   let mut next = None;
   if !reverse {
     vec.reverse();
@@ -75,11 +78,22 @@ fn vec_to_nodes(mut vec: Vec<i32>, reverse: bool) -> Option<Box<ListNode>> {
 }
 
 // build the vector of the number from the number list
-fn nodes_to_vec(node: Option<Box<ListNode>>) -> Vec<i32> {
+fn nodes_to_num_vec(node: Option<Box<ListNode>>) -> Vec<i32> {
   let (mut vec, mut temp) = (vec![], &node);
   while let Some(n) = temp {
     vec.push(n.val);
     temp = &n.next;
+  }
+  vec
+}
+
+// build the vector of the node from the node list
+fn nodes_to_node_vec(node: Option<Box<ListNode>>) -> Vec<Option<Box<ListNode>>> {
+  let (mut vec, mut current) = (vec![], node);
+  while let Some(v) = current.as_mut() {
+    let node = std::mem::replace(&mut v.next, None);
+    vec.push(current);
+    current = node;
   }
   vec
 }

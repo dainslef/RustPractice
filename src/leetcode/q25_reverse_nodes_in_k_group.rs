@@ -19,7 +19,7 @@
 use super::*;
 
 fn reverse_k_group(head: Option<Box<ListNode>>, k: i32) -> Option<Box<ListNode>> {
-  let (mut temp, mut merage_size, nodes) = (vec![], 0, nodes_to_vec(head));
+  let (mut temp, mut merage_size, nodes) = (vec![], 0, nodes_to_num_vec(head));
   let (k, count) = (k as usize, nodes.len());
 
   let mut merage = |range: std::ops::Range<usize>, reverse| {
@@ -41,7 +41,7 @@ fn reverse_k_group(head: Option<Box<ListNode>>, k: i32) -> Option<Box<ListNode>>
     merage(merage_size..count, false);
   }
 
-  vec_to_nodes(temp, false)
+  num_vec_to_nodes(temp, false)
 }
 
 #[test]
@@ -52,7 +52,7 @@ fn test_reverse_k_group() {
     num_to_nodes(21435, false)
   );
   assert_eq!(
-    reverse_k_group(vec_to_nodes(vec![10, 20, 1, 2, 3, 4, 5], false), 7),
-    vec_to_nodes(vec![5, 4, 3, 2, 1, 20, 10], false)
+    reverse_k_group(num_vec_to_nodes(vec![10, 20, 1, 2, 3, 4, 5], false), 7),
+    num_vec_to_nodes(vec![5, 4, 3, 2, 1, 20, 10], false)
   );
 }

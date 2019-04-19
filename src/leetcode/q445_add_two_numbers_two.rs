@@ -17,7 +17,7 @@ fn add_two_numbers(l1: Option<Box<ListNode>>, l2: Option<Box<ListNode>>) -> Opti
   let (mut next, mut carry) = (None, false);
   // get the long number vector, the short number vector and the offset
   let (long, short, offset) = {
-    let (v1, v2) = (nodes_to_vec(l1), nodes_to_vec(l2));
+    let (v1, v2) = (nodes_to_num_vec(l1), nodes_to_num_vec(l2));
     let (len1, len2) = (v1.len(), v2.len());
     if len1 > len2 {
       (v1, v2, len1 - len2)

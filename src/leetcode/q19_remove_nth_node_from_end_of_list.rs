@@ -17,14 +17,17 @@
 use super::*;
 
 fn remove_nth_from_end(head: Option<Box<ListNode>>, n: i32) -> Option<Box<ListNode>> {
-  let mut vals = nodes_to_vec(head);
+  let mut vals = nodes_to_num_vec(head);
   vals.reverse();
   vals.remove(n as usize - 1);
-  vec_to_nodes(vals, true)
+  num_vec_to_nodes(vals, true)
 }
 
 #[test]
 fn test_remove_nth_from_end() {
   assert_eq!(remove_nth_from_end(num_to_nodes(1, false), 1), None);
-  assert_eq!(remove_nth_from_end(num_to_nodes(12345, false), 2), num_to_nodes(1235, false));
+  assert_eq!(
+    remove_nth_from_end(num_to_nodes(12345, false), 2),
+    num_to_nodes(1235, false)
+  );
 }

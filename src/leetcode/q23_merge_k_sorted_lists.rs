@@ -17,11 +17,11 @@ fn merge_k_lists(lists: Vec<Option<Box<ListNode>>>) -> Option<Box<ListNode>> {
   let mut temp = vec![];
 
   for v in lists {
-    temp.append(&mut nodes_to_vec(v));
+    temp.append(&mut nodes_to_num_vec(v));
   }
   temp.sort();
 
-  vec_to_nodes(temp, false)
+  num_vec_to_nodes(temp, false)
 }
 
 #[test]

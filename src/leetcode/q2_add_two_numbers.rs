@@ -44,7 +44,7 @@ fn add_two_numbers(l1: Option<Box<ListNode>>, l2: Option<Box<ListNode>>) -> Opti
         if carry {
           vec.push(carry as i32);
         }
-        break vec_to_nodes(vec, false);
+        break num_vec_to_nodes(vec, false);
       }
     }
   }

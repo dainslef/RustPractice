@@ -13,21 +13,13 @@ use super::*;
 fn reverse_between(head: Option<Box<ListNode>>, m: i32, n: i32) -> Option<Box<ListNode>> {
   use std::mem::swap;
 
-  let mut nodes = vec![];
-  let mut current = head;
-  while let Some(v) = current.as_mut() {
-    let mut node = None;
-    swap(&mut v.next, &mut node);
-    nodes.push(current);
-    current = node;
-  }
-
+  let mut nodes = nodes_to_node_vec(head);
   let mut result = None;
   let mut node = &mut result;
   for i in 1..=nodes.len() {
     let (m, n) = (m as usize, n as usize);
-    let i = if i > n || i < m { i } else { n - i + m };
-    swap(node, &mut nodes[i - 1]);
+    let index = if i > n || i < m { i } else { n - i + m };
+    swap(node, &mut nodes[index - 1]);
     if let Some(v) = node {
       node = &mut v.next;
     }
