@@ -20,7 +20,7 @@ mod q24_swap_nodes_in_pairs;
 mod q25_reverse_nodes_in_k_group;
 mod q29_divide_two_integers;
 mod q2_add_two_numbers;
-// mod q30_substring_with_concatenation_of_all_words;
+mod q30_substring_with_concatenation_of_all_words;
 mod q3_length_of_longest_substring;
 // mod q42_trapping_rain_water;
 // mod q31_next_permutation;
