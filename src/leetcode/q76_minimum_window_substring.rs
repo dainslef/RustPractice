@@ -16,8 +16,9 @@ fn min_window(s: String, t: String) -> String {
 
   let mut targets: HashMap<char, i32> = HashMap::new();
   let mut char_sequence: VecDeque<(char, usize)> = VecDeque::new();
-  let mut char_indexes: HashMap<char, i32> = HashMap::new();
+  let mut char_size: HashMap<char, i32> = HashMap::new();
 
+  // record the index of target chars
   for c in t.chars() {
     *targets.entry(c).or_insert(0) += 1;
   }
@@ -26,41 +27,52 @@ fn min_window(s: String, t: String) -> String {
 
   for (i, c) in s.char_indices() {
     if targets.contains_key(&c) {
+      // add all target chars into a sequence and compute the size of target chars
       char_sequence.push_back((c, i));
-      *char_indexes.entry(c).or_insert(0) += 1;
+      *char_size.entry(c).or_insert(0) += 1;
 
+      // check if the input string contains the target string
       let check_vaild = {
         let mut eq = true;
-        for v in &targets {
-          match char_indexes.get(&v.0) {
-            Some(count) if count < v.1 => {
-              eq = false;
-              break;
+        for (target_char, target_index) in &targets {
+          match char_size.get(target_char) {
+            Some(count) => {
+              // check if the char size of the input string is less than the target index
+              if count < target_index {
+                // less means the input string hasn't enough target chars
+                eq = false;
+                break;
+              }
             }
             None => {
               eq = false;
               break;
             }
-            _ => {}
           }
         }
         eq
       };
 
       if check_vaild {
-        let (first, last) = (
-          *char_sequence.front().unwrap(),
-          *char_sequence.back().unwrap(),
-        );
+        // init the range of the target chars
+        let (first, last) = (char_sequence[0], char_sequence[char_sequence.len() - 1]);
         range.get_or_insert((first.1, last.1));
+
         let mut new_first = first;
-        while char_indexes[&new_first.0] > targets[&new_first.0] {
+        while char_size[&new_first.0] > targets[&new_first.0] {
+          // remove the first char in the sequence
           char_sequence.pop_front();
-          char_indexes.get_mut(&new_first.0).map(|v| *v -= 1);
-          new_first = *char_sequence.front().unwrap();
+          // update the count of the target char
+          char_size.get_mut(&new_first.0).map(|v| *v -= 1);
+          new_first = char_sequence[0];
         }
-        if last.1 - new_first.1 < range.unwrap().1 - range.unwrap().0 {
-          range = Some((new_first.1, last.1));
+
+        if let Some((start, end)) = range {
+          let (new_start, new_end) = (new_first.1, last.1);
+          // check if the window is smaller than the previous window
+          if new_end - new_start < end - start {
+            range = Some((new_start, new_end));
+          }
         }
       }
     }
