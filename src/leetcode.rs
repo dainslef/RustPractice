@@ -4,7 +4,7 @@
  * Functions used by tests but not used by other modules will not receive
  * warnning message like "warning: function is never used: `...`".
  */
-// mod q10_regular_expression_matching;
+mod q10_regular_expression_matching;
 mod q11_container_with_most_water;
 mod q126_word_ladder_ii;
 mod q127_word_ladder;

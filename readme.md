@@ -11,6 +11,7 @@ Solutions for [`LeetCode`](https://leetcode.com/problems) problems using [`Rust`
 - [`#6 Zipzag Conversion`](src/leetcode/q6_zipzag_conversion.rs)
 - [`#7 Reverse Integer`](src/leetcode/q7_reverse_integer.rs)
 - [`#8 String to Integer (atoi)`](src/leetcode/q8_my_atoi.rs)
+- [`#10 Regular Expression Matching`](src/leetcode/q10_regular_expression_matching.rs)
 - [`#11 Container With Most Water`](src/leetcode/q11_container_with_most_water.rs)
 - [`#12 Integer to Roman`](src/leetcode/q12_integer_to_roman.rs)
 - [`#15 3Sum`](src/leetcode/q15_three_sum.rs)
