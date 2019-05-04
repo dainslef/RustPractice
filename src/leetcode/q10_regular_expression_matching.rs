@@ -54,44 +54,42 @@ fn is_match(s: String, p: String) -> bool {
   );
 
   fn deal_substring(mut input: VecDeque<char>, mut pattern: VecDeque<char>) -> bool {
-    let (mut last, mut is_match) = (None, true);
+    let mut last = None;
 
     loop {
       match (last, pattern.pop_front()) {
         (None, v @ Some(_)) => last = v,
         // continue only if the current match state is true
-        (Some(last_char), Some('*')) if is_match => {
-          let mut next_input = input.clone();
-          if last_char >= 'a' && last_char <= 'z' {
-            while next_input.pop_front() == Some(last_char) {
-              if deal_substring(next_input.clone(), pattern.clone()) {
-                return true;
-              }
-            }
-          } else if last_char == '.' {
-            while next_input.pop_front().is_some() {
-              if deal_substring(next_input.clone(), pattern.clone()) {
-                return true;
-              }
-            }
+        (Some(last_char), Some('*'))
+          if last_char >= 'a' && last_char <= 'z' || last_char == '.' =>
+        {
+          let mut next = input.clone();
+          while if let Some(next_char) = next.pop_front() {
+            last_char == '.' || last_char == next_char
           } else {
-            is_match = false;
+            false
+          } {
+            // continue with a new substring
+            if deal_substring(next.clone(), pattern.clone()) {
+              return true;
+            }
           }
           last = None;
         }
         (Some(last_char), v) => {
-          // check if input is empty
+          // get the current input char
           if let Some(current_char) = input.pop_front() {
             // check if char is match
             if last_char != '.' && current_char != last_char {
-              is_match = false;
+              return false;
             }
           } else {
-            is_match = false;
+            // if the input areadly empty, means the pattern isn't match
+            return false;
           }
           last = v;
         }
-        (None, None) => return if input.is_empty() { is_match } else { false },
+        (None, None) => return input.is_empty(),
       }
     }
   }
@@ -103,11 +101,17 @@ fn is_match(s: String, p: String) -> bool {
 fn test_is_match() {
   assert_eq!(is_match("abb".to_string(), "bbb*".to_string()), false);
   assert_eq!(is_match("ab".to_string(), ".*c".to_string()), false);
-  assert_eq!(is_match("mississippi".to_string(), "mis*is*ip*.".to_string()), true);
+  assert_eq!(
+    is_match("mississippi".to_string(), "mis*is*ip*.".to_string()),
+    true
+  );
   assert_eq!(is_match("abaa".to_string(), "a*a".to_string()), false);
   assert_eq!(is_match("abaa".to_string(), "a*aa".to_string()), false);
   assert_eq!(is_match("abaa".to_string(), "ab*a".to_string()), false);
   assert_eq!(is_match("abaa".to_string(), "aba*".to_string()), true);
   assert_eq!(is_match("abaabb".to_string(), "a*ba*b*".to_string()), true);
-  assert_eq!(is_match("abaabb".to_string(), "a*.*b.*a*b*".to_string()), true);
+  assert_eq!(
+    is_match("abaabb".to_string(), "a*.*b.*a*b*".to_string()),
+    true
+  );
 }
