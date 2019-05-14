@@ -77,15 +77,12 @@ fn is_match(s: String, p: String) -> bool {
           last = None;
         }
         (Some(last_char), v) => {
-          // get the current input char
-          if let Some(current_char) = input.pop_front() {
-            // check if char is match
-            if last_char != '.' && current_char != last_char {
-              return false;
-            }
-          } else {
+          match input.pop_front() {
+            // get the current input char, check if char is match
+            Some(current_char) if last_char != '.' && current_char != last_char => return false,
             // if the input areadly empty, means the pattern isn't match
-            return false;
+            None => return false,
+            _ => {}
           }
           last = v;
         }

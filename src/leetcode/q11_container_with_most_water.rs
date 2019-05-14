@@ -54,6 +54,11 @@ fn max_area_two_side(height: Vec<i32>) -> i32 {
 
 #[test]
 fn test_max_area() {
+  test(&max_area);
+  test(&max_area_two_side);
+}
+
+fn test(max_area: &Fn(Vec<i32>) -> i32) {
   assert_eq!(max_area(vec![1, 0]), 0);
   assert_eq!(max_area(vec![1, 8, 6, 2, 5, 4, 8, 3, 7]), 49);
 }

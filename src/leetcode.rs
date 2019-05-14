@@ -41,6 +41,7 @@ mod q7_reverse_integer;
 mod q8_my_atoi;
 mod q92_reverse_linked_list_ii;
 mod q97_interleaving_string;
+// mod q39_combination_sum;
 
 #[derive(PartialEq, Eq, Debug)]
 struct ListNode {
@@ -146,20 +147,25 @@ where
   T: ExactSizeIterator,
   T::Item: Eq + std::hash::Hash + std::fmt::Debug,
 {
-  use std::collections::HashSet;
-  use std::iter::FromIterator;
+  use std::collections::HashMap;
 
   let (len1, len2) = (v1.len(), v2.len());
-  let set1: HashSet<T::Item> = HashSet::from_iter(v1);
-  let set2 = HashSet::from_iter(v2);
+  let (mut content1, mut content2) = (HashMap::new(), HashMap::new());
 
-  let eq = set1 == set2 && len1 == len2;
+  for v in v1 {
+    *content1.entry(v).or_insert(0) += 1;
+  }
+  for v in v2 {
+    *content2.entry(v).or_insert(0) += 1;
+  }
+
+  let eq = content1 == content2 && len1 == len2;
   if !eq {
     println!(
       "Elements are different!\nLength 1: {}, Length 2: {}",
       len1, len2
     );
-    println!("Content 1: {:?}\nContent 2: {:?}", set1, set2);
+    println!("Content 1: {:?}\nContent 2: {:?}", content1, content2);
   }
 
   eq
