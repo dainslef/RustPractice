@@ -35,13 +35,14 @@ mod q5_longest_palindrome;
 // mod q60_permutation_sequence;
 mod q143_recoder_list;
 // mod q32_longest_valid_parentheses;
+mod q39_combination_sum;
 mod q6_zipzag_conversion;
 mod q76_minimum_window_substring;
 mod q7_reverse_integer;
 mod q8_my_atoi;
 mod q92_reverse_linked_list_ii;
 mod q97_interleaving_string;
-// mod q39_combination_sum;
+// mod q40_combination_sum_ii;
 
 #[derive(PartialEq, Eq, Debug)]
 struct ListNode {
