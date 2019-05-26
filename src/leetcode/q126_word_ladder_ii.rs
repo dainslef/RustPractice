@@ -35,6 +35,7 @@
  */
 use super::*;
 
+// use dfs to find all possible result, but time limit exceeded
 fn find_ladders_dfs(
   begin_word: String,
   end_word: String,
@@ -168,6 +169,11 @@ fn find_ladders(begin_word: String, end_word: String, word_list: Vec<String>) ->
 
 #[test]
 fn test_find_ladders() {
+  test(find_ladders);
+  // test(find_ladders_dfs); // time limit exceeded
+}
+
+fn test(find_ladders: impl Fn(String, String, Vec<String>) -> Vec<Vec<String>>) {
   let empty: Vec<Vec<String>> = vec![];
 
   assert_eq!(

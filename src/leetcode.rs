@@ -43,6 +43,9 @@ mod q8_my_atoi;
 mod q92_reverse_linked_list_ii;
 mod q97_interleaving_string;
 // mod q40_combination_sum_ii;
+// mod q77_combinations;
+// mod q216_combination_sum_iii;
+// mod q377_combination_sum_iv;
 
 #[derive(PartialEq, Eq, Debug)]
 struct ListNode {
@@ -150,7 +153,7 @@ where
 {
   use std::collections::HashMap;
 
-  let (len1, len2) = (v1.len(), v2.len());
+  let (length1, length2) = (v1.len(), v2.len());
   let (mut content1, mut content2) = (HashMap::new(), HashMap::new());
 
   for v in v1 {
@@ -160,11 +163,11 @@ where
     *content2.entry(v).or_insert(0) += 1;
   }
 
-  let eq = content1 == content2 && len1 == len2;
+  let eq = content1 == content2 && length1 == length2;
   if !eq {
     println!(
       "Elements are different!\nLength 1: {}, Length 2: {}",
-      len1, len2
+      length1, length2
     );
     println!("Content 1: {:?}\nContent 2: {:?}", content1, content2);
   }
