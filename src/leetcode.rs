@@ -23,7 +23,7 @@ mod q2_add_two_numbers;
 mod q30_substring_with_concatenation_of_all_words;
 mod q3_length_of_longest_substring;
 // mod q42_trapping_rain_water;
-// mod q31_next_permutation;
+mod q31_next_permutation;
 mod q445_add_two_numbers_two;
 mod q454_four_sum_two;
 mod q46_permutations;

@@ -21,3 +21,4 @@ Solutions for [`LeetCode`](https://leetcode.com/problems) problems using [`Rust`
 - [`#19 Remove Nth Node From End of List`](src/leetcode/q19_remove_nth_node_from_end_of_list.rs)
 - [`#24 Swap Nodes in Pairs`](src/leetcode/q24_swap_nodes_in_pairs.rs)
 - [`#30 Substring with Concatenation of All Words`](src/leetcode/q30_substring_with_concatenation_of_all_words.rs)
+- [`#31 Next Permutation`](src/leetcode/q31_next_permutation.rs)
