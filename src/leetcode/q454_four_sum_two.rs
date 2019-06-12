@@ -32,7 +32,7 @@ fn four_sum_count(a: Vec<i32>, b: Vec<i32>, c: Vec<i32>, d: Vec<i32>) -> i32 {
     for val_b in &b {
       let key = val_a + val_b;
       // calculate and update the number of times that sum of val_a and val_b appeared
-      let last_count = map.get(&key).unwrap_or(&0);
+      let last_count = *map.get(&key).unwrap_or(&0);
       map.insert(key, last_count + 1);
     }
   }

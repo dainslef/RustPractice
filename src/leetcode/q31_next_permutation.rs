@@ -55,23 +55,23 @@ fn test_next_permutation() {
   next_permutation(nums);
   assert_eq!(nums, &vec![1, 3, 2]);
 
-  nums = &mut vec![3, 2, 1];
+  let nums = &mut vec![3, 2, 1];
   next_permutation(nums);
   assert_eq!(nums, &vec![1, 2, 3]);
 
-  nums = &mut vec![5, 1, 4, 3, 2];
+  let nums = &mut vec![5, 1, 4, 3, 2];
   next_permutation(nums);
   assert_eq!(nums, &vec![5, 2, 1, 3, 4]);
 
-  nums = &mut vec![8, 0, 4, 2, 7, 6];
+  let nums = &mut vec![8, 0, 4, 2, 7, 6];
   next_permutation(nums);
   assert_eq!(nums, &vec![8, 0, 4, 6, 2, 7]);
 
-  nums = &mut vec![1, 2, 9, 5, 8, 7, 3, 2];
+  let nums = &mut vec![1, 2, 9, 5, 8, 7, 3, 2];
   next_permutation(nums);
   assert_eq!(nums, &vec![1, 2, 9, 7, 2, 3, 5, 8]);
 
-  nums = &mut vec![9, 4, 8, 9, 7, 5];
+  let nums = &mut vec![9, 4, 8, 9, 7, 5];
   next_permutation(nums);
   assert_eq!(nums, &vec![9, 4, 9, 5, 7, 8]);
 }
