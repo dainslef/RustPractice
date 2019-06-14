@@ -75,12 +75,39 @@ fn combination_sum(candidates: Vec<i32>, target: i32) -> Vec<Vec<i32>> {
   out
 }
 
-#[test]
-fn test_combination_sum() {
-  test(&combination_sum);
+fn combination_sum_recursion(candidates: Vec<i32>, target: i32) -> Vec<Vec<i32>> {
+  fn recursion(
+    candidates: &Vec<i32>,
+    target: i32,
+    start: usize,
+    input: &mut Vec<i32>,
+    output: &mut Vec<Vec<i32>>,
+  ) {
+    if target == 0 {
+      output.push(input.clone());
+    } else if target > 0 {
+      for i in start..candidates.len() {
+        input.push(candidates[i]);
+        recursion(candidates, target - candidates[i], i, input, output);
+        input.pop();
+      }
+    }
+  }
+
+  let (input, mut out, mut candidates) = (&mut vec![], vec![], candidates);
+  candidates.sort();
+  recursion(&candidates, target, 0, input, &mut out);
+
+  out
 }
 
-fn test(combination_sum: &Fn(Vec<i32>, i32) -> Vec<Vec<i32>>) {
+#[test]
+fn test_combination_sum() {
+  test(combination_sum);
+  test(combination_sum_recursion);
+}
+
+fn test(combination_sum: impl Fn(Vec<i32>, i32) -> Vec<Vec<i32>>) {
   use super::check_element_eq;
 
   assert!(check_element_eq(
