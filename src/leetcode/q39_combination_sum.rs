@@ -101,10 +101,45 @@ fn combination_sum_recursion(candidates: Vec<i32>, target: i32) -> Vec<Vec<i32>>
   out
 }
 
+fn combination_sum_recursion_self(candidates: Vec<i32>, target: i32) -> Vec<Vec<i32>> {
+  if candidates.is_empty() {
+    return vec![];
+  }
+
+  let mut out = vec![];
+  let mut candidates = candidates;
+  candidates.sort();
+
+  let mut temp = vec![(vec![candidates[0]], candidates[0])];
+  while !temp.is_empty() {
+    let mut next = vec![];
+    for (nums, sum) in temp {
+      if sum == target {
+        out.push(nums.clone());
+      } else if sum < target {
+        for v in &candidates {
+          if nums.last().map(|n| v >= n).unwrap_or(false) {
+            let mut nums = nums.clone();
+            nums.push(*v);
+            next.push((nums, sum + v));
+          }
+        }
+      }
+    }
+    temp = next;
+  }
+
+  candidates.remove(0);
+  out.append(&mut combination_sum_recursion_self(candidates, target));
+
+  out
+}
+
 #[test]
 fn test_combination_sum() {
   test(combination_sum);
   test(combination_sum_recursion);
+  test(combination_sum_recursion_self);
 }
 
 fn test(combination_sum: impl Fn(Vec<i32>, i32) -> Vec<Vec<i32>>) {
