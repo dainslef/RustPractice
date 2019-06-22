@@ -27,26 +27,25 @@ fn search(nums: Vec<i32>, target: i32) -> i32 {
   let (mut i_left, mut i_right) = (0, nums.len() - 1);
   loop {
     let i_center = (i_left + i_right) / 2;
-    let (center, left, right) = (nums[i_center], nums[i_left], nums[i_right]);
-    if center == target {
-      break i_center as i32;
-    } else if left == target {
-      break i_left as i32;
-    } else if right == target {
-      break i_right as i32;
-    } else if i_left + 1 == i_right || i_left == i_right {
-      break -1;
-    } else if center > target {
-      if target > left || center < right {
-        i_right = i_center;
-      } else {
-        i_left = i_center;
-      }
-    } else {
-      if center > left || target < right {
-        i_left = i_center;
-      } else {
-        i_right = i_center;
+    match (nums[i_left], nums[i_center], nums[i_right]) {
+      (_, center, _) if center == target => break i_center as i32,
+      (left, _, _) if left == target => break i_left as i32,
+      (_, _, right) if right == target => break i_right as i32,
+      _ if i_left + 1 == i_right || i_left == i_right => break -1,
+      (left, center, right) => {
+        if center > target {
+          if target > left || center < right {
+            i_right = i_center;
+          } else {
+            i_left = i_center;
+          }
+        } else {
+          if center > left || target < right {
+            i_left = i_center;
+          } else {
+            i_right = i_center;
+          }
+        }
       }
     }
   }
