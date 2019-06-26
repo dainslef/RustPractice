@@ -47,7 +47,7 @@ fn convert(s: String, num_rows: i32) -> String {
 }
 
 #[test]
-fn test_convert() {
+fn q6_test() {
   assert_eq!(convert("ABCDEFG".to_string(), 3), "AEBDFCG");
   assert_eq!(convert("ABCDEFG".to_string(), 4), "AGBFCED");
   assert_eq!(convert("PAYPALISHIRING".to_string(), 0), "PAYPALISHIRING");

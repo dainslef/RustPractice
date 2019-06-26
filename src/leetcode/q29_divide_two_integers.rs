@@ -37,7 +37,7 @@ fn divide(dividend: i32, divisor: i32) -> i32 {
 }
 
 #[test]
-fn test_divide() {
+fn q29_test() {
   assert_eq!(divide(0, 1), 0);
   assert_eq!(divide(1, 1), 1);
   assert_eq!(divide(3, -1), -3);

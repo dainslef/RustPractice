@@ -19,8 +19,13 @@
  * Output: -1
  */
 
+// need to add comments
 fn search(nums: Vec<i32>, target: i32) -> i32 {
-  if nums.is_empty() {
+
+  // check the range of nums, return if target isn't match the range
+  if nums.first().map(|v| target < *v).unwrap_or(true)
+    && nums.last().map(|v| target > *v).unwrap_or(true)
+  {
     return -1;
   }
 
@@ -32,19 +37,18 @@ fn search(nums: Vec<i32>, target: i32) -> i32 {
       (left, _, _) if left == target => break i_left as i32,
       (_, _, right) if right == target => break i_right as i32,
       _ if i_left + 1 == i_right || i_left == i_right => break -1,
-      (left, center, right) => {
-        if center > target {
-          if target > left || center < right {
-            i_right = i_center;
-          } else {
-            i_left = i_center;
-          }
+      (left, center, right) if center > target => {
+        if target > left || center < right {
+          i_right = i_center;
         } else {
-          if center > left || target < right {
-            i_left = i_center;
-          } else {
-            i_right = i_center;
-          }
+          i_left = i_center;
+        }
+      }
+      (left, center, right) => {
+        if center > left || target < right {
+          i_left = i_center;
+        } else {
+          i_right = i_center;
         }
       }
     }
@@ -52,9 +56,11 @@ fn search(nums: Vec<i32>, target: i32) -> i32 {
 }
 
 #[test]
-fn test_search() {
+fn q33_test() {
+  assert_eq!(search(vec![7, 8, 9, 1, 2], 5), -1);
   assert_eq!(search(vec![3, 6, 9, 10], 8), -1);
   assert_eq!(search(vec![1, 3], 2), -1);
+  assert_eq!(search(vec![1, 2], 2), 1);
   assert_eq!(search(vec![1], 0), -1);
   assert_eq!(search(vec![], 5), -1);
   assert_eq!(search(vec![0, 1, 2, 4, 5, 6, 7], 6), 5);

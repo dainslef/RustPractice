@@ -101,7 +101,7 @@ fn three_sum(nums: Vec<i32>) -> Vec<Vec<i32>> {
 }
 
 #[test]
-fn test_three_sum() {
+fn q15_test() {
   let empty: Vec<Vec<i32>> = vec![];
   assert_eq!(three_sum(vec![]), empty);
   assert_eq!(three_sum(vec![0, 0, 0]), [[0, 0, 0]]);

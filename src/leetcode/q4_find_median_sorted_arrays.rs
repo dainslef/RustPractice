@@ -47,7 +47,7 @@ fn find_median_sorted_arrays(nums1: Vec<i32>, nums2: Vec<i32>) -> f64 {
 }
 
 #[test]
-fn test_find_median_sorted_arrays() {
+fn q4_test() {
   assert_eq!(find_median_sorted_arrays(vec![], vec![1]), 1.0);
   assert_eq!(find_median_sorted_arrays(vec![1, 3], vec![2]), 2.0);
   assert_eq!(find_median_sorted_arrays(vec![1, 2], vec![2, 4]), 2.0);

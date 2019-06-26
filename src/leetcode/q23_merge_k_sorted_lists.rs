@@ -25,7 +25,7 @@ fn merge_k_lists(lists: Vec<Option<Box<ListNode>>>) -> Option<Box<ListNode>> {
 }
 
 #[test]
-fn test_merge_k_lists() {
+fn q23_test() {
   assert_eq!(merge_k_lists(vec![None, None, None]), None);
   assert_eq!(
     merge_k_lists(vec![

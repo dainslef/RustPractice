@@ -95,7 +95,7 @@ fn is_match(s: String, p: String) -> bool {
 }
 
 #[test]
-fn test_is_match() {
+fn q10_test() {
   assert_eq!(is_match("abb".to_string(), "bbb*".to_string()), false);
   assert_eq!(is_match("ab".to_string(), ".*c".to_string()), false);
   assert_eq!(

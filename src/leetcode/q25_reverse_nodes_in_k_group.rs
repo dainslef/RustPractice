@@ -45,7 +45,7 @@ fn reverse_k_group(head: Option<Box<ListNode>>, k: i32) -> Option<Box<ListNode>>
 }
 
 #[test]
-fn test_reverse_k_group() {
+fn q25_test() {
   assert_eq!(reverse_k_group(None, 2), None);
   assert_eq!(
     reverse_k_group(num_to_nodes(12345, false), 2),

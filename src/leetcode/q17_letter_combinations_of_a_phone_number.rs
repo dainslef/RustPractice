@@ -51,7 +51,7 @@ fn letter_combinations(digits: String) -> Vec<String> {
 }
 
 #[test]
-fn test_letter_combinations() {
+fn q17_test() {
   use super::*;
 
   assert!(check_element_eq(

@@ -65,19 +65,18 @@ fn int_to_roman(num: i32) -> String {
   .collect::<HashMap<_, _>>();
 
   while let Some(step) = values.pop() {
+    let add_chars = |temp: &mut Vec<_>, start, end| {
+      for _ in start..end {
+        temp.push(char_to_value[&step]);
+      }
+    };
     while re / step > 0 {
       match re / step {
         n @ 4 | n @ 9 => temp.push(char_to_value[&(n * step)]),
-        n @ _ => {
-          let start = if n < 5 {
-            0
-          } else {
-            temp.push(char_to_value[&(5 * step)]);
-            5
-          };
-          for _ in start..n {
-            temp.push(char_to_value[&step]);
-          }
+        n if n < 5 => add_chars(&mut temp, 0, n),
+        n => {
+          temp.push(char_to_value[&(5 * step)]);
+          add_chars(&mut temp, 5, n);
         }
       };
       re %= step;
@@ -89,7 +88,7 @@ fn int_to_roman(num: i32) -> String {
 }
 
 #[test]
-fn test_int_to_roman() {
+fn q12_test() {
   assert_eq!(int_to_roman(3), "III");
   assert_eq!(int_to_roman(58), "LVIII");
   assert_eq!(int_to_roman(1994), "MCMXCIV");

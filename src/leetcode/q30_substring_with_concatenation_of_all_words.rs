@@ -98,7 +98,7 @@ fn find_substring(s: String, words: Vec<String>) -> Vec<i32> {
 }
 
 #[test]
-fn test_find_substring() {
+fn q30_test() {
   use super::*;
 
   assert_eq!(find_substring("".to_string(), strs_to_vec(&["a"])), []);

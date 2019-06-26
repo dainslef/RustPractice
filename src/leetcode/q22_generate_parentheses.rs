@@ -48,7 +48,7 @@ fn generate_parenthesis(n: i32) -> Vec<String> {
 }
 
 #[test]
-fn test_generate_parenthesis() {
+fn q22_test() {
   assert_eq!(generate_parenthesis(0), vec![""]);
   assert_eq!(generate_parenthesis(1), vec!["()"]);
   assert_eq!(generate_parenthesis(2), vec!["(())", "()()"]);

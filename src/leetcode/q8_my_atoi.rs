@@ -96,7 +96,7 @@ fn my_atoi(s: String) -> i32 {
 }
 
 #[test]
-fn test_my_atoi() {
+fn q8_test() {
   assert_eq!(my_atoi("".to_string()), 0);
   assert_eq!(my_atoi(" 010  ".to_string()), 10);
   assert_eq!(my_atoi("  -0012a42".to_string()), -12);

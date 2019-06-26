@@ -50,7 +50,7 @@ fn next_permutation(nums: &mut Vec<i32>) {
 }
 
 #[test]
-fn test_next_permutation() {
+fn q31_test() {
   let nums = &mut vec![1, 2, 3];
   next_permutation(nums);
   assert_eq!(nums, &vec![1, 3, 2]);

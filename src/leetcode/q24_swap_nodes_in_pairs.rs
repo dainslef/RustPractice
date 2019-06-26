@@ -24,7 +24,7 @@ fn swap_pairs(head: Option<Box<ListNode>>) -> Option<Box<ListNode>> {
 }
 
 #[test]
-fn test_swap_pairs() {
+fn q24_test() {
   assert_eq!(
     swap_pairs(num_to_nodes(1234, false)),
     num_to_nodes(2143, false)

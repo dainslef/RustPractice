@@ -104,7 +104,7 @@ fn longest_palindrome(s: String) -> String {
 }
 
 #[test]
-fn test_longest_palindrome() {
+fn q5_test() {
   assert_eq!(longest_palindrome("acaca".to_string()), "acaca");
   assert_eq!(longest_palindrome("bbbbb".to_string()), "bbbbb");
   assert_eq!(longest_palindrome("aa789".to_string()), "aa");

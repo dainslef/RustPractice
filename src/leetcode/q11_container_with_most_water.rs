@@ -53,7 +53,7 @@ fn max_area_two_side(height: Vec<i32>) -> i32 {
 }
 
 #[test]
-fn test_max_area() {
+fn q11_test() {
   test(max_area);
   test(max_area_two_side);
 }
