@@ -21,7 +21,7 @@ mod q29_divide_two_integers;
 mod q2_add_two_numbers;
 mod q30_substring_with_concatenation_of_all_words;
 mod q31_next_permutation;
-mod q33_search_in_rotated_sorted_array;
+mod q32_longest_valid_parentheses;
 mod q3_length_of_longest_substring;
 mod q454_four_sum_two;
 mod q46_permutations;
@@ -36,7 +36,7 @@ mod q97_interleaving_string;
 
 // mod q143_recoder_list;
 // mod q216_combination_sum_iii;
-// mod q32_longest_valid_parentheses;
+// mod q34_find_first_and_last_position_of_element_in_sorted_array;
 // mod q377_combination_sum_iv;
 // mod q40_combination_sum_ii;
 // mod q42_trapping_rain_water;
@@ -45,6 +45,7 @@ mod q97_interleaving_string;
 // mod q52_n_queens_ii;
 // mod q60_permutation_sequence;
 // mod q77_combinations;
+// mod q81_search_in_rotated_sorted_array_ii;
 
 #[derive(PartialEq, Eq, Debug)]
 struct ListNode {
