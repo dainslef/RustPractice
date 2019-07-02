@@ -33,22 +33,26 @@ fn search(nums: Vec<i32>, target: i32) -> i32 {
   loop {
     let i_center = (i_left + i_right) / 2;
     match (nums[i_left], nums[i_center], nums[i_right]) {
+      // compare the value of left/center/right index
       (_, center, _) if center == target => break i_center as i32,
       (left, _, _) if left == target => break i_left as i32,
       (_, _, right) if right == target => break i_right as i32,
       _ if i_left + 1 == i_right || i_left == i_right => break -1,
-      (left, center, right) if center > target => {
-        if target > left || center < right {
-          i_right = i_center;
-        } else {
-          i_left = i_center;
-        }
-      }
       (left, center, right) => {
-        if center > left || target < right {
-          i_left = i_center;
+        let mut update_index = |change_left| {
+          // check condition and update the index
+          if change_left {
+            i_left = i_center;
+          } else {
+            i_right = i_center;
+          }
+        };
+        if center > target {
+          // if center is larger than target, only should make center index as new left index when center and target in different side
+          update_index(center > right && target < right);
         } else {
-          i_right = i_center;
+          // if center is smaller than target, make center index as new left index when when center and target in same side
+          update_index(center > left || target < right);
         }
       }
     }
