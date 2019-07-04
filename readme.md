@@ -24,3 +24,4 @@ Solutions for [`LeetCode`](https://leetcode.com/problems) problems using [`Rust`
 - [`#31 Next Permutation`](src/leetcode/q31_next_permutation.rs)
 - [`#32 Longest Valid Parentheses`](src/leetcode/q32_longest_valid_parentheses.rs)
 - [`#33 Search in Rotated Sorted Array`](src/leetcode/q33_search_in_rotated_sorted_array.rs)
+- [`#34 Find First and Last Position of Element in Sorted Array`](src/leetcode/q34_find_first_and_last_position_of_element_in_sorted_array.rs)
