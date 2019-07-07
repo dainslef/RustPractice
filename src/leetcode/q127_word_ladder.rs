@@ -68,50 +68,38 @@ fn ladder_length(begin_word: String, end_word: String, word_list: Vec<String>) -
 #[test]
 fn test_ladder_length() {
   assert_eq!(
-    ladder_length(
-      "hot".to_string(),
-      "dog".to_string(),
-      strs_to_vec(&["hot", "dog", "dot"])
-    ),
+    ladder_length("hot".into(), "dog".into(), string_vec!["hot", "dog", "dot"]),
     3
   );
   assert_eq!(
-    ladder_length(
-      "hot".to_string(),
-      "dog".to_string(),
-      strs_to_vec(&["hot", "dog"])
-    ),
+    ladder_length("hot".into(), "dog".into(), string_vec!["hot", "dog"]),
     0
   );
   assert_eq!(
-    ladder_length(
-      "a".to_string(),
-      "c".to_string(),
-      strs_to_vec(&["a", "b", "c"])
-    ),
+    ladder_length("a".into(), "c".into(), string_vec!["a", "b", "c"]),
     2
   );
   assert_eq!(
     ladder_length(
-      "hit".to_string(),
-      "cog".to_string(),
-      strs_to_vec(&["hot", "dot", "dog", "lot", "log"])
+      "hit".into(),
+      "cog".into(),
+      string_vec!["hot", "dot", "dog", "lot", "log"]
     ),
     0
   );
   assert_eq!(
     ladder_length(
-      "hit".to_string(),
-      "cog".to_string(),
-      strs_to_vec(&["hot", "dot", "dog", "lot", "log", "cog"])
+      "hit".into(),
+      "cog".into(),
+      string_vec!["hot", "dot", "dog", "lot", "log", "cog"]
     ),
     5
   );
   assert_eq!(
     ladder_length(
-      "qa".to_string(),
-      "sq".to_string(),
-      strs_to_vec(&[
+      "qa".into(),
+      "sq".into(),
+      string_vec![
         "si", "go", "se", "cm", "so", "ph", "mt", "db", "mb", "sb", "kr", "ln", "tm", "le", "av",
         "sm", "ar", "ci", "ca", "br", "ti", "ba", "to", "ra", "fa", "yo", "ow", "sn", "ya", "cr",
         "po", "fe", "ho", "ma", "re", "or", "rn", "au", "ur", "rh", "sr", "tc", "lt", "lo", "as",
@@ -119,15 +107,15 @@ fn test_ladder_length() {
         "no", "bi", "di", "hi", "qa", "pi", "os", "uh", "wm", "an", "me", "mo", "na", "la", "st",
         "er", "sc", "ne", "mn", "mi", "am", "ex", "pt", "io", "be", "fm", "ta", "tb", "ni", "mr",
         "pa", "he", "lr", "sq", "ye"
-      ])
+      ]
     ),
     5
   );
   assert_eq!(
     ladder_length(
-      "cet".to_string(),
-      "ism".to_string(),
-      strs_to_vec(&[
+      "cet".into(),
+      "ism".into(),
+      string_vec![
         "kid", "tag", "pup", "ail", "tun", "woo", "erg", "luz", "brr", "gay", "sip", "kay", "per",
         "val", "mes", "ohs", "now", "boa", "cet", "pal", "bar", "die", "war", "hay", "eco", "pub",
         "lob", "rue", "fry", "lit", "rex", "jan", "cot", "bid", "ali", "pay", "col", "gum", "ger",
@@ -175,7 +163,7 @@ fn test_ladder_length() {
         "jay", "hob", "mow", "jot", "are", "pol", "arc", "lax", "aft", "alb", "len", "air", "pug",
         "pox", "vow", "got", "meg", "zoe", "amp", "ale", "bud", "gee", "pin", "dun", "pat", "ten",
         "mob"
-      ])
+      ]
     ),
     11
   );

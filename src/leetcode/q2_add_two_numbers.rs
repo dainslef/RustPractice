@@ -13,7 +13,7 @@ use super::*;
 
 fn add_two_numbers(l1: Option<Box<ListNode>>, l2: Option<Box<ListNode>>) -> Option<Box<ListNode>> {
   let (mut l1, mut l2) = (&l1, &l2);
-  let (mut vec, mut carry) = (vec![], false);
+  let (mut temp, mut carry) = (vec![], false);
 
   let mut deal_result = |num| {
     // compute the result by carry
@@ -21,7 +21,7 @@ fn add_two_numbers(l1: Option<Box<ListNode>>, l2: Option<Box<ListNode>>) -> Opti
 
     // if the result is larger than 10, set the carry
     carry = result >= 10;
-    vec.push(if carry { result - 10 } else { result });
+    temp.push(if carry { result - 10 } else { result });
   };
 
   loop {
@@ -42,9 +42,9 @@ fn add_two_numbers(l1: Option<Box<ListNode>>, l2: Option<Box<ListNode>>) -> Opti
       (None, None) => {
         // if the list is ended, check the carry
         if carry {
-          vec.push(carry as i32);
+          temp.push(carry as i32);
         }
-        break num_vec_to_nodes(vec, false);
+        break num_vec_to_nodes(temp, false);
       }
     }
   }

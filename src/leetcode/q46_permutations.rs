@@ -65,9 +65,8 @@ fn test_permute() {
 
 fn test(permute: &Fn(Vec<i32>) -> Vec<Vec<i32>>) {
   use super::check_element_eq;
-
   assert!(check_element_eq(
-    permute(vec![1, 2, 3]).iter(),
+    permute(vec![1, 2, 3]),
     vec![
       vec![1, 2, 3],
       vec![1, 3, 2],
@@ -76,10 +75,9 @@ fn test(permute: &Fn(Vec<i32>) -> Vec<Vec<i32>>) {
       vec![3, 1, 2],
       vec![3, 2, 1]
     ]
-    .iter()
   ));
   assert!(check_element_eq(
-    permute(vec![4, 2, 1, 3]).iter(),
+    permute(vec![4, 2, 1, 3]),
     vec![
       vec![4, 3, 2, 1],
       vec![3, 4, 2, 1],
@@ -106,6 +104,5 @@ fn test(permute: &Fn(Vec<i32>) -> Vec<Vec<i32>>) {
       vec![1, 2, 4, 3],
       vec![1, 2, 3, 4]
     ]
-    .iter()
   ));
 }

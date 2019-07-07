@@ -21,11 +21,8 @@ fn longest_valid_parentheses(s: String) -> i32 {
   for (i, c) in s.char_indices() {
     match (i as i32, c) {
       v @ (_, '(') => symbols.push_back(v),
-      v @ (_, ')') => match symbols.back() {
-        Some((_, '(')) => drop(symbols.pop_back()),
-        _ => symbols.push_back(v),
-      },
-      _ => {}
+      (_, ')') if symbols.back().map(|v| v.1 == '(').unwrap_or(false) => drop(symbols.pop_back()),
+      v => symbols.push_back(v),
     }
   }
 
@@ -46,9 +43,9 @@ fn longest_valid_parentheses(s: String) -> i32 {
 
 #[test]
 fn q32_test() {
-  assert_eq!(longest_valid_parentheses("()".to_string()), 2);
-  assert_eq!(longest_valid_parentheses("(()".to_string()), 2);
-  assert_eq!(longest_valid_parentheses("()(()".to_string()), 2);
-  assert_eq!(longest_valid_parentheses(")()())".to_string()), 4);
-  assert_eq!(longest_valid_parentheses(")(()))((()))".to_string()), 6);
+  assert_eq!(longest_valid_parentheses("()".into()), 2);
+  assert_eq!(longest_valid_parentheses("(()".into()), 2);
+  assert_eq!(longest_valid_parentheses("()(()".into()), 2);
+  assert_eq!(longest_valid_parentheses(")()())".into()), 4);
+  assert_eq!(longest_valid_parentheses(")(()))((()))".into()), 6);
 }

@@ -52,22 +52,21 @@ fn letter_combinations(digits: String) -> Vec<String> {
 
 #[test]
 fn q17_test() {
-  use super::*;
-
+  use super::check_element_eq;
   assert!(check_element_eq(
-    letter_combinations("23".to_string()).iter(),
-    strs_to_vec(&["ad", "ae", "af", "bd", "be", "bf", "cd", "ce", "cf"]).iter()
+    letter_combinations("23".into()),
+    string_vec!["ad", "ae", "af", "bd", "be", "bf", "cd", "ce", "cf"]
   ));
   assert!(check_element_eq(
-    letter_combinations("".to_string()).iter(),
-    strs_to_vec(&[]).iter()
+    letter_combinations("".into()),
+    string_vec![]
   ));
   assert!(check_element_eq(
-    letter_combinations("01".to_string()).iter(),
-    strs_to_vec(&[" *"]).iter()
+    letter_combinations("01".into()),
+    string_vec![" *"]
   ));
   assert!(check_element_eq(
-    letter_combinations("1210".to_string()).iter(),
-    strs_to_vec(&["*a* ", "*b* ", "*c* "]).iter()
+    letter_combinations("1210".into()),
+    string_vec!["*a* ", "*b* ", "*c* "]
   ));
 }

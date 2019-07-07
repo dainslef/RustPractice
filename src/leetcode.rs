@@ -4,49 +4,6 @@
  * Functions used by tests but not used by other modules will not receive
  * warnning message like "warning: function is never used: `...`".
  */
-mod q10_regular_expression_matching;
-mod q11_container_with_most_water;
-mod q126_word_ladder_ii;
-mod q127_word_ladder;
-mod q12_integer_to_roman;
-mod q16_three_sum_closest;
-mod q17_letter_combinations_of_a_phone_number;
-mod q18_four_sum;
-mod q19_remove_nth_node_from_end_of_list;
-mod q22_generate_parentheses;
-mod q23_merge_k_sorted_lists;
-mod q24_swap_nodes_in_pairs;
-mod q25_reverse_nodes_in_k_group;
-mod q29_divide_two_integers;
-mod q2_add_two_numbers;
-mod q30_substring_with_concatenation_of_all_words;
-mod q31_next_permutation;
-mod q32_longest_valid_parentheses;
-mod q33_search_in_rotated_sorted_array;
-mod q34_find_first_and_last_position_of_element_in_sorted_array;
-mod q454_four_sum_two;
-mod q46_permutations;
-mod q4_find_median_sorted_arrays;
-mod q5_longest_palindrome;
-mod q6_zipzag_conversion;
-mod q76_minimum_window_substring;
-mod q7_reverse_integer;
-mod q8_my_atoi;
-mod q92_reverse_linked_list_ii;
-mod q97_interleaving_string;
-
-// mod q143_recoder_list;
-// mod q216_combination_sum_iii;
-// mod q35_valid_sudoku;
-// mod q377_combination_sum_iv;
-// mod q40_combination_sum_ii;
-// mod q42_trapping_rain_water;
-// mod q47_permutations_ii;
-// mod q51_n_queens;
-// mod q52_n_queens_ii;
-// mod q60_permutation_sequence;
-// mod q77_combinations;
-// mod q81_search_in_rotated_sorted_array_ii;
 
 #[derive(PartialEq, Eq, Debug)]
 struct ListNode {
@@ -104,10 +61,6 @@ fn nodes_to_node_vec(node: Option<Box<ListNode>>) -> Vec<Option<Box<ListNode>>> 
   vec
 }
 
-fn strs_to_vec(str_array: &[&str]) -> Vec<String> {
-  str_array.iter().map(|v| v.to_string()).collect()
-}
-
 // for q15 and q18, check if the target is included in the "vec_list"
 fn check_vecs_contain_target(vec_list: &Vec<Vec<i32>>, target: &Vec<i32>) -> bool {
   for old_vec in vec_list {
@@ -149,18 +102,20 @@ fn check_diff_one_char(old_word: &String, new_word: &String) -> bool {
 // check element content equivalence without element order
 fn check_element_eq<T>(v1: T, v2: T) -> bool
 where
-  T: ExactSizeIterator,
+  T: IntoIterator,
   T::Item: Eq + std::hash::Hash + std::fmt::Debug,
 {
   use std::collections::HashMap;
 
-  let (length1, length2) = (v1.len(), v2.len());
+  let (mut length1, mut length2) = (0, 0);
   let (mut content1, mut content2) = (HashMap::new(), HashMap::new());
 
   for v in v1 {
+    length1 += 1;
     *content1.entry(v).or_insert(0) += 1;
   }
   for v in v2 {
+    length2 += 1;
     *content2.entry(v).or_insert(0) += 1;
   }
 
@@ -175,3 +130,60 @@ where
 
   eq
 }
+
+/**
+ * Unlike everything else in the languages, macros will remain visible in sub-modules.
+ * Also, unlike everything else in the language, macros are only accessible after their definition.
+ * Or use #[macro_export] to export the macro, then use macro with code "crate::xxx_macro_name!".
+ */
+macro_rules! string_vec {
+  ($($content:expr),*) => {{
+    let mut temp = Vec::new();
+    $(temp.push($content.to_string());)*
+    temp
+  }}
+}
+
+mod q10_regular_expression_matching;
+mod q11_container_with_most_water;
+mod q126_word_ladder_ii;
+mod q127_word_ladder;
+mod q12_integer_to_roman;
+mod q16_three_sum_closest;
+mod q17_letter_combinations_of_a_phone_number;
+mod q18_four_sum;
+mod q19_remove_nth_node_from_end_of_list;
+mod q22_generate_parentheses;
+mod q23_merge_k_sorted_lists;
+mod q24_swap_nodes_in_pairs;
+mod q25_reverse_nodes_in_k_group;
+mod q29_divide_two_integers;
+mod q2_add_two_numbers;
+mod q30_substring_with_concatenation_of_all_words;
+mod q31_next_permutation;
+mod q32_longest_valid_parentheses;
+mod q33_search_in_rotated_sorted_array;
+mod q34_find_first_and_last_position_of_element_in_sorted_array;
+mod q454_four_sum_two;
+mod q46_permutations;
+mod q4_find_median_sorted_arrays;
+mod q5_longest_palindrome;
+mod q6_zipzag_conversion;
+mod q76_minimum_window_substring;
+mod q7_reverse_integer;
+mod q8_my_atoi;
+mod q92_reverse_linked_list_ii;
+mod q97_interleaving_string;
+
+// mod q143_recoder_list;
+// mod q216_combination_sum_iii;
+// mod q35_valid_sudoku; // now
+// mod q377_combination_sum_iv;
+// mod q40_combination_sum_ii;
+// mod q42_trapping_rain_water;
+// mod q47_permutations_ii;
+// mod q51_n_queens;
+// mod q52_n_queens_ii;
+// mod q60_permutation_sequence;
+// mod q77_combinations;
+// mod q81_search_in_rotated_sorted_array_ii;
