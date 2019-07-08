@@ -1,10 +1,3 @@
-/**
- * Use "#[cfg(test)]" to define a test module,
- * the function in test module will only compile and run when user execute "cargo test" command.
- * Functions used by tests but not used by other modules will not receive
- * warnning message like "warning: function is never used: `...`".
- */
-
 #[derive(PartialEq, Eq, Debug)]
 struct ListNode {
   pub val: i32,
@@ -177,7 +170,8 @@ mod q97_interleaving_string;
 
 // mod q143_recoder_list;
 // mod q216_combination_sum_iii;
-// mod q35_valid_sudoku; // now
+mod q35_valid_sudoku;
+// mod q37_sudoku_solver;
 // mod q377_combination_sum_iv;
 // mod q40_combination_sum_ii;
 // mod q42_trapping_rain_water;
