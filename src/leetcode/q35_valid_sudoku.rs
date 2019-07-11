@@ -50,6 +50,15 @@
  */
 
 fn is_valid_sudoku(board: Vec<Vec<char>>) -> bool {
+  macro_rules! check {
+    ($c:expr,$container:expr) => {
+      if *$c != '.' && !$container.insert($c) {
+        return false;
+      }
+    };
+  }
+
+  // Use Vec as container, has same time cost in LeetCode
   use std::collections::HashSet;
 
   const BOARD_SIZE: usize = 9;
@@ -58,26 +67,21 @@ fn is_valid_sudoku(board: Vec<Vec<char>>) -> bool {
   let (mut line, mut sub_box) = (HashSet::new(), HashSet::new());
 
   for x in 0..BOARD_SIZE {
-    let row = &board[x];
-    for c in row {
-      if *c != '.' && !line.insert(c) {
-        return false;
-      }
+    for c in &board[x] {
+      // check the repetition of row
+      check!(c, line);
     }
     line.clear();
 
     for y in 0..BOARD_SIZE {
-      let c = &board[y][x];
-      if *c != '.' && !line.insert(c) {
-        return false;
-      }
+      // check the repetition of column
+      check!(&board[y][x], line);
+      // check the index, compute the repeatability of every 9 cell
       if x % CELL_SIZE == 0 && y % CELL_SIZE == 0 {
+        // cell range: 3 * 3
         for x in x..x + CELL_SIZE {
           for y in y..y + CELL_SIZE {
-            let c = &board[x][y];
-            if *c != '.' && !sub_box.insert(c) {
-              return false;
-            }
+            check!(&board[x][y], sub_box);
           }
         }
         sub_box.clear();
