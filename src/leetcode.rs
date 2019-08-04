@@ -157,6 +157,8 @@ mod q31_next_permutation;
 mod q32_longest_valid_parentheses;
 mod q33_search_in_rotated_sorted_array;
 mod q34_find_first_and_last_position_of_element_in_sorted_array;
+mod q35_valid_sudoku;
+mod q40_combination_sum_ii;
 mod q454_four_sum_two;
 mod q46_permutations;
 mod q4_find_median_sorted_arrays;
@@ -170,10 +172,8 @@ mod q97_interleaving_string;
 
 // mod q143_recoder_list;
 // mod q216_combination_sum_iii;
-mod q35_valid_sudoku;
-// mod q37_sudoku_solver;
+// mod q37_sudoku_solver; // in progress
 // mod q377_combination_sum_iv;
-// mod q40_combination_sum_ii;
 // mod q42_trapping_rain_water;
 // mod q47_permutations_ii;
 // mod q51_n_queens;
