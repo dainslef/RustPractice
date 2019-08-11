@@ -59,7 +59,7 @@ fn q17_test() {
   ));
   assert!(check_element_eq(
     letter_combinations("".into()),
-    string_vec![]
+    vec![]
   ));
   assert!(check_element_eq(
     letter_combinations("01".into()),
