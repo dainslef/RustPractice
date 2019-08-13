@@ -74,9 +74,42 @@ fn combination_sum2(candidates: Vec<i32>, target: i32) -> Vec<Vec<i32>> {
   out
 }
 
+fn combination_sum2_recursion(candidates: Vec<i32>, target: i32) -> Vec<Vec<i32>> {
+  fn recursion(
+    candidates: &Vec<i32>,
+    target: i32,
+    start: usize,
+    input: &mut Vec<i32>,
+    output: &mut Vec<Vec<i32>>,
+  ) {
+    if target == 0 {
+      output.push(input.clone());
+    } else if target > 0 {
+      let mut last: Option<i32> = None;
+      for i in start..candidates.len() {
+        let n = candidates[i];
+        // check to avoid adding duplicate elements
+        if last.map(|v| v != n).unwrap_or(true) {
+          input.push(n);
+          recursion(candidates, target - n, i + 1, input, output);
+          input.pop();
+        }
+        last = Some(n);
+      }
+    }
+  }
+
+  let (input, mut out, mut candidates) = (&mut vec![], vec![], candidates);
+  candidates.sort();
+  recursion(&candidates, target, 0, input, &mut out);
+
+  out
+}
+
 #[test]
 fn test_combination_sum2() {
   test(combination_sum2);
+  test(combination_sum2_recursion);
 }
 
 fn test(combination_sum2: impl Fn(Vec<i32>, i32) -> Vec<Vec<i32>>) {
