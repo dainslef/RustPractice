@@ -31,23 +31,18 @@ fn solve_sudoku(board: &mut Vec<Vec<char>>) {
     .map(|v| v as char)
     .collect::<HashSet<char>>();
 
-  fn sub_index(row: usize, column: usize) -> usize {
+  fn around_index(row: usize, column: usize) -> usize {
     row / CELL_SIZE * CELL_SIZE + column / CELL_SIZE
   }
 
-  let (mut rows, mut columns) = (0..BOARD_SIZE)
-    .map(|x| {
-      (
-        board[x].clone().into_iter().collect(),
-        (0..BOARD_SIZE).map(|y| board[y][x]).collect(), // notice the cloumn index can't change
-      )
-    })
-    .unzip();
-
-  let mut arounds: Vec<HashSet<char>> = vec![];
+  let (mut rows, mut columns, mut arounds): (Vec<_>, Vec<_>, Vec<HashSet<char>>) =
+    (vec![], vec![], vec![]);
   for x in 0..BOARD_SIZE {
+    rows.push(board[x].clone().into_iter().collect()); // add rows
+    columns.push(HashSet::new()); // add new column
     for y in 0..BOARD_SIZE {
-      let i = sub_index(x, y);
+      columns[x].insert(board[y][x]); // add column content
+      let i = around_index(x, y);
       if let Some(v) = arounds.get_mut(i) {
         if board[x][y] != '.' {
           v.insert(board[x][y]);
@@ -74,6 +69,7 @@ fn solve_sudoku(board: &mut Vec<Vec<char>>) {
 
     macro_rules! next {
       () => {
+        // check if the sudoku is sovled, or run the next solve operate
         row == BOARD_SIZE - 1 && column == BOARD_SIZE - 1
           || recursion(next_row, next_column, input, rows, columns, arounds, nums)
       };
@@ -84,17 +80,12 @@ fn solve_sudoku(board: &mut Vec<Vec<char>>) {
         return true;
       }
     } else {
-      let around = sub_index(row, column);
-      let difference = nums
-        .difference(&rows[row])
-        .map(|v| *v)
-        .collect::<HashSet<char>>()
-        .difference(&columns[column])
-        .map(|v| *v)
-        .collect::<HashSet<char>>()
-        .difference(&arounds[around])
-        .map(|v| *v)
-        .collect::<HashSet<char>>();
+      let around = around_index(row, column);
+      let mut difference = nums.clone();
+      difference.retain(|v| {
+        // compute values match sudoku rules, use retain function instead of difference function
+        !rows[row].contains(v) && !columns[column].contains(v) && !arounds[around].contains(v)
+      });
 
       for v in difference {
         rows[row].insert(v);
@@ -104,6 +95,7 @@ fn solve_sudoku(board: &mut Vec<Vec<char>>) {
         if next!() {
           return true;
         } else {
+          // if the answer isn't found, unchange the values
           rows[row].remove(&v);
           columns[column].remove(&v);
           arounds[around].remove(&v);
@@ -134,7 +126,7 @@ fn q37_test() {
   solve_sudoku(&mut temp);
   assert_eq!(
     temp,
-    vec![
+    [
       ['5', '1', '9', '7', '4', '8', '6', '3', '2'],
       ['7', '8', '3', '6', '5', '2', '4', '1', '9'],
       ['4', '2', '6', '1', '3', '9', '8', '7', '5'],
@@ -161,7 +153,7 @@ fn q37_test() {
   solve_sudoku(&mut temp);
   assert_eq!(
     temp,
-    vec![
+    [
       ['5', '3', '4', '6', '7', '8', '9', '1', '2'],
       ['6', '7', '2', '1', '9', '5', '3', '4', '8'],
       ['1', '9', '8', '3', '4', '2', '5', '6', '7'],
