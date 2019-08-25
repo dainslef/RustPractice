@@ -27,3 +27,4 @@ Solutions for [`LeetCode`](https://leetcode.com/problems) problems using [`Rust`
 - [#34 Find First and Last Position of Element in Sorted Array](src/leetcode/q34_find_first_and_last_position_of_element_in_sorted_array.rs)
 - [#35 Valid Sudoku](src/leetcode/q35_valid_sudoku.rs)
 - [#37 Sudoku Solver](src/leetcode/q37_sudoku_solver.rs)
+- [#41 First Missing Positive](src/leetcode/q41_first_missing_positive.rs)
