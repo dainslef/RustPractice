@@ -33,7 +33,7 @@ fn search_range(nums: Vec<i32>, target: i32) -> Vec<i32> {
       (_, _, right) if right == target => Some((i_right, right)),
       _ => None,
     } {
-      let check_range = |range: &mut Iterator<Item = usize>, v: &mut i32| {
+      let check_range = |range: &mut dyn Iterator<Item = usize>, v: &mut i32| {
         for i in range {
           if nums[i] == value {
             *v = i as i32;

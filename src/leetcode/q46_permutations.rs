@@ -63,7 +63,7 @@ fn test_permute() {
   test(&permute_recursion);
 }
 
-fn test(permute: &Fn(Vec<i32>) -> Vec<Vec<i32>>) {
+fn test(permute: &dyn Fn(Vec<i32>) -> Vec<Vec<i32>>) {
   use super::check_element_eq;
   assert!(check_element_eq(
     permute(vec![1, 2, 3]),
