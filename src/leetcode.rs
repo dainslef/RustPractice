@@ -168,14 +168,15 @@ mod q5_longest_palindrome;
 mod q6_zipzag_conversion;
 mod q76_minimum_window_substring;
 mod q7_reverse_integer;
+mod q42_trapping_rain_water;
 mod q8_my_atoi;
 mod q92_reverse_linked_list_ii;
 mod q97_interleaving_string;
 
+// mod q43_multiply_strings;
 // mod q143_recoder_list;
 // mod q216_combination_sum_iii;
 // mod q377_combination_sum_iv;
-// mod q42_trapping_rain_water;
 // mod q47_permutations_ii;
 // mod q51_n_queens;
 // mod q52_n_queens_ii;
