@@ -10,7 +10,6 @@
  * Output: 6
  */
 
-// need refactoring and add comments
 fn trap(height: Vec<i32>) -> i32 {
   use std::collections::HashMap;
 
@@ -18,57 +17,52 @@ fn trap(height: Vec<i32>) -> i32 {
     return 0;
   }
 
-  let mut trap = 0;
   let (mut last, mut last_top, mut last_top_index, mut last_is_up) =
     (height[0], height[0], 0, true);
 
+  // record the filled height
   let mut temp: HashMap<usize, i32> = HashMap::new();
 
   for i in 1..height.len() {
+    macro_rules! record_height {
+      ($min:expr) => {
+        for i in last_top_index..i {
+          if temp.get(&i).map(|v| $min > *v).unwrap_or(true) {
+            temp.insert(i, $min);
+          }
+        }
+      };
+    }
+
     let current = height[i];
     let is_up = current > last;
-    if !is_up && last_is_up {
-      let min = std::cmp::min(last_top, last);
-      for i in last_top_index..i {
-        if let Some(v) = temp.get(&i) {
-          if &min > v {
-            temp.insert(i, min);
-          }
-        } else {
-          temp.insert(i, min);
-        }
-      }
+
+    // find the first index after height stop grow
+    if last_is_up && !is_up {
+      // save the filled height during the indexes
+      record_height!(std::cmp::min(last_top, last));
       if last > last_top {
         last_top = last;
         last_top_index = i;
       }
     };
+
+    // check if the index is the last
     if i == height.len() - 1 && is_up {
-      let min = std::cmp::min(last_top, current);
-      for i in last_top_index..=i {
-        if let Some(v) = temp.get(&i) {
-          if &min > v {
-            temp.insert(i, min);
-          }
-        } else {
-          temp.insert(i, min);
-        }
-      }
+      // save the filled height before the last
+      record_height!(std::cmp::min(last_top, current));
     };
+
     last_is_up = is_up;
     last = current;
   }
 
-  for i in 0..height.len() {
-    if let Some(min) = temp.get(&i) {
-      let offset = min - height[i];
-      if offset > 0 {
-        trap += offset;
-      }
-    }
-  }
-
-  trap
+  // some index which at last might not have filled height are recorded
+  (0..height.len())
+    .filter(|i| temp.contains_key(&i)) // filter value doesn't have filled height
+    .map(|i| temp[&i] - height[i]) // compute the offset
+    .filter(|offset| *offset > 0) // filter the invalid offset
+    .sum()
 }
 
 #[test]
