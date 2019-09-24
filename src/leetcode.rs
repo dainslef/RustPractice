@@ -162,6 +162,7 @@ mod q37_sudoku_solver;
 mod q40_combination_sum_ii;
 mod q41_first_missing_positive;
 mod q42_trapping_rain_water;
+mod q43_multiply_strings;
 mod q454_four_sum_two;
 mod q46_permutations;
 mod q47_permutations_ii;
@@ -174,7 +175,7 @@ mod q8_my_atoi;
 mod q92_reverse_linked_list_ii;
 mod q97_interleaving_string;
 
-// mod q43_multiply_strings;
+// mod q407_trapping_rain_water_ii;
 // mod q143_recoder_list;
 // mod q216_combination_sum_iii;
 // mod q377_combination_sum_iv;
