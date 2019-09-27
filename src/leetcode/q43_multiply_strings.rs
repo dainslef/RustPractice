@@ -24,54 +24,55 @@ fn multiply(num1: String, num2: String) -> String {
 
   use std::collections::VecDeque;
 
+  // use 2-dimensional arrays to save the product of each of the two numbers
+  // size: the length of num1 multiply the length of num2
   let (column_size, row_size) = (num1.len(), num2.len());
   let mut nums = (0..row_size)
     .map(|_| (0..column_size).map(|_| 0).collect())
-    .collect::<Vec<Vec<i32>>>();
+    .collect::<Vec<Vec<u32>>>();
 
-  fn n(c: char) -> i32 {
-    c as i32 - '0' as i32
-  }
-
+  // save the product of each of the two numbers
   for (x, c1) in num1.char_indices() {
     for (y, c2) in num2.char_indices() {
       let (row, column) = (num2.len() - y - 1, x);
-      nums[row][column] = n(c1) * n(c2);
+      if let (Some(n1), Some(n2)) = (c1.to_digit(10), c2.to_digit(10)) {
+        nums[row][column] = n1 * n2;
+      }
     }
   }
 
-  let mut plus = 0;
-  let mut result: VecDeque<char> = VecDeque::new();
+  let mut plus = 0; // save the carry
+  let mut result: VecDeque<u8> = VecDeque::new(); // save the ascii code of each digit of the result
 
-  let mut update_result = |plus: i32| -> i32 {
-    result.push_front(((plus % 10) as u8 + '0' as u8) as char);
-    plus / 10
-  };
-
-  for x in (0..column_size).rev() {
-    let mut offset = 0;
-    while let Some(v) = nums.get(0 + offset).and_then(|v| v.get(x + offset)) {
-      plus += v;
-      offset += 1;
-    }
-    plus = update_result(plus);
+  // compute the sum of the products
+  macro_rules! compute {
+    ($seq:expr, $row:expr, $column:expr) => {
+      for n in $seq {
+        let mut offset = 0;
+        while let Some(v) = nums
+          .get($row(n, offset))
+          .and_then(|v| v.get($column(n, offset)))
+        {
+          plus += v;
+          offset += 1;
+        }
+        // only calculate and record the product of one digit at a time
+        result.push_front((plus % 10) as u8 + '0' as u8);
+        plus /= 10;
+      }
+    };
   }
 
-  for y in 1..row_size {
-    let mut offset = 0;
-    while let Some(v) = nums.get(y + offset).and_then(|v| v.get(0 + offset)) {
-      plus += v;
-      offset += 1;
-    }
-    plus = update_result(plus);
-  }
+  // accumulate all the values
+  compute!((0..column_size).rev(), |_, s| s, |v, s| v + s);
+  compute!(1..row_size, |v, s| v + s, |_, s| s);
 
+  // check if the last carry exists
   if plus != 0 {
-    update_result(plus);
+    result.push_front((plus % 10) as u8 + '0' as u8);
   }
 
-  use std::iter::FromIterator;
-  String::from_iter(result.into_iter())
+  String::from_utf8(result.into()).unwrap()
 }
 
 #[test]
