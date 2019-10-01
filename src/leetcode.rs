@@ -159,6 +159,7 @@ mod q33_search_in_rotated_sorted_array;
 mod q34_find_first_and_last_position_of_element_in_sorted_array;
 mod q35_valid_sudoku;
 mod q37_sudoku_solver;
+mod q407_trapping_rain_water_ii;
 mod q40_combination_sum_ii;
 mod q41_first_missing_positive;
 mod q42_trapping_rain_water;
@@ -175,7 +176,6 @@ mod q8_my_atoi;
 mod q92_reverse_linked_list_ii;
 mod q97_interleaving_string;
 
-// mod q407_trapping_rain_water_ii;
 // mod q143_recoder_list;
 // mod q216_combination_sum_iii;
 // mod q377_combination_sum_iv;
