@@ -13,7 +13,7 @@
 fn trap(height: Vec<i32>) -> i32 {
   use std::collections::HashMap;
 
-  if height.len() == 0 {
+  if height.is_empty() {
     return 0;
   }
 
@@ -65,14 +65,50 @@ fn trap(height: Vec<i32>) -> i32 {
     .sum()
 }
 
+fn trap_two_side(height: Vec<i32>) -> i32 {
+  let mut water = 0;
+  if height.is_empty() {
+    return water;
+  }
+
+  let length = height.len();
+  let (mut left_max, mut right_max) = (
+    (0..length).map(|_| 0).collect::<Vec<i32>>(),
+    (0..length).map(|_| 0).collect::<Vec<i32>>(),
+  );
+  left_max[0] = height[0];
+  right_max[length - 1] = height[length - 1];
+
+  for l in 1..length - 1 {
+    left_max[l] = std::cmp::max(left_max[l - 1], height[l]);
+    let r = length - l - 1;
+    right_max[r] = std::cmp::max(right_max[r + 1], height[r]);
+  }
+
+  for i in 1..length - 1 {
+    let min = std::cmp::min(left_max[i], right_max[i]);
+    if min > height[i] {
+      water += min - height[i];
+    }
+  }
+
+  water
+}
+
 #[test]
-fn test_trap() {
-  assert_eq!(trap(vec![2, 0, 2]), 2);
-  assert_eq!(trap(vec![2, 0, 3]), 2);
-  assert_eq!(trap(vec![8, 0, 7, 0, 10]), 17);
-  assert_eq!(trap(vec![5, 2, 1, 2, 1, 5]), 14);
-  assert_eq!(trap(vec![5, 8, 9, 4, 9, 6, 1, 4]), 8);
-  assert_eq!(trap(vec![0, 1, 8, 2, 1, 0, 1, 3, 7, 1, 2, 1]), 29);
-  assert_eq!(trap(vec![0, 1, 0, 2, 1, 0, 1, 3, 2, 1, 2, 1]), 6);
-  assert_eq!(trap(vec![8, 7, 6, 5, 4, 3, 2, 1, 9, 2, 3, 4, 10, 6]), 46);
+fn test_q42() {
+  fn test(trap: impl Fn(Vec<i32>) -> i32) {
+    assert_eq!(trap(vec![]), 0);
+    assert_eq!(trap(vec![2, 0, 2]), 2);
+    assert_eq!(trap(vec![2, 0, 3]), 2);
+    assert_eq!(trap(vec![8, 0, 7, 0, 10]), 17);
+    assert_eq!(trap(vec![5, 2, 1, 2, 1, 5]), 14);
+    assert_eq!(trap(vec![5, 8, 9, 4, 9, 6, 1, 4]), 8);
+    assert_eq!(trap(vec![0, 1, 8, 2, 1, 0, 1, 3, 7, 1, 2, 1]), 29);
+    assert_eq!(trap(vec![0, 1, 0, 2, 1, 0, 1, 3, 2, 1, 2, 1]), 6);
+    assert_eq!(trap(vec![8, 7, 6, 5, 4, 3, 2, 1, 9, 2, 3, 4, 10, 6]), 46);
+  }
+
+  test(trap);
+  test(trap_two_side);
 }
