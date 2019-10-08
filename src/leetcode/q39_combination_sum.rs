@@ -136,42 +136,42 @@ fn combination_sum_recursion_self(candidates: Vec<i32>, target: i32) -> Vec<Vec<
 }
 
 #[test]
-fn test_combination_sum() {
+fn test_q39() {
+  fn test(combination_sum: impl Fn(Vec<i32>, i32) -> Vec<Vec<i32>>) {
+    use super::check_element_eq;
+
+    assert!(check_element_eq(
+      combination_sum(vec![8, 6, 7, 9], 5).iter(),
+      vec![].iter()
+    ));
+    assert!(check_element_eq(
+      combination_sum(vec![2], 1).iter(),
+      vec![].iter()
+    ));
+    assert!(check_element_eq(
+      combination_sum(vec![7, 3, 2], 18).iter(),
+      vec![
+        vec![2, 2, 2, 2, 2, 2, 2, 2, 2],
+        vec![2, 2, 2, 2, 2, 2, 3, 3],
+        vec![2, 2, 2, 2, 3, 7],
+        vec![2, 2, 2, 3, 3, 3, 3],
+        vec![2, 2, 7, 7],
+        vec![2, 3, 3, 3, 7],
+        vec![3, 3, 3, 3, 3, 3]
+      ]
+      .iter()
+    ));
+    assert!(check_element_eq(
+      combination_sum(vec![2, 3, 7, 6], 7).iter(),
+      vec![vec![7], vec![2, 2, 3]].iter()
+    ));
+    assert!(check_element_eq(
+      combination_sum(vec![2, 3, 5], 8).iter(),
+      vec![vec![2, 2, 2, 2], vec![2, 3, 3], vec![3, 5]].iter()
+    ));
+  }
+
   test(combination_sum);
   test(combination_sum_recursion);
   test(combination_sum_recursion_self);
-}
-
-fn test(combination_sum: impl Fn(Vec<i32>, i32) -> Vec<Vec<i32>>) {
-  use super::check_element_eq;
-
-  assert!(check_element_eq(
-    combination_sum(vec![8, 6, 7, 9], 5).iter(),
-    vec![].iter()
-  ));
-  assert!(check_element_eq(
-    combination_sum(vec![2], 1).iter(),
-    vec![].iter()
-  ));
-  assert!(check_element_eq(
-    combination_sum(vec![7, 3, 2], 18).iter(),
-    vec![
-      vec![2, 2, 2, 2, 2, 2, 2, 2, 2],
-      vec![2, 2, 2, 2, 2, 2, 3, 3],
-      vec![2, 2, 2, 2, 3, 7],
-      vec![2, 2, 2, 3, 3, 3, 3],
-      vec![2, 2, 7, 7],
-      vec![2, 3, 3, 3, 7],
-      vec![3, 3, 3, 3, 3, 3]
-    ]
-    .iter()
-  ));
-  assert!(check_element_eq(
-    combination_sum(vec![2, 3, 7, 6], 7).iter(),
-    vec![vec![7], vec![2, 2, 3]].iter()
-  ));
-  assert!(check_element_eq(
-    combination_sum(vec![2, 3, 5], 8).iter(),
-    vec![vec![2, 2, 2, 2], vec![2, 3, 3], vec![3, 5]].iter()
-  ));
 }

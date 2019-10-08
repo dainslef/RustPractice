@@ -107,28 +107,28 @@ fn combination_sum2_recursion(candidates: Vec<i32>, target: i32) -> Vec<Vec<i32>
 }
 
 #[test]
-fn test_combination_sum2() {
+fn test_q40() {
+  fn test(combination_sum2: impl Fn(Vec<i32>, i32) -> Vec<Vec<i32>>) {
+    use super::check_element_eq;
+
+    assert!(check_element_eq(
+      combination_sum2(vec![8, 6, 7, 9], 5).iter(),
+      vec![].iter()
+    ));
+    assert!(check_element_eq(
+      combination_sum2(vec![2], 1).iter(),
+      vec![].iter()
+    ));
+    assert!(check_element_eq(
+      combination_sum2(vec![10, 1, 2, 7, 6, 1, 5], 8).iter(),
+      vec![vec![1, 7], vec![1, 2, 5], vec![2, 6], vec![1, 1, 6]].iter()
+    ));
+    assert!(check_element_eq(
+      combination_sum2(vec![2, 5, 2, 1, 2], 5).iter(),
+      vec![vec![1, 2, 2], vec![5]].iter()
+    ));
+  }
+
   test(combination_sum2);
   test(combination_sum2_recursion);
-}
-
-fn test(combination_sum2: impl Fn(Vec<i32>, i32) -> Vec<Vec<i32>>) {
-  use super::check_element_eq;
-
-  assert!(check_element_eq(
-    combination_sum2(vec![8, 6, 7, 9], 5).iter(),
-    vec![].iter()
-  ));
-  assert!(check_element_eq(
-    combination_sum2(vec![2], 1).iter(),
-    vec![].iter()
-  ));
-  assert!(check_element_eq(
-    combination_sum2(vec![10, 1, 2, 7, 6, 1, 5], 8).iter(),
-    vec![vec![1, 7], vec![1, 2, 5], vec![2, 6], vec![1, 1, 6]].iter()
-  ));
-  assert!(check_element_eq(
-    combination_sum2(vec![2, 5, 2, 1, 2], 5).iter(),
-    vec![vec![1, 2, 2], vec![5]].iter()
-  ));
 }
