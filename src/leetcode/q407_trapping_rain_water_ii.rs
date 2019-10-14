@@ -33,7 +33,8 @@
 fn trap_rain_water(height_map: Vec<Vec<i32>>) -> i32 {
   use std::{cmp::Ordering, collections::BinaryHeap};
 
-  if height_map.len() == 0 {
+  // check empty inputs
+  if height_map.is_empty() {
     return 0;
   }
 
@@ -44,7 +45,9 @@ fn trap_rain_water(height_map: Vec<Vec<i32>>) -> i32 {
     h: i32,
   }
 
+  // implementing custom comparison logic for type Cell
   impl PartialOrd for Cell {
+    // the BinaryHeap in Rust is Min-Heap by default, so the opposite comparsion should be used
     fn partial_cmp(&self, other: &Self) -> Option<Ordering> {
       Option::Some(match (self.h, other.h) {
         (h1, h2) if h1 > h2 => Ordering::Less,
@@ -62,6 +65,7 @@ fn trap_rain_water(height_map: Vec<Vec<i32>>) -> i32 {
     .map(|_| (0..column).map(|_| false).collect())
     .collect::<Vec<Vec<bool>>>();
 
+  // add the points from the edge
   for y in 0..row {
     let (x1, x2) = (0, column - 1);
     heap.push(Cell {
@@ -77,7 +81,6 @@ fn trap_rain_water(height_map: Vec<Vec<i32>>) -> i32 {
     visited[y][x1] = true;
     visited[y][x2] = true;
   }
-
   for x in 1..column {
     let (y1, y2) = (0, row - 1);
     heap.push(Cell {
@@ -96,17 +99,20 @@ fn trap_rain_water(height_map: Vec<Vec<i32>>) -> i32 {
 
   let mut water = 0;
   while let Some(cell) = heap.pop() {
+    // check four directions
     for (offset_x, offset_y) in &DIRS {
       let (x, y) = (
         (cell.x as i32 + offset_x) as usize,
         (cell.y as i32 + offset_y) as usize,
       );
+      // deal the point not be visited
       if x > 0 && x < column && y > 0 && y < row && !visited[y][x] {
         let (current_h, next_h) = (cell.h, height_map[y][x]);
         heap.push(Cell {
           x,
           y,
           h: if current_h > next_h {
+            // if the current height is larger than target height, increase the water size
             water += current_h - next_h;
             current_h
           } else {
