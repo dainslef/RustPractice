@@ -36,5 +36,5 @@ Solutions for [`LeetCode`](https://leetcode.com/problems) problems using [`Rust`
 - [#92 Reverse Linked List II](src/leetcode/q92_reverse_linked_list_ii.rs)
 - [#97 Interleaving String](src/leetcode/q97_interleaving_string.rs)
 - [#407 Trapping Rain Water II](src/leetcode/q407_trapping_rain_water_ii.rs)
-- [#445 Add Two Numbers II](src/leetcode/q445_add_two_numbers_two.rs)
-- [#454 Four Sum II](src/leetcode/q454_four_sum_two.rs)
+- [#445 Add Two Numbers II](src/leetcode/q445_add_two_numbers_ii.rs)
+- [#454 4Sum II](src/leetcode/q454_four_sum_ii.rs)

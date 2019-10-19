@@ -4,7 +4,8 @@
  *
  * Functions used by tests but not used by other modules will not receive
  * warnning message like "warning: function is never used: `...`".
- * Use "#[cfg(dead_code)]" to dsiable warning of the unused code
+ * Use "#[allow(dead_code)]" to dsiable warning of unused code.
+ * Macro has similar problem, use "#[allow(unused_macros)]" to disable warning of unused macro.
  */
-#[allow(dead_code)]
+#[allow(dead_code, unused_macros)]
 mod leetcode;
