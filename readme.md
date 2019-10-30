@@ -30,6 +30,7 @@ Solutions for [`LeetCode`](https://leetcode.com/problems) problems using [`Rust`
 - [#41 First Missing Positive](src/leetcode/q41_first_missing_positive.rs)
 - [#42 Trapping Rain Water](src/leetcode/q42_trapping_rain_water.rs)
 - [#43 Multiply Strings](src/leetcode/q43_multiply_strings.rs)
+- [#44 Wildcard Matching](src/leetcode/q44_wildcard_matching.rs)
 - [#46 Permulations](src/leetcode/q46_permutations.rs)
 - [#47 Permutations II](src/leetcode/q47_permutations_ii.rs)
 - [#76 Minimum Window Substring](src/leetcode/q76_minimum_window_substring.rs)
