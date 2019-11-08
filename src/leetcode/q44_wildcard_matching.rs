@@ -76,36 +76,71 @@ fn is_match(s: String, p: String) -> bool {
   s_i == s_chars.len() && p_i == p_chars.len()
 }
 
+fn is_match_recursion(s: String, p: String) -> bool {
+  fn recursion(
+    s: &Vec<char>,
+    p: &Vec<char>,
+    s_i: usize,
+    mut p_i: usize,
+    backup: Option<(usize, usize)>,
+  ) -> bool {
+    match (s.get(s_i), p.get(p_i)) {
+      (Some(_), Some('*')) => recursion(s, p, s_i, p_i + 1, Some((s_i, p_i))),
+      (Some(s_char), Some(p_char)) if p_char == s_char || p_char == &'?' => {
+        recursion(s, p, s_i + 1, p_i + 1, backup)
+      }
+      (Some(_), _) if backup.is_some() => {
+        recursion(s, p, backup.unwrap().0 + 1, backup.unwrap().1, backup)
+      }
+      _ => {
+        s_i == s.len() && {
+          while Some(&'*') == p.get(p_i) {
+            p_i += 1;
+          }
+          p_i == p.len()
+        }
+      }
+    }
+  }
+
+  recursion(&s.chars().collect(), &p.chars().collect(), 0, 0, None)
+}
+
 #[test]
 fn test_q44() {
-  assert_eq!(is_match("abaabaaaabbabbaaabaabababbaabaabbabaaaaabababbababaabbabaabbbbaabbbbbbbabaaabbaaaaabbaabbbaaaaabbbabb".into(),
+  fn test(is_match: impl Fn(String, String) -> bool) {
+    assert_eq!(is_match("adceb".into(), "*a*b".into()), true);
+    assert_eq!(is_match("".into(), "***".into()), true);
+    assert_eq!(is_match("".into(), "*?".into()), false);
+    assert_eq!(is_match("aa".into(), "a".into()), false);
+    assert_eq!(is_match("aa".into(), "*".into()), true);
+    assert_eq!(is_match("aa".into(), "***".into()), true);
+    assert_eq!(is_match("aa".into(), "a*".into()), true);
+    assert_eq!(is_match("aa".into(), "*a".into()), true);
+    assert_eq!(is_match("aa".into(), "?*".into()), true);
+    assert_eq!(is_match("aa".into(), "*?".into()), true);
+    assert_eq!(is_match("aa".into(), "??".into()), true);
+    assert_eq!(is_match("aa".into(), "*a??".into()), false);
+    assert_eq!(is_match("acdcb".into(), "a*c?b".into()), false);
+    assert_eq!(is_match("acdcb".into(), "a*?cb".into()), true);
+    assert_eq!(
+      is_match(
+        "bbbababbabbbbabbbbaabaaabbbbabbbababbbbababaabbbab".into(),
+        "b******b****".into()
+      ),
+      true
+    );
+    assert_eq!(
+      is_match(
+        "bbbababbabbbbabbbbaabaaabbbbabbbababbbbababaabbbab".into(),
+        "a******b*".into()
+      ),
+      false
+    );
+    assert_eq!(is_match("abaabaaaabbabbaaabaabababbaabaabbabaaaaabababbababaabbabaabbbbaabbbbbbbabaaabbaaaaabbaabbbaaaaabbbabb".into(),
   "ab*aaba**abbaaaa**b*b****aa***a*b**ba*a**ba*baaa*b*ab*".into()), false);
-  assert_eq!(is_match("adceb".into(), "*a*b".into()), true);
-  assert_eq!(is_match("".into(), "***".into()), true);
-  assert_eq!(is_match("".into(), "*?".into()), false);
-  assert_eq!(
-    is_match(
-      "bbbababbabbbbabbbbaabaaabbbbabbbababbbbababaabbbab".into(),
-      "b******b****".into()
-    ),
-    true
-  );
-  assert_eq!(
-    is_match(
-      "bbbababbabbbbabbbbaabaaabbbbabbbababbbbababaabbbab".into(),
-      "a******b*".into()
-    ),
-    false
-  );
-  assert_eq!(is_match("aa".into(), "a".into()), false);
-  assert_eq!(is_match("aa".into(), "*".into()), true);
-  assert_eq!(is_match("aa".into(), "***".into()), true);
-  assert_eq!(is_match("aa".into(), "a*".into()), true);
-  assert_eq!(is_match("aa".into(), "*a".into()), true);
-  assert_eq!(is_match("aa".into(), "?*".into()), true);
-  assert_eq!(is_match("aa".into(), "*?".into()), true);
-  assert_eq!(is_match("aa".into(), "??".into()), true);
-  assert_eq!(is_match("aa".into(), "*a??".into()), false);
-  assert_eq!(is_match("acdcb".into(), "a*c?b".into()), false);
-  assert_eq!(is_match("acdcb".into(), "a*?cb".into()), true);
+  }
+
+  test(is_match);
+  test(is_match_recursion);
 }
