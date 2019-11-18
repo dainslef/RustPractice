@@ -46,8 +46,11 @@
  */
 
 fn is_match(s: String, p: String) -> bool {
+  // save the input chars and pattern have been matched
   let (s_chars, p_chars): (Vec<char>, Vec<char>) = (s.chars().collect(), p.chars().collect());
+  // save the match content index
   let (mut s_i, mut p_i) = (0, 0);
+  // backup the last match index with the pattern '*'
   let mut backup = None;
 
   while let Some(current_s) = s_chars.get(s_i) {
@@ -56,12 +59,15 @@ fn is_match(s: String, p: String) -> bool {
       .map(|v| v == current_s || *v == '?')
       .unwrap_or(false)
     {
+      // normal match, update the match index
       s_i += 1;
       p_i += 1;
     } else if current_p.map(|v| *v == '*').unwrap_or(false) {
+      // match the pattern '*', backup the match index and update pattern index
       backup = Some((s_i, p_i));
       p_i += 1;
     } else if let Some((backup_s_i, backup_p_i)) = backup {
+      // if current pattern match nothing, try recovering data from backup
       p_i = backup_p_i;
       s_i = backup_s_i + 1;
     } else {
@@ -70,9 +76,11 @@ fn is_match(s: String, p: String) -> bool {
   }
 
   while Some(&'*') == p_chars.get(p_i) {
+    // if the current last pattern is '*', can up the pattern index
     p_i += 1;
   }
 
+  // check if the final index match the pattern
   s_i == s_chars.len() && p_i == p_chars.len()
 }
 
@@ -85,10 +93,13 @@ fn is_match_recursion(s: String, p: String) -> bool {
     backup: Option<(usize, usize)>,
   ) -> bool {
     match (s.get(s_i), p.get(p_i)) {
+      // macth any content
       (Some(_), Some('*')) => recursion(s, p, s_i, p_i + 1, Some((s_i, p_i))),
+      // match the char equals the char in partten
       (Some(s_char), Some(p_char)) if p_char == s_char || p_char == &'?' => {
         recursion(s, p, s_i + 1, p_i + 1, backup)
       }
+      // if the target char doesn't match the partten, check if have backup, try recovering from backup
       (Some(_), _) if backup.is_some() => {
         recursion(s, p, backup.unwrap().0 + 1, backup.unwrap().1, backup)
       }
