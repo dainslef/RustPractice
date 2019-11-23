@@ -33,6 +33,7 @@ Solutions for [`LeetCode`](https://leetcode.com/problems) problems using [`Rust`
 - [#44 Wildcard Matching](src/leetcode/q44_wildcard_matching.rs)
 - [#46 Permulations](src/leetcode/q46_permutations.rs)
 - [#47 Permutations II](src/leetcode/q47_permutations_ii.rs)
+- [#48 Rotate Image](src/leetcode/q48_rotate_image.rs)
 - [#76 Minimum Window Substring](src/leetcode/q76_minimum_window_substring.rs)
 - [#92 Reverse Linked List II](src/leetcode/q92_reverse_linked_list_ii.rs)
 - [#97 Interleaving String](src/leetcode/q97_interleaving_string.rs)
