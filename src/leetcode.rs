@@ -170,6 +170,7 @@ mod q454_four_sum_ii;
 mod q46_permutations;
 mod q47_permutations_ii;
 mod q48_rotate_image;
+mod q49_group_anagrams;
 mod q4_find_median_sorted_arrays;
 mod q5_longest_palindrome;
 mod q6_zipzag_conversion;
