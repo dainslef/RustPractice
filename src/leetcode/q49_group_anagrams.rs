@@ -17,26 +17,24 @@
  */
 
 fn group_anagrams(strs: Vec<String>) -> Vec<Vec<String>> {
-  fn key(s: &String) -> Vec<u32> {
-    let mut chars = ('a' as u8..='z' as u8)
-      .map(|_| 0)
-      .collect::<Vec<u32>>();
-
+  // calculate the chars of different string
+  fn key(s: &String) -> [u32; 26] {
+    let mut chars = [0; 26]; // use array to record the size of chars
     for c in s.chars() {
-      chars[c as usize - 'a' as usize] += 1;
+      chars[c as usize - 'a' as usize] += 1; // update the size of chars
     }
-
     chars
   }
 
   use std::collections::HashMap;
-  let mut temp = HashMap::new();
+  let mut temp = HashMap::new(); // use HashMap to group the strings
 
   for s in strs {
-    let t = temp.entry(key(&s)).or_insert(vec![]);
-    t.push(s);
+    // update the string group by chars info
+    temp.entry(key(&s)).or_insert(vec![]).push(s);
   }
 
+  // collect the values of hash map
   temp.into_iter().map(|v| v.1).collect()
 }
 
