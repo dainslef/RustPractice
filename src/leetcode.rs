@@ -172,6 +172,7 @@ mod q47_permutations_ii;
 mod q48_rotate_image;
 mod q49_group_anagrams;
 mod q4_find_median_sorted_arrays;
+mod q50_pow_x_n;
 mod q5_longest_palindrome;
 mod q6_zipzag_conversion;
 mod q76_minimum_window_substring;
