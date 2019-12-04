@@ -181,12 +181,13 @@ mod q8_my_atoi;
 mod q92_reverse_linked_list_ii;
 mod q97_interleaving_string;
 
+// mod q54_spiral_matrix;
 // mod q55_jump_game;
 // mod q45_jump_game_ii;
 // mod q143_recoder_list;
 // mod q216_combination_sum_iii;
 // mod q377_combination_sum_iv;
-// mod q51_n_queens;
+mod q51_n_queens;
 // mod q52_n_queens_ii;
 // mod q60_permutation_sequence;
 // mod q77_combinations;
