@@ -49,6 +49,7 @@ fn rotate(matrix: &mut Vec<Vec<i32>>) {
     // don't change item you have changed before (based on index y)
     for x in y..max - y {
       let (r_x, r_y) = (max - x, max - y);
+      // backup the old values
       let (a, b, c, d) = (
         matrix[y][x],
         matrix[x][r_y],

@@ -21,22 +21,21 @@
  */
 
 fn my_pow(x: f64, n: i32) -> f64 {
-  if x == 0.0 {
-    0.0
-  } else if n == 0 {
-    1.0
-  } else if n == 1 {
-    x
-  } else if n == -1 {
-    1.0 / x
-  } else {
-    let v = my_pow(x, n / 2);
-    v * v * my_pow(x, n % 2)
+  match n {
+    0 => 1.0,
+    1 => x,
+    -1 => 1.0 / x,
+    _ => {
+      let v = my_pow(x, n / 2); // avoid duplicate computation
+      v * v * my_pow(x, n % 2) // split computation process into smaller parts
+    }
   }
 }
 
 #[test]
 fn q50_test() {
+  assert_eq!(my_pow(0.0, 0), 1.0);
+  assert_eq!(my_pow(0.0, 2147483647), 0.0);
   assert_eq!(my_pow(0.00001, 2147483647), 0.0);
   assert_eq!(my_pow(1111.0, 0), 1.0);
   assert_eq!(my_pow(2.0, 10), 1024.0);
