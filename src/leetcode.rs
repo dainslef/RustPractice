@@ -167,6 +167,7 @@ mod q42_trapping_rain_water;
 mod q43_multiply_strings;
 mod q44_wildcard_matching;
 mod q454_four_sum_ii;
+mod q45_jump_game_ii;
 mod q46_permutations;
 mod q47_permutations_ii;
 mod q48_rotate_image;
@@ -184,7 +185,6 @@ mod q97_interleaving_string;
 
 // mod q54_spiral_matrix;
 // mod q55_jump_game;
-// mod q45_jump_game_ii;
 // mod q143_recoder_list;
 // mod q216_combination_sum_iii;
 // mod q377_combination_sum_iv;
