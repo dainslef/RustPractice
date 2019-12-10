@@ -16,15 +16,50 @@
  * You can assume that you can always reach the last index.
  */
 
+// TLE, use DFS cost a lot of time
+fn jump_recursion(nums: Vec<i32>) -> i32 {
+  fn recursion(
+    nums: &Vec<i32>,
+    index: usize,
+    step: usize,
+    min_step: Option<usize>,
+  ) -> Option<usize> {
+    use std::{cmp::Reverse, collections::BinaryHeap};
+
+    let mut mins = BinaryHeap::new();
+    if index + 1 == nums.len() {
+      return Some(index);
+    } else if min_step.map(|v| step < v).unwrap_or(true) {
+      for i in 1..=nums[index] as usize {
+        let index_next = index + i;
+        if index_next >= nums.len() - 1 {
+          mins.push(Reverse(step + 1));
+        } else if let Some(v) = recursion(nums, index_next, step + 1, mins.peek().map(|v| v.0)) {
+          mins.push(Reverse(v));
+        }
+      }
+    }
+
+    mins.peek().map(|v| v.0).or(min_step)
+  }
+
+  recursion(&nums, 0, 0, None).map(|v| v as i32).unwrap_or(0)
+}
+
 fn jump(nums: Vec<i32>) -> i32 {
   let (mut last_reach, mut current_reach, mut step) = (0, 0, 0);
 
   for i in 0..nums.len() {
+    // check if the last reach index is less than current index
     if last_reach < i {
+      // if the last max reach index is smaller than current index, it means should cost a step to jump index
       last_reach = current_reach;
+      // update the step size
       step += 1;
     }
 
+    // compare with the new reach index, update the current reach index if the new one is larger than current
+    // always make current reach index to be the biggest reach index now
     current_reach = std::cmp::max(current_reach, nums[i] as usize + i);
   }
 
