@@ -53,25 +53,25 @@ fn next_permutation(nums: &mut Vec<i32>) {
 fn q31_test() {
   let nums = &mut vec![1, 2, 3];
   next_permutation(nums);
-  assert_eq!(nums, &vec![1, 3, 2]);
+  assert_eq!(*nums, [1, 3, 2]);
 
   let nums = &mut vec![3, 2, 1];
   next_permutation(nums);
-  assert_eq!(nums, &vec![1, 2, 3]);
+  assert_eq!(*nums, [1, 2, 3]);
 
   let nums = &mut vec![5, 1, 4, 3, 2];
   next_permutation(nums);
-  assert_eq!(nums, &vec![5, 2, 1, 3, 4]);
+  assert_eq!(*nums, [5, 2, 1, 3, 4]);
 
   let nums = &mut vec![8, 0, 4, 2, 7, 6];
   next_permutation(nums);
-  assert_eq!(nums, &vec![8, 0, 4, 6, 2, 7]);
+  assert_eq!(*nums, [8, 0, 4, 6, 2, 7]);
 
   let nums = &mut vec![1, 2, 9, 5, 8, 7, 3, 2];
   next_permutation(nums);
-  assert_eq!(nums, &vec![1, 2, 9, 7, 2, 3, 5, 8]);
+  assert_eq!(*nums, [1, 2, 9, 7, 2, 3, 5, 8]);
 
   let nums = &mut vec![9, 4, 8, 9, 7, 5];
   next_permutation(nums);
-  assert_eq!(nums, &vec![9, 4, 9, 5, 7, 8]);
+  assert_eq!(*nums, [9, 4, 9, 5, 7, 8]);
 }

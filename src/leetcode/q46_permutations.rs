@@ -58,51 +58,51 @@ fn permute(nums: Vec<i32>) -> Vec<Vec<i32>> {
 }
 
 #[test]
-fn test_permute() {
-  test(&permute);
-  test(&permute_recursion);
-}
+fn q46_test() {
+  fn test(permute: impl Fn(Vec<i32>) -> Vec<Vec<i32>>) {
+    use super::check_element_eq;
+    assert!(check_element_eq(
+      permute(vec![1, 2, 3]),
+      vec![
+        vec![1, 2, 3],
+        vec![1, 3, 2],
+        vec![2, 1, 3],
+        vec![2, 3, 1],
+        vec![3, 1, 2],
+        vec![3, 2, 1]
+      ]
+    ));
+    assert!(check_element_eq(
+      permute(vec![4, 2, 1, 3]),
+      vec![
+        vec![4, 3, 2, 1],
+        vec![3, 4, 2, 1],
+        vec![3, 2, 4, 1],
+        vec![3, 2, 1, 4],
+        vec![4, 2, 3, 1],
+        vec![2, 4, 3, 1],
+        vec![2, 3, 4, 1],
+        vec![2, 3, 1, 4],
+        vec![4, 2, 1, 3],
+        vec![2, 4, 1, 3],
+        vec![2, 1, 4, 3],
+        vec![2, 1, 3, 4],
+        vec![4, 3, 1, 2],
+        vec![3, 4, 1, 2],
+        vec![3, 1, 4, 2],
+        vec![3, 1, 2, 4],
+        vec![4, 1, 3, 2],
+        vec![1, 4, 3, 2],
+        vec![1, 3, 4, 2],
+        vec![1, 3, 2, 4],
+        vec![4, 1, 2, 3],
+        vec![1, 4, 2, 3],
+        vec![1, 2, 4, 3],
+        vec![1, 2, 3, 4]
+      ]
+    ));
+  }
 
-fn test(permute: &dyn Fn(Vec<i32>) -> Vec<Vec<i32>>) {
-  use super::check_element_eq;
-  assert!(check_element_eq(
-    permute(vec![1, 2, 3]),
-    vec![
-      vec![1, 2, 3],
-      vec![1, 3, 2],
-      vec![2, 1, 3],
-      vec![2, 3, 1],
-      vec![3, 1, 2],
-      vec![3, 2, 1]
-    ]
-  ));
-  assert!(check_element_eq(
-    permute(vec![4, 2, 1, 3]),
-    vec![
-      vec![4, 3, 2, 1],
-      vec![3, 4, 2, 1],
-      vec![3, 2, 4, 1],
-      vec![3, 2, 1, 4],
-      vec![4, 2, 3, 1],
-      vec![2, 4, 3, 1],
-      vec![2, 3, 4, 1],
-      vec![2, 3, 1, 4],
-      vec![4, 2, 1, 3],
-      vec![2, 4, 1, 3],
-      vec![2, 1, 4, 3],
-      vec![2, 1, 3, 4],
-      vec![4, 3, 1, 2],
-      vec![3, 4, 1, 2],
-      vec![3, 1, 4, 2],
-      vec![3, 1, 2, 4],
-      vec![4, 1, 3, 2],
-      vec![1, 4, 3, 2],
-      vec![1, 3, 4, 2],
-      vec![1, 3, 2, 4],
-      vec![4, 1, 2, 3],
-      vec![1, 4, 2, 3],
-      vec![1, 2, 4, 3],
-      vec![1, 2, 3, 4]
-    ]
-  ));
+  test(permute);
+  test(permute_recursion);
 }

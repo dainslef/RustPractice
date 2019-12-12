@@ -66,22 +66,22 @@ fn rotate(matrix: &mut Vec<Vec<i32>>) {
 }
 
 #[test]
-fn test_q48() {
+fn q48_test() {
   let mut matrix = vec![vec![]];
   rotate(&mut matrix);
-  assert_eq!(matrix, vec![vec![]]);
+  assert_eq!(matrix, [[]]);
 
   let mut matrix = vec![vec![1]];
   rotate(&mut matrix);
-  assert_eq!(matrix, vec![vec![1]]);
+  assert_eq!(matrix, [[1]]);
 
   let mut matrix = vec![vec![1, 2], vec![3, 4]];
   rotate(&mut matrix);
-  assert_eq!(matrix, vec![vec![3, 1], vec![4, 2]]);
+  assert_eq!(matrix, [[3, 1], [4, 2]]);
 
   let mut matrix = vec![vec![1, 2, 3], vec![4, 5, 6], vec![7, 8, 9]];
   rotate(&mut matrix);
-  assert_eq!(matrix, vec![vec![7, 4, 1], vec![8, 5, 2], vec![9, 6, 3]]);
+  assert_eq!(matrix, [[7, 4, 1], [8, 5, 2], [9, 6, 3]]);
 
   let mut matrix = vec![
     vec![5, 1, 9, 11],
@@ -92,11 +92,11 @@ fn test_q48() {
   rotate(&mut matrix);
   assert_eq!(
     matrix,
-    vec![
-      vec![15, 13, 2, 5],
-      vec![14, 3, 4, 1],
-      vec![12, 6, 8, 9],
-      vec![16, 7, 10, 11]
+    [
+      [15, 13, 2, 5],
+      [14, 3, 4, 1],
+      [12, 6, 8, 9],
+      [16, 7, 10, 11]
     ]
   );
 }
