@@ -39,66 +39,38 @@ fn generate_matrix(n: i32) -> Vec<Vec<i32>> {
     }
   }
 
-  struct Position {
-    x: usize,
-    y: usize,
-    width: usize,
-    height: usize,
-    value: i32,
-    dir: Dir,
-    matrix: Vec<Vec<i32>>,
-  }
+  let (mut x, mut y, mut value, mut dir) = (0, 0, 1, Dir::Right);
+  let mut matrix = (0..n)
+    .map(|y| {
+      (0..n)
+        .map(|x| if x == 0 && y == 0 { 1 } else { 0 })
+        .collect()
+    })
+    .collect::<Vec<Vec<i32>>>();
 
-  impl Position {
-    fn new(size: usize) -> Position {
-      Position {
-        x: 0,
-        y: 0,
-        width: size,
-        height: size,
-        value: 1,
-        dir: Dir::Right,
-        matrix: (0..size)
-          .map(|y| {
-            (0..size)
-              .map(|x| if x == 0 && y == 0 { 1 } else { 0 })
-              .collect()
-          })
-          .collect::<Vec<Vec<i32>>>(),
-      }
-    }
-    fn next(&mut self) -> bool {
-      self.value += 1;
-      let mut next_index = self.dir.next_index(self.x, self.y);
-
-      macro_rules! invalid {
-        () => {
-          next_index
-            .and_then(|(x, y)| self.matrix.get(y).and_then(|v| v.get(x)).map(|v| *v > 0))
-            .unwrap_or(true)
-        };
-      }
-
-      if invalid!() {
-        self.dir = self.dir.next_dir();
-        next_index = self.dir.next_index(self.x, self.y);
-      }
-
-      if invalid!() {
-        false
-      } else {
-        self.x = next_index.unwrap().0;
-        self.y = next_index.unwrap().1;
-        self.matrix[self.y][self.x] = self.value;
-        true
-      }
-    }
-  }
-
-  let mut position = Position::new(n as usize);
   loop {
-    if !position.next() {
-      return position.matrix;
+    value += 1;
+    let mut next_index = dir.next_index(x, y);
+
+    macro_rules! invalid {
+      () => {
+        next_index
+          .and_then(|(x, y)| matrix.get(y).and_then(|v| v.get(x)).map(|v| *v > 0))
+          .unwrap_or(true)
+      };
+    }
+
+    if invalid!() {
+      dir = dir.next_dir();
+      next_index = dir.next_index(x, y);
+    }
+
+    if invalid!() {
+      break matrix;
+    } else {
+      x = next_index.unwrap().0;
+      y = next_index.unwrap().1;
+      matrix[y][x] = value;
     }
   }
 }
