@@ -21,6 +21,98 @@
  * Output: [1,2,3,4,8,12,11,10,9,5,6,7]
  */
 
+fn spiral_order_dir(matrix: Vec<Vec<i32>>) -> Vec<i32> {
+  enum Dir {
+    Up,
+    Down,
+    Left,
+    Right,
+  }
+
+  impl Dir {
+    fn next_dir(&self) -> Dir {
+      match self {
+        Dir::Up => Dir::Right,
+        Dir::Down => Dir::Left,
+        Dir::Left => Dir::Up,
+        Dir::Right => Dir::Down,
+      }
+    }
+    fn next_index(&self, x: usize, y: usize) -> Option<(usize, usize)> {
+      match self {
+        Dir::Up => y.checked_sub(1).map(|y| (x, y)),
+        Dir::Down => y.checked_add(1).map(|y| (x, y)),
+        Dir::Left => x.checked_sub(1).map(|x| (x, y)),
+        Dir::Right => x.checked_add(1).map(|x| (x, y)),
+      }
+    }
+  }
+
+  struct Position {
+    x: usize,
+    y: usize,
+    output: Vec<i32>,
+    dir: Dir,
+    matrix: Vec<Vec<Option<i32>>>,
+  }
+
+  impl Position {
+    fn new(matrix: Vec<Vec<i32>>) -> Position {
+      Position {
+        x: 0,
+        y: 0,
+        output: vec![],
+        dir: Dir::Right,
+        matrix: matrix
+          .into_iter()
+          .map(|r| r.into_iter().map(|v| Some(v)).collect())
+          .collect(),
+      }
+    }
+    fn next(&mut self) -> bool {
+      if let Some(Some(v)) = self.matrix.get(self.y).and_then(|v| v.get(self.x)) {
+        self.output.push(*v);
+        self.matrix[self.y][self.x] = None;
+      }
+      let mut next_index = self.dir.next_index(self.x, self.y);
+
+      macro_rules! invalid {
+        () => {
+          next_index
+            .and_then(|(x, y)| {
+              self
+                .matrix
+                .get(y)
+                .and_then(|v| v.get(x))
+                .map(|v| v.is_none())
+            })
+            .unwrap_or(true)
+        };
+      }
+
+      if invalid!() {
+        self.dir = self.dir.next_dir();
+        next_index = self.dir.next_index(self.x, self.y);
+      }
+
+      if invalid!() {
+        false
+      } else {
+        self.x = next_index.unwrap().0;
+        self.y = next_index.unwrap().1;
+        true
+      }
+    }
+  }
+
+  let mut position = Position::new(matrix);
+  loop {
+    if !position.next() {
+      break position.output;
+    }
+  }
+}
+
 fn spiral_order(matrix: Vec<Vec<i32>>) -> Vec<i32> {
   let (height, width) = match (matrix.len(), matrix.first().map(|v| v.len())) {
     (1, Some(_)) => return matrix[0].to_owned(),
@@ -70,61 +162,66 @@ fn spiral_order(matrix: Vec<Vec<i32>>) -> Vec<i32> {
 
 #[test]
 fn q54_test() {
-  assert_eq!(spiral_order(vec![vec![]]), vec![]);
-  assert_eq!(spiral_order(vec![vec![1]]), vec![1]);
-  assert_eq!(spiral_order(vec![vec![1, 2], vec![3, 4]]), vec![1, 2, 4, 3]);
-  assert_eq!(spiral_order(vec![vec![6], vec![9], vec![7]]), vec![6, 9, 7]);
-  assert_eq!(spiral_order(vec![vec![6, 9, 7]]), vec![6, 9, 7]);
-  assert_eq!(
-    spiral_order(vec![vec![2, 5], vec![8, 4], vec![0, -1]]),
-    vec![2, 5, 4, -1, 0, 8]
-  );
-  assert_eq!(
-    spiral_order(vec![
-      vec![1, 2, 3, 4, 5],
-      vec![6, 7, 8, 9, 10],
-      vec![11, 12, 13, 14, 15]
-    ]),
-    vec![1, 2, 3, 4, 5, 10, 15, 14, 13, 12, 11, 6, 7, 8, 9]
-  );
-  assert_eq!(
-    spiral_order(vec![
-      vec![2, 3, 4],
-      vec![5, 6, 7],
-      vec![8, 9, 10],
-      vec![11, 12, 13],
-      vec![14, 15, 16]
-    ]),
-    vec![2, 3, 4, 7, 10, 13, 16, 15, 14, 11, 8, 5, 6, 9, 12]
-  );
-  assert_eq!(
-    spiral_order(vec![vec![1, 2, 3], vec![4, 5, 6], vec![7, 8, 9]]),
-    vec![1, 2, 3, 6, 9, 8, 7, 4, 5]
-  );
-  assert_eq!(
-    spiral_order(vec![
-      vec![1, 2, 3],
-      vec![4, 5, 6],
-      vec![7, 8, 9],
-      vec![10, 11, 12]
-    ]),
-    vec![1, 2, 3, 6, 9, 12, 11, 10, 7, 4, 5, 8]
-  );
-  assert_eq!(
-    spiral_order(vec![
-      vec![1, 2, 3, 4],
-      vec![5, 6, 7, 8],
-      vec![9, 10, 11, 12]
-    ]),
-    vec![1, 2, 3, 4, 8, 12, 11, 10, 9, 5, 6, 7]
-  );
-  assert_eq!(
-    spiral_order(vec![
-      vec![1, 2, 3, 4],
-      vec![5, 6, 7, 8],
-      vec![9, 10, 11, 12],
-      vec![13, 14, 15, 16]
-    ]),
-    vec![1, 2, 3, 4, 8, 12, 16, 15, 14, 13, 9, 5, 6, 7, 11, 10]
-  );
+  fn test(spiral_order: impl Fn(Vec<Vec<i32>>) -> Vec<i32>) {
+    assert_eq!(spiral_order(vec![vec![]]), vec![]);
+    assert_eq!(spiral_order(vec![vec![1]]), vec![1]);
+    assert_eq!(spiral_order(vec![vec![1, 2], vec![3, 4]]), vec![1, 2, 4, 3]);
+    assert_eq!(spiral_order(vec![vec![6], vec![9], vec![7]]), vec![6, 9, 7]);
+    assert_eq!(spiral_order(vec![vec![6, 9, 7]]), vec![6, 9, 7]);
+    assert_eq!(
+      spiral_order(vec![vec![2, 5], vec![8, 4], vec![0, -1]]),
+      vec![2, 5, 4, -1, 0, 8]
+    );
+    assert_eq!(
+      spiral_order(vec![
+        vec![1, 2, 3, 4, 5],
+        vec![6, 7, 8, 9, 10],
+        vec![11, 12, 13, 14, 15]
+      ]),
+      vec![1, 2, 3, 4, 5, 10, 15, 14, 13, 12, 11, 6, 7, 8, 9]
+    );
+    assert_eq!(
+      spiral_order(vec![
+        vec![2, 3, 4],
+        vec![5, 6, 7],
+        vec![8, 9, 10],
+        vec![11, 12, 13],
+        vec![14, 15, 16]
+      ]),
+      vec![2, 3, 4, 7, 10, 13, 16, 15, 14, 11, 8, 5, 6, 9, 12]
+    );
+    assert_eq!(
+      spiral_order(vec![vec![1, 2, 3], vec![4, 5, 6], vec![7, 8, 9]]),
+      vec![1, 2, 3, 6, 9, 8, 7, 4, 5]
+    );
+    assert_eq!(
+      spiral_order(vec![
+        vec![1, 2, 3],
+        vec![4, 5, 6],
+        vec![7, 8, 9],
+        vec![10, 11, 12]
+      ]),
+      vec![1, 2, 3, 6, 9, 12, 11, 10, 7, 4, 5, 8]
+    );
+    assert_eq!(
+      spiral_order(vec![
+        vec![1, 2, 3, 4],
+        vec![5, 6, 7, 8],
+        vec![9, 10, 11, 12]
+      ]),
+      vec![1, 2, 3, 4, 8, 12, 11, 10, 9, 5, 6, 7]
+    );
+    assert_eq!(
+      spiral_order(vec![
+        vec![1, 2, 3, 4],
+        vec![5, 6, 7, 8],
+        vec![9, 10, 11, 12],
+        vec![13, 14, 15, 16]
+      ]),
+      vec![1, 2, 3, 4, 8, 12, 16, 15, 14, 13, 9, 5, 6, 7, 11, 10]
+    );
+  }
+
+  test(spiral_order);
+  test(spiral_order_dir);
 }
