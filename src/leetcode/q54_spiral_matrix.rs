@@ -48,68 +48,38 @@ fn spiral_order_dir(matrix: Vec<Vec<i32>>) -> Vec<i32> {
     }
   }
 
-  struct Position {
-    x: usize,
-    y: usize,
-    output: Vec<i32>,
-    dir: Dir,
-    matrix: Vec<Vec<Option<i32>>>,
-  }
+  let (mut x, mut y, mut output, mut dir) = (0, 0, vec![], Dir::Right);
+  let mut matrix = matrix
+    .into_iter()
+    .map(|r| r.into_iter().map(|v| Some(v)).collect())
+    .collect::<Vec<Vec<Option<i32>>>>();
 
-  impl Position {
-    fn new(matrix: Vec<Vec<i32>>) -> Position {
-      Position {
-        x: 0,
-        y: 0,
-        output: vec![],
-        dir: Dir::Right,
-        matrix: matrix
-          .into_iter()
-          .map(|r| r.into_iter().map(|v| Some(v)).collect())
-          .collect(),
-      }
-    }
-    fn next(&mut self) -> bool {
-      if let Some(Some(v)) = self.matrix.get(self.y).and_then(|v| v.get(self.x)) {
-        self.output.push(*v);
-        self.matrix[self.y][self.x] = None;
-      }
-      let mut next_index = self.dir.next_index(self.x, self.y);
-
-      macro_rules! invalid {
-        () => {
-          next_index
-            .and_then(|(x, y)| {
-              self
-                .matrix
-                .get(y)
-                .and_then(|v| v.get(x))
-                .map(|v| v.is_none())
-            })
-            .unwrap_or(true)
-        };
-      }
-
-      if invalid!() {
-        self.dir = self.dir.next_dir();
-        next_index = self.dir.next_index(self.x, self.y);
-      }
-
-      if invalid!() {
-        false
-      } else {
-        self.x = next_index.unwrap().0;
-        self.y = next_index.unwrap().1;
-        true
-      }
-    }
-  }
-
-  let mut position = Position::new(matrix);
   loop {
-    if !position.next() {
-      break position.output;
+    if let Some(Some(v)) = matrix.get(y).and_then(|v| v.get(x)) {
+      output.push(*v);
+      matrix[y][x] = None;
     }
+    let mut next_index = dir.next_index(x, y);
+
+    macro_rules! invalid {
+      () => {
+        next_index
+          .and_then(|(x, y)| matrix.get(y).and_then(|v| v.get(x)).map(|v| v.is_none()))
+          .unwrap_or(true)
+      };
+    }
+
+    if invalid!() {
+      dir = dir.next_dir();
+      next_index = dir.next_index(x, y);
+    }
+
+    if invalid!() {
+      break output;
+    }
+
+    x = next_index.unwrap().0;
+    y = next_index.unwrap().1;
   }
 }
 
