@@ -133,14 +133,14 @@ fn spiral_order(matrix: Vec<Vec<i32>>) -> Vec<i32> {
 #[test]
 fn q54_test() {
   fn test(spiral_order: impl Fn(Vec<Vec<i32>>) -> Vec<i32>) {
-    assert_eq!(spiral_order(vec![vec![]]), vec![]);
-    assert_eq!(spiral_order(vec![vec![1]]), vec![1]);
-    assert_eq!(spiral_order(vec![vec![1, 2], vec![3, 4]]), vec![1, 2, 4, 3]);
-    assert_eq!(spiral_order(vec![vec![6], vec![9], vec![7]]), vec![6, 9, 7]);
-    assert_eq!(spiral_order(vec![vec![6, 9, 7]]), vec![6, 9, 7]);
+    assert_eq!(spiral_order(vec![vec![]]), []);
+    assert_eq!(spiral_order(vec![vec![1]]), [1]);
+    assert_eq!(spiral_order(vec![vec![1, 2], vec![3, 4]]), [1, 2, 4, 3]);
+    assert_eq!(spiral_order(vec![vec![6], vec![9], vec![7]]), [6, 9, 7]);
+    assert_eq!(spiral_order(vec![vec![6, 9, 7]]), [6, 9, 7]);
     assert_eq!(
       spiral_order(vec![vec![2, 5], vec![8, 4], vec![0, -1]]),
-      vec![2, 5, 4, -1, 0, 8]
+      [2, 5, 4, -1, 0, 8]
     );
     assert_eq!(
       spiral_order(vec![
@@ -148,7 +148,7 @@ fn q54_test() {
         vec![6, 7, 8, 9, 10],
         vec![11, 12, 13, 14, 15]
       ]),
-      vec![1, 2, 3, 4, 5, 10, 15, 14, 13, 12, 11, 6, 7, 8, 9]
+      [1, 2, 3, 4, 5, 10, 15, 14, 13, 12, 11, 6, 7, 8, 9]
     );
     assert_eq!(
       spiral_order(vec![
@@ -158,11 +158,11 @@ fn q54_test() {
         vec![11, 12, 13],
         vec![14, 15, 16]
       ]),
-      vec![2, 3, 4, 7, 10, 13, 16, 15, 14, 11, 8, 5, 6, 9, 12]
+      [2, 3, 4, 7, 10, 13, 16, 15, 14, 11, 8, 5, 6, 9, 12]
     );
     assert_eq!(
       spiral_order(vec![vec![1, 2, 3], vec![4, 5, 6], vec![7, 8, 9]]),
-      vec![1, 2, 3, 6, 9, 8, 7, 4, 5]
+      [1, 2, 3, 6, 9, 8, 7, 4, 5]
     );
     assert_eq!(
       spiral_order(vec![
@@ -171,7 +171,7 @@ fn q54_test() {
         vec![7, 8, 9],
         vec![10, 11, 12]
       ]),
-      vec![1, 2, 3, 6, 9, 12, 11, 10, 7, 4, 5, 8]
+      [1, 2, 3, 6, 9, 12, 11, 10, 7, 4, 5, 8]
     );
     assert_eq!(
       spiral_order(vec![
@@ -179,7 +179,7 @@ fn q54_test() {
         vec![5, 6, 7, 8],
         vec![9, 10, 11, 12]
       ]),
-      vec![1, 2, 3, 4, 8, 12, 11, 10, 9, 5, 6, 7]
+      [1, 2, 3, 4, 8, 12, 11, 10, 9, 5, 6, 7]
     );
     assert_eq!(
       spiral_order(vec![
@@ -188,7 +188,7 @@ fn q54_test() {
         vec![9, 10, 11, 12],
         vec![13, 14, 15, 16]
       ]),
-      vec![1, 2, 3, 4, 8, 12, 16, 15, 14, 13, 9, 5, 6, 7, 11, 10]
+      [1, 2, 3, 4, 8, 12, 16, 15, 14, 13, 9, 5, 6, 7, 11, 10]
     );
   }
 

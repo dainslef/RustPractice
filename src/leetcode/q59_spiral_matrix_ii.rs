@@ -67,11 +67,11 @@ fn generate_matrix(n: i32) -> Vec<Vec<i32>> {
 
     if invalid!() {
       break matrix;
-    } else {
-      x = next_index.unwrap().0;
-      y = next_index.unwrap().1;
-      matrix[y][x] = value;
     }
+
+    x = next_index.unwrap().0;
+    y = next_index.unwrap().1;
+    matrix[y][x] = value;
   }
 }
 

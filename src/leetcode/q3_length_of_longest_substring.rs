@@ -39,10 +39,10 @@ fn length_of_longest_substring(s: String) -> i32 {
 
 #[test]
 fn q3_test() {
-  assert_eq!(length_of_longest_substring("abcabcbb".to_string()), 3);
-  assert_eq!(length_of_longest_substring("bbbbb".to_string()), 1);
-  assert_eq!(length_of_longest_substring("aa789".to_string()), 4);
-  assert_eq!(length_of_longest_substring("\"\"".to_string()), 1);
-  assert_eq!(length_of_longest_substring("\" \"".to_string()), 2);
-  assert_eq!(length_of_longest_substring("dvdf".to_string()), 3);
+  assert_eq!(length_of_longest_substring("abcabcbb".into()), 3);
+  assert_eq!(length_of_longest_substring("bbbbb".into()), 1);
+  assert_eq!(length_of_longest_substring("aa789".into()), 4);
+  assert_eq!(length_of_longest_substring("\"\"".into()), 1);
+  assert_eq!(length_of_longest_substring("\" \"".into()), 2);
+  assert_eq!(length_of_longest_substring("dvdf".into()), 3);
 }

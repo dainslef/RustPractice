@@ -97,15 +97,15 @@ fn my_atoi(s: String) -> i32 {
 
 #[test]
 fn q8_test() {
-  assert_eq!(my_atoi("".to_string()), 0);
-  assert_eq!(my_atoi(" 010  ".to_string()), 10);
-  assert_eq!(my_atoi("  -0012a42".to_string()), -12);
-  assert_eq!(my_atoi("   00000420000".to_string()), 420000);
-  assert_eq!(my_atoi("  0000000000012345678".to_string()), 12345678);
-  assert_eq!(my_atoi("3.14159".to_string()), 3);
-  assert_eq!(my_atoi("      -42".to_string()), -42);
-  assert_eq!(my_atoi("4193 with words".to_string()), 4193);
-  assert_eq!(my_atoi("words and 987".to_string()), 0);
-  assert_eq!(my_atoi("-91283472332".to_string()), -2147483648);
-  assert_eq!(my_atoi("2147483648".to_string()), 2147483647);
+  assert_eq!(my_atoi("".into()), 0);
+  assert_eq!(my_atoi(" 010  ".into()), 10);
+  assert_eq!(my_atoi("  -0012a42".into()), -12);
+  assert_eq!(my_atoi("   00000420000".into()), 420000);
+  assert_eq!(my_atoi("  0000000000012345678".into()), 12345678);
+  assert_eq!(my_atoi("3.14159".into()), 3);
+  assert_eq!(my_atoi("      -42".into()), -42);
+  assert_eq!(my_atoi("4193 with words".into()), 4193);
+  assert_eq!(my_atoi("words and 987".into()), 0);
+  assert_eq!(my_atoi("-91283472332".into()), -2147483648);
+  assert_eq!(my_atoi("2147483648".into()), 2147483647);
 }
