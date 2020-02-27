@@ -181,6 +181,7 @@ mod q55_jump_game;
 mod q59_spiral_matrix_ii;
 mod q5_longest_palindrome;
 mod q6_zipzag_conversion;
+mod q75_sort_colors;
 mod q76_minimum_window_substring;
 mod q7_reverse_integer;
 mod q8_my_atoi;
