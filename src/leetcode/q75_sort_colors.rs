@@ -1,4 +1,7 @@
 /**
+ * 75. Sort Colors
+ * https://leetcode.com/problems/sort-colors/
+ *
  * Given an array with n objects colored red, white or blue, sort them in-place so that objects of the same color are adjacent, with the colors in the order red, white and blue.
  *
  * Here, we will use the integers 0, 1, and 2 to represent the color red, white, and blue respectively.
@@ -32,9 +35,51 @@ fn sort_colors(nums: &mut Vec<i32>) {
   }
 }
 
+fn sort_colors_one_pass(nums: &mut Vec<i32>) {
+  // one pass solution
+  let length = nums.len();
+  let (mut n0, mut n1, mut n2) = (0, 0, 0);
+  for i in 0..length {
+    let v = nums[i];
+    if v <= 2 {
+      nums[n2] = 2;
+      n2 += 1;
+    }
+    if v <= 1 {
+      nums[n1] = 1;
+      n1 += 1;
+    }
+    if v == 0 {
+      nums[n0] = 0;
+      n0 += 1;
+    }
+  }
+}
+
 #[test]
 fn q75_test() {
-  let mut nums = vec![2, 0, 2, 1, 1, 0];
-  sort_colors(&mut nums);
-  assert_eq!(nums, [0, 0, 1, 1, 2, 2]);
+  fn test(sort_colors: impl Fn(&mut Vec<i32>)) {
+    let mut nums = vec![0];
+    sort_colors(&mut nums);
+    assert_eq!(nums, [0]);
+
+    let mut nums = vec![1];
+    sort_colors(&mut nums);
+    assert_eq!(nums, [1]);
+
+    let mut nums = vec![2];
+    sort_colors(&mut nums);
+    assert_eq!(nums, [2]);
+
+    let mut nums = vec![2, 0, 1];
+    sort_colors(&mut nums);
+    assert_eq!(nums, [0, 1, 2]);
+
+    let mut nums = vec![2, 0, 2, 1, 1, 0];
+    sort_colors(&mut nums);
+    assert_eq!(nums, [0, 0, 1, 1, 2, 2]);
+  }
+
+  test(sort_colors);
+  test(sort_colors_one_pass);
 }
