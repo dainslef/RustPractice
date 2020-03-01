@@ -56,6 +56,33 @@ fn sort_colors_one_pass(nums: &mut Vec<i32>) {
   }
 }
 
+fn sort_colors_one_pass_2(nums: &mut Vec<i32>) {
+  // one pass solution
+  let length = nums.len();
+  let (mut i, mut n0, mut n2) = (0, 0, length - 1);
+  while i <= n2 {
+    match nums[i] {
+      0 => {
+        nums[i] = nums[n0];
+        nums[n0] = 0;
+        n0 += 1;
+        i += 1;
+      }
+      2 => {
+        nums[i] = nums[n2];
+        nums[n2] = 2;
+        // check the index to avoid the negative number
+        if n2 == 0 {
+          break; // if n2 equals 0, means all of the number is 2, break the loop
+        } else {
+          n2 -= 1;
+        }
+      }
+      _ => i += 1,
+    }
+  }
+}
+
 #[test]
 fn q75_test() {
   fn test(sort_colors: impl Fn(&mut Vec<i32>)) {
@@ -71,6 +98,10 @@ fn q75_test() {
     sort_colors(&mut nums);
     assert_eq!(nums, [2]);
 
+    let mut nums = vec![2, 2];
+    sort_colors(&mut nums);
+    assert_eq!(nums, [2, 2]);
+
     let mut nums = vec![2, 0, 1];
     sort_colors(&mut nums);
     assert_eq!(nums, [0, 1, 2]);
@@ -82,4 +113,5 @@ fn q75_test() {
 
   test(sort_colors);
   test(sort_colors_one_pass);
+  test(sort_colors_one_pass_2);
 }
