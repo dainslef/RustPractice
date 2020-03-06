@@ -53,9 +53,8 @@ fn is_match(s: String, p: String) -> bool {
     p.chars().collect::<VecDeque<char>>(),
   );
 
-  fn deal_substring(mut input: VecDeque<char>, mut pattern: VecDeque<char>) -> bool {
+  fn recurse(mut input: VecDeque<char>, mut pattern: VecDeque<char>) -> bool {
     let mut last = None;
-
     loop {
       match (last, pattern.pop_front()) {
         (None, v @ Some(_)) => last = v,
@@ -70,7 +69,7 @@ fn is_match(s: String, p: String) -> bool {
             false
           } {
             // continue with a new substring
-            if deal_substring(next.clone(), pattern.clone()) {
+            if recurse(next.clone(), pattern.clone()) {
               return true;
             }
           }
@@ -91,7 +90,7 @@ fn is_match(s: String, p: String) -> bool {
     }
   }
 
-  deal_substring(input, pattern)
+  recurse(input, pattern)
 }
 
 #[test]

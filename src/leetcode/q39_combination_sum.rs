@@ -76,7 +76,7 @@ fn combination_sum(candidates: Vec<i32>, target: i32) -> Vec<Vec<i32>> {
 }
 
 fn combination_sum_recursion(mut candidates: Vec<i32>, target: i32) -> Vec<Vec<i32>> {
-  fn recursion(
+  fn recurse(
     candidates: &Vec<i32>,
     target: i32,
     start: usize,
@@ -88,7 +88,7 @@ fn combination_sum_recursion(mut candidates: Vec<i32>, target: i32) -> Vec<Vec<i
     } else if target > 0 {
       for i in start..candidates.len() {
         input.push(candidates[i]);
-        recursion(candidates, target - candidates[i], i, input, output);
+        recurse(candidates, target - candidates[i], i, input, output);
         input.pop();
       }
     }
@@ -96,7 +96,7 @@ fn combination_sum_recursion(mut candidates: Vec<i32>, target: i32) -> Vec<Vec<i
 
   let (mut input, mut out) = (vec![], vec![]);
   candidates.sort();
-  recursion(&candidates, target, 0, &mut input, &mut out);
+  recurse(&candidates, target, 0, &mut input, &mut out);
 
   out
 }

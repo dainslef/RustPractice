@@ -53,7 +53,7 @@ fn solve_sudoku(board: &mut Vec<Vec<char>>) {
     }
   }
 
-  fn recursion(
+  fn recurse(
     row: usize,
     column: usize,
     input: &mut Vec<Vec<char>>,
@@ -71,7 +71,7 @@ fn solve_sudoku(board: &mut Vec<Vec<char>>) {
       () => {
         // check if the sudoku is sovled, or run the next solve operate
         row == BOARD_SIZE - 1 && column == BOARD_SIZE - 1
-          || recursion(next_row, next_column, input, rows, columns, arounds, nums)
+          || recurse(next_row, next_column, input, rows, columns, arounds, nums)
       };
     }
 
@@ -107,7 +107,7 @@ fn solve_sudoku(board: &mut Vec<Vec<char>>) {
     false
   }
 
-  recursion(0, 0, board, &mut rows, &mut columns, &mut arounds, &nums);
+  recurse(0, 0, board, &mut rows, &mut columns, &mut arounds, &nums);
 }
 
 #[test]

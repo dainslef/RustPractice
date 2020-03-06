@@ -18,7 +18,7 @@
 
 // TLE, use DFS cost a lot of time
 fn jump_recursion(nums: Vec<i32>) -> i32 {
-  fn recursion(
+  fn recurse(
     nums: &Vec<i32>,
     index: usize,
     step: usize,
@@ -34,7 +34,7 @@ fn jump_recursion(nums: Vec<i32>) -> i32 {
         let index_next = index + i;
         if index_next >= nums.len() - 1 {
           mins.push(Reverse(step + 1));
-        } else if let Some(v) = recursion(nums, index_next, step + 1, mins.peek().map(|v| v.0)) {
+        } else if let Some(v) = recurse(nums, index_next, step + 1, mins.peek().map(|v| v.0)) {
           mins.push(Reverse(v));
         }
       }
@@ -43,7 +43,7 @@ fn jump_recursion(nums: Vec<i32>) -> i32 {
     mins.peek().map(|v| v.0).or(min_step)
   }
 
-  recursion(&nums, 0, 0, None).map(|v| v as i32).unwrap_or(0)
+  recurse(&nums, 0, 0, None).map(|v| v as i32).unwrap_or(0)
 }
 
 fn jump(nums: Vec<i32>) -> i32 {

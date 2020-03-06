@@ -26,7 +26,7 @@
 fn solve_n_queens(n: i32) -> Vec<Vec<String>> {
   let mut records = Vec::new();
 
-  fn deal_queens(record: Vec<i32>, records: &mut Vec<Vec<i32>>, n: i32) {
+  fn recurse(record: Vec<i32>, records: &mut Vec<Vec<i32>>, n: i32) {
     let next_row = record.len() as i32;
     if next_row == n {
       records.push(record);
@@ -46,14 +46,14 @@ fn solve_n_queens(n: i32) -> Vec<Vec<String>> {
           if is_valid {
             let mut next_record = record.clone();
             next_record.push(next);
-            deal_queens(next_record, records, n);
+            recurse(next_record, records, n);
           }
         }
       }
     }
   }
 
-  deal_queens(vec![], &mut records, n);
+  recurse(vec![], &mut records, n);
 
   records
     .into_iter()
@@ -72,7 +72,7 @@ fn solve_n_queens(n: i32) -> Vec<Vec<String>> {
 }
 
 #[test]
-fn test_solve_n_queens() {
+fn q51_test() {
   assert_eq!(
     solve_n_queens(4),
     [

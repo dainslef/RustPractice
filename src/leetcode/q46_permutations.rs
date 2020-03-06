@@ -19,12 +19,12 @@
 fn permute_recursion(nums: Vec<i32>) -> Vec<Vec<i32>> {
   let mut temp = vec![];
 
-  fn deal_nums(input: Vec<i32>, output: Vec<i32>, result: &mut Vec<Vec<i32>>) {
+  fn recurse(input: Vec<i32>, output: Vec<i32>, result: &mut Vec<Vec<i32>>) {
     // find all possible numbers for next index
     for i in 0..input.len() {
       let (mut next_input, mut next_output) = (input.clone(), output.clone());
       next_output.push(next_input.remove(i));
-      deal_nums(next_input, next_output, result);
+      recurse(next_input, next_output, result);
     }
     // check input vector, if all numbers are added, push the answer to the result
     if input.is_empty() {
@@ -32,8 +32,7 @@ fn permute_recursion(nums: Vec<i32>) -> Vec<Vec<i32>> {
     }
   }
 
-  deal_nums(nums, vec![], &mut temp);
-
+  recurse(nums, vec![], &mut temp);
   temp
 }
 

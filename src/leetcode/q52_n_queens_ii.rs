@@ -56,7 +56,7 @@ fn total_n_queens(n: i32) -> i32 {
 }
 
 #[test]
-fn test_total_n_queens() {
+fn q52_test() {
   assert_eq!(total_n_queens(4), 2);
   assert_eq!(total_n_queens(5), 10);
 }

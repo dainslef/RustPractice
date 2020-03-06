@@ -48,11 +48,11 @@ fn convert(s: String, num_rows: i32) -> String {
 
 #[test]
 fn q6_test() {
-  assert_eq!(convert("ABCDEFG".to_string(), 3), "AEBDFCG");
-  assert_eq!(convert("ABCDEFG".to_string(), 4), "AGBFCED");
-  assert_eq!(convert("PAYPALISHIRING".to_string(), 0), "PAYPALISHIRING");
-  assert_eq!(convert("PAYPALISHIRING".to_string(), 1), "PAYPALISHIRING");
-  assert_eq!(convert("PAYPALISHIRING".to_string(), 2), "PYAIHRNAPLSIIG");
-  assert_eq!(convert("PAYPALISHIRING".to_string(), 3), "PAHNAPLSIIGYIR");
-  assert_eq!(convert("PAYPALISHIRING".to_string(), 4), "PINALSIGYAHRPI");
+  assert_eq!(convert("ABCDEFG".into(), 3), "AEBDFCG");
+  assert_eq!(convert("ABCDEFG".into(), 4), "AGBFCED");
+  assert_eq!(convert("PAYPALISHIRING".into(), 0), "PAYPALISHIRING");
+  assert_eq!(convert("PAYPALISHIRING".into(), 1), "PAYPALISHIRING");
+  assert_eq!(convert("PAYPALISHIRING".into(), 2), "PYAIHRNAPLSIIG");
+  assert_eq!(convert("PAYPALISHIRING".into(), 3), "PAHNAPLSIIGYIR");
+  assert_eq!(convert("PAYPALISHIRING".into(), 4), "PINALSIGYAHRPI");
 }

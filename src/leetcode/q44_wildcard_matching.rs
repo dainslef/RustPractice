@@ -85,7 +85,7 @@ fn is_match(s: String, p: String) -> bool {
 }
 
 fn is_match_recursion(s: String, p: String) -> bool {
-  fn recursion(
+  fn recurse(
     s: &Vec<char>,
     p: &Vec<char>,
     s_i: usize,
@@ -94,14 +94,14 @@ fn is_match_recursion(s: String, p: String) -> bool {
   ) -> bool {
     match (s.get(s_i), p.get(p_i)) {
       // macth any content
-      (Some(_), Some('*')) => recursion(s, p, s_i, p_i + 1, Some((s_i, p_i))),
+      (Some(_), Some('*')) => recurse(s, p, s_i, p_i + 1, Some((s_i, p_i))),
       // match the char equals the char in partten
       (Some(s_char), Some(p_char)) if p_char == s_char || p_char == &'?' => {
-        recursion(s, p, s_i + 1, p_i + 1, backup)
+        recurse(s, p, s_i + 1, p_i + 1, backup)
       }
       // if the target char doesn't match the partten, check if have backup, try recovering from backup
       (Some(_), _) if backup.is_some() => {
-        recursion(s, p, backup.unwrap().0 + 1, backup.unwrap().1, backup)
+        recurse(s, p, backup.unwrap().0 + 1, backup.unwrap().1, backup)
       }
       _ => {
         s_i == s.len() && {
@@ -114,7 +114,7 @@ fn is_match_recursion(s: String, p: String) -> bool {
     }
   }
 
-  recursion(&s.chars().collect(), &p.chars().collect(), 0, 0, None)
+  recurse(&s.chars().collect(), &p.chars().collect(), 0, 0, None)
 }
 
 #[test]
