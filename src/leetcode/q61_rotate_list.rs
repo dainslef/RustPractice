@@ -34,22 +34,69 @@ fn rotate_right(head: Option<Box<ListNode>>, k: i32) -> Option<Box<ListNode>> {
   num_vec_to_nodes(out, false)
 }
 
+fn rotate_right_with_move_pointer(mut head: Option<Box<ListNode>>, k: i32) -> Option<Box<ListNode>> {
+  let (mut count, mut next) = (0, &mut head);
+  while let Some(v) = next {
+    next = &mut v.next;
+    count += 1;
+  }
+
+  // check if the data need to be processed (size == 0 or move size == 0 doesn't need to be processed)
+  if count == 0 || k as usize % count == 0 { return head; }
+
+  // compute the rotate index
+  let i = count - k as usize % count;
+  next = &mut head;
+  for _ in 0..i {
+    if let Some(v) = next {
+      next = &mut v.next;
+    }
+  }
+
+  let mut out = None;
+  std::mem::swap(next, &mut out); // swap and get the pointer
+  next = &mut out;
+  while let Some(v) = next {
+    if v.next.is_some() {
+      next = &mut v.next;
+    } else {
+      v.next = head; // if the node is at the end, connect two sets of pointers
+      break;
+    }
+  }
+
+  out
+}
+
 #[test]
 fn q61_test() {
-  assert_eq!(
-    rotate_right(num_to_nodes(12345, false), 2),
-    num_to_nodes(45123, false)
-  );
-  assert_eq!(
-    rotate_right(num_to_nodes(312, false), 4),
-    num_to_nodes(231, false)
-  );
-  assert_eq!(
-    rotate_right(num_vec_to_nodes(vec![], false), 2),
-    num_vec_to_nodes(vec![], false)
-  );
-  assert_eq!(
-    rotate_right(num_vec_to_nodes(vec![1], false), 4),
-    num_vec_to_nodes(vec![1], false)
-  );
+  fn test(rotate_right: impl Fn(Option<Box<ListNode>>, i32) -> Option<Box<ListNode>>) {
+    assert_eq!(
+      rotate_right(num_to_nodes(12345, false), 2),
+      num_to_nodes(45123, false)
+    );
+    assert_eq!(
+      rotate_right(num_to_nodes(312, false), 4),
+      num_to_nodes(231, false)
+    );
+    assert_eq!(
+      rotate_right(num_vec_to_nodes(vec![], false), 2),
+      num_vec_to_nodes(vec![], false)
+    );
+    assert_eq!(
+      rotate_right(num_vec_to_nodes(vec![1, 2], false), 3),
+      num_vec_to_nodes(vec![2, 1], false)
+    );
+    assert_eq!(
+      rotate_right(num_vec_to_nodes(vec![1, 2], false), 4),
+      num_vec_to_nodes(vec![1, 2], false)
+    );
+    assert_eq!(
+      rotate_right(num_vec_to_nodes(vec![1], false), 4),
+      num_vec_to_nodes(vec![1], false)
+    );
+  }
+
+  test(rotate_right);
+  test(rotate_right_with_move_pointer);
 }
