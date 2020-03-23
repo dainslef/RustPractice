@@ -183,6 +183,7 @@ mod q57_insert_interval;
 mod q59_spiral_matrix_ii;
 mod q5_longest_palindrome;
 mod q61_rotate_list;
+mod q68_text_justification;
 mod q6_zipzag_conversion;
 mod q75_sort_colors;
 mod q76_minimum_window_substring;
