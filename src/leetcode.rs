@@ -192,6 +192,9 @@ mod q8_my_atoi;
 mod q92_reverse_linked_list_ii;
 mod q97_interleaving_string;
 
+mod q71_simplify_path;
+// mod q328_odd_even_linked_list;
+// mod q725_split_linked_list;
 // mod q65_valid_number;
 // mod q64_minimum_path_sum;
 // mod q63_unique_paths_ii;
