@@ -1,13 +1,13 @@
 #[derive(PartialEq, Eq, Debug)]
 struct ListNode {
   pub val: i32,
-  pub next: Option<Box<ListNode>>,
+  pub next: Option<Box<Self>>,
 }
 
 impl ListNode {
   #[inline]
   fn new(val: i32) -> Self {
-    ListNode { next: None, val }
+    Self { next: None, val }
   }
 }
 
@@ -185,6 +185,7 @@ mod q5_longest_palindrome;
 mod q61_rotate_list;
 mod q68_text_justification;
 mod q6_zipzag_conversion;
+mod q71_simplify_path;
 mod q75_sort_colors;
 mod q76_minimum_window_substring;
 mod q7_reverse_integer;
@@ -192,7 +193,11 @@ mod q8_my_atoi;
 mod q92_reverse_linked_list_ii;
 mod q97_interleaving_string;
 
-mod q71_simplify_path;
+// mod q122_best_time_to_buy_and_sell_stock_ii;
+// mod q283_move_zeroes;
+// mod q53_maximum_subarray;
+// mod q136_single_number;
+// mod q202_happy_number;
 // mod q328_odd_even_linked_list;
 // mod q725_split_linked_list;
 // mod q65_valid_number;
@@ -206,3 +211,5 @@ mod q71_simplify_path;
 // mod q60_permutation_sequence;
 // mod q77_combinations;
 // mod q81_search_in_rotated_sorted_array_ii;
+
+mod day_30_leetcoding_challenge;
