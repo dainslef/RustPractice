@@ -1,8 +1,11 @@
 # Rust Practice Codes
-Repo for my rust language practice code.
+Repository for my rust language practice code.
 
 ## LeetCode
 Solutions for [`LeetCode`](https://leetcode.com/problems) problems using [`Rust`](https://www.rust-lang.org/) language.
+
+### Normal Problem
+Solutions for normal problems.
 
 - [#2 Add Two Numbers](src/leetcode/q2_add_two_numbers.rs)
 - [#3 Length of Longest Substring](src/leetcode/q3_length_of_longest_substring.rs)
@@ -41,6 +44,11 @@ Solutions for [`LeetCode`](https://leetcode.com/problems) problems using [`Rust`
 - [#54 Spiral Matrix](src/leetcode/q54_spiral_matrix.rs)
 - [#55 Jump Game](src/leetcode/q55_jump_game.rs)
 - [#56 Merge Intervals](src/leetcode/q56_merge_intervals.rs)
+- [#57 Insert Interval](src/leetcode/q57_insert_interval.rs)
+- [#59 Spiral Matrix II](src/leetcode/q59_spiral_matrix_ii.rs)
+- [#61 Rotate List](src/leetcode/q61_rotate_list.rs)
+- [#68 Text Justification](src/leetcode/q68_text_justification.rs)
+- [#71 Simplify Path](src/leetcode/q71_simplify_path.rs)
 - [#75 Sort Colors](src/leetcode/q75_sort_colors.rs)
 - [#76 Minimum Window Substring](src/leetcode/q76_minimum_window_substring.rs)
 - [#92 Reverse Linked List II](src/leetcode/q92_reverse_linked_list_ii.rs)
@@ -48,3 +56,9 @@ Solutions for [`LeetCode`](https://leetcode.com/problems) problems using [`Rust`
 - [#407 Trapping Rain Water II](src/leetcode/q407_trapping_rain_water_ii.rs)
 - [#445 Add Two Numbers II](src/leetcode/q445_add_two_numbers_ii.rs)
 - [#454 4Sum II](src/leetcode/q454_four_sum_ii.rs)
+
+### 30 Day Leetcoding Challenge
+Some problems are only can be found in "30 Day Leetcoding Challenge".
+(Questions are missing from "problems" page, there are no stanard question IDs for these problems.)
+
+- [Counting Elements](src/leetcode/day_30_leetcoding_challenge/counting_elements.rs)

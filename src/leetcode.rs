@@ -22,6 +22,7 @@ fn num_to_nodes(mut num: i32, reverse: bool) -> Option<Box<ListNode>> {
   num_vec_to_nodes(vec, !reverse)
 }
 
+// build list node from the vector of the numbers
 fn num_vec_to_nodes(mut vec: Vec<i32>, reverse: bool) -> Option<Box<ListNode>> {
   let mut next = None;
   if !reverse {
@@ -33,7 +34,7 @@ fn num_vec_to_nodes(mut vec: Vec<i32>, reverse: bool) -> Option<Box<ListNode>> {
   next
 }
 
-// build the vector of the number from the number list
+// build the vector of the numbers from the a list node
 fn nodes_to_num_vec(node: Option<Box<ListNode>>) -> Vec<i32> {
   let (mut vec, mut temp) = (vec![], &node);
   while let Some(n) = temp {
@@ -43,7 +44,7 @@ fn nodes_to_num_vec(node: Option<Box<ListNode>>) -> Vec<i32> {
   vec
 }
 
-// build the vector of the node from the node list
+// build the vector of the node from the a list node
 fn nodes_to_node_vec(node: Option<Box<ListNode>>) -> Vec<Option<Box<ListNode>>> {
   let (mut vec, mut current) = (vec![], node);
   while let Some(v) = current.as_mut() {
@@ -137,6 +138,8 @@ macro_rules! string_vec {
   }}
 }
 
+mod day_30_leetcoding_challenge;
+
 mod q10_regular_expression_matching;
 mod q11_container_with_most_water;
 mod q126_word_ladder_ii;
@@ -193,6 +196,7 @@ mod q8_my_atoi;
 mod q92_reverse_linked_list_ii;
 mod q97_interleaving_string;
 
+// mod q876_middle_of_the_linked_list;
 // mod q122_best_time_to_buy_and_sell_stock_ii;
 // mod q283_move_zeroes;
 // mod q53_maximum_subarray;
@@ -211,5 +215,3 @@ mod q97_interleaving_string;
 // mod q60_permutation_sequence;
 // mod q77_combinations;
 // mod q81_search_in_rotated_sorted_array_ii;
-
-mod day_30_leetcoding_challenge;
