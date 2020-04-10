@@ -192,6 +192,7 @@ mod q71_simplify_path;
 mod q75_sort_colors;
 mod q76_minimum_window_substring;
 mod q7_reverse_integer;
+mod q844_backspace_string_compare;
 mod q8_my_atoi;
 mod q92_reverse_linked_list_ii;
 mod q97_interleaving_string;
