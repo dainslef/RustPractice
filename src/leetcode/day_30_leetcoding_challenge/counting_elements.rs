@@ -38,29 +38,39 @@
 
 fn count_elements(mut arr: Vec<i32>) -> i32 {
   if let 0 | 1 = arr.len() {
-    return 0;
+    return 0; // return immediately when arr has not enough numbers
   }
 
-  arr.sort();
-
-  let mut count = 0;
-  let (mut last_size, mut current_size) = (0, 0);
+  arr.sort(); // sort arr, make the elements in the arr in order
+  let (mut count, mut last_size, mut current_size) = (0, 0, 0);
   let (mut last, mut current): (Option<i32>, Option<i32>) = (None, None);
 
-  for v in arr {
-    if last.is_none() || last.map(|n| n == v).unwrap_or(false) {
-      last = Some(v);
-      last_size += 1;
-    } else if current.is_none() || current.map(|n| n == v).unwrap_or(false) {
-      current = Some(v);
-      current_size += 1;
-    } else {
-      if current
+  macro_rules! compute_count {
+    () => {
+      if current // check two adjacent elements
         .and_then(|c| last.map(|l| c - l == 1))
         .unwrap_or(false)
       {
-        count += last_size;
+        count += last_size; // size means the count of elements match the "x,x-1" condition
       }
+    };
+  }
+
+  for v in arr {
+    macro_rules! check {
+      ($state: expr, $state_size: expr) => {{
+        // check if has element and count the elemnt size
+        let not_match = !$state.is_none() && $state != Some(v);
+        if !not_match {
+          $state = Some(v);
+          $state_size += 1;
+        }
+        not_match
+      }};
+    }
+    // count the size of same elements, compute the size when the element isn't match current state value
+    if check!(last, last_size) || check!(current, current_size) {
+      compute_count!();
       last = current;
       last_size = current_size;
       current = Some(v);
@@ -68,13 +78,7 @@ fn count_elements(mut arr: Vec<i32>) -> i32 {
     }
   }
 
-  if current
-    .and_then(|c| last.map(|l| c - l == 1))
-    .unwrap_or(false)
-  {
-    count += last_size;
-  }
-
+  compute_count!(); // compute the count for the last group of same elements
   count
 }
 
