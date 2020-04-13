@@ -55,6 +55,60 @@ fn nodes_to_node_vec(node: Option<Box<ListNode>>) -> Vec<Option<Box<ListNode>>> 
   vec
 }
 
+use std::{cell::RefCell, rc::Rc};
+
+// Definition for a binary tree node.
+#[derive(Debug, PartialEq, Eq)]
+struct TreeNode {
+  pub val: i32,
+  pub left: Option<Rc<RefCell<TreeNode>>>,
+  pub right: Option<Rc<RefCell<TreeNode>>>,
+}
+
+impl TreeNode {
+  #[inline]
+  pub fn new(val: i32) -> Self {
+    TreeNode {
+      val,
+      left: None,
+      right: None,
+    }
+  }
+
+  #[inline]
+  pub fn new_option(opt: Option<i32>) -> Option<Rc<RefCell<TreeNode>>> {
+    opt.map(|v| Rc::new(RefCell::new(TreeNode::new(v))))
+  }
+
+  pub fn from(vec: Vec<Option<i32>>) -> Option<Rc<RefCell<TreeNode>>> {
+    use std::collections::VecDeque;
+    let mut root = None; // save the root node
+    let mut nodes: VecDeque<*mut Option<Rc<RefCell<TreeNode>>>> = Default::default(); // save the pointer to child nodes
+    for v in vec {
+      macro_rules! deal {
+        ($node: expr) => {
+          if let Some(n) = &mut *$node {
+            // add the pointer of child node, use raw pointer to avoid the ownership check
+            nodes.push_back(&mut n.borrow_mut().left as *mut Option<Rc<RefCell<TreeNode>>>);
+            nodes.push_back(&mut n.borrow_mut().right as *mut Option<Rc<RefCell<TreeNode>>>);
+          }
+        };
+      }
+      let node = TreeNode::new_option(v);
+      unsafe {
+        if root.is_none() {
+          root = node;
+          deal!(&mut root);
+        } else if let Some(current) = nodes.pop_front() {
+          *current = node;
+          deal!(current);
+        }
+      }
+    }
+    root
+  }
+}
+
 // for q15 and q18, check if the target is included in the "vec_list"
 fn check_vecs_contain_target(vec_list: &Vec<Vec<i32>>, target: &Vec<i32>) -> bool {
   for old_vec in vec_list {
@@ -179,6 +233,7 @@ mod q4_find_median_sorted_arrays;
 mod q50_pow_x_n;
 mod q51_n_queens;
 mod q52_n_queens_ii;
+mod q543_diameter_of_binary_tree;
 mod q54_spiral_matrix;
 mod q55_jump_game;
 mod q56_merge_intervals;
@@ -197,6 +252,8 @@ mod q8_my_atoi;
 mod q92_reverse_linked_list_ii;
 mod q97_interleaving_string;
 
+// mod q1046_last_stone_weight;
+// mod q155_min_stack;
 // mod q876_middle_of_the_linked_list;
 // mod q122_best_time_to_buy_and_sell_stock_ii;
 // mod q283_move_zeroes;
