@@ -232,6 +232,7 @@ mod q49_group_anagrams;
 mod q4_find_median_sorted_arrays;
 mod q50_pow_x_n;
 mod q51_n_queens;
+mod q525_contiguous_array;
 mod q52_n_queens_ii;
 mod q543_diameter_of_binary_tree;
 mod q54_spiral_matrix;
