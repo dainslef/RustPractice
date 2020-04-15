@@ -76,15 +76,36 @@ impl TreeNode {
   }
 
   #[inline]
-  pub fn new_option(opt: Option<i32>) -> Option<Rc<RefCell<TreeNode>>> {
-    opt.map(|v| Rc::new(RefCell::new(TreeNode::new(v))))
+  pub fn new_option(val: Option<i32>) -> Option<Rc<RefCell<TreeNode>>> {
+    val.map(|v| Rc::new(RefCell::new(TreeNode::new(v))))
   }
 
+  /**
+   * Building binary tree from Vec<Option<i32>>, Some means valued node, None means empty node.
+   * for example:
+   *
+   * [Some(1), Some(2), Some(3), Some(4), Some(5), Some(6)] will be transformed to:
+   *     1
+   *    / \
+   *   3   4
+   *  / \
+   * 5  6
+   *
+   * [Some(1), Some(2), Some(3), Some(4), None, Some(5), None, Some(6)] will be transformed to:
+   *     1
+   *    / \
+   *   3   4
+   *    \   \
+   *     5   6
+   */
   pub fn from(vec: Vec<Option<i32>>) -> Option<Rc<RefCell<TreeNode>>> {
     use std::collections::VecDeque;
+
     let mut root = None; // save the root node
     let mut nodes: VecDeque<*mut Option<Rc<RefCell<TreeNode>>>> = Default::default(); // save the pointer to child nodes
+
     for v in vec {
+      // use the macro to deal with child node
       macro_rules! deal {
         ($node: expr) => {
           if let Some(n) = &mut *$node {
@@ -94,8 +115,9 @@ impl TreeNode {
           }
         };
       }
-      let node = TreeNode::new_option(v);
+      let node = TreeNode::new_option(v); // new tree node
       unsafe {
+        // save the raw pointer of child node of new tree node should under UNSAFE
         if root.is_none() {
           root = node;
           deal!(&mut root);
@@ -105,6 +127,7 @@ impl TreeNode {
         }
       }
     }
+
     root
   }
 }

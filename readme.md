@@ -56,10 +56,11 @@ Solutions for normal problems.
 - [#407 Trapping Rain Water II](src/leetcode/q407_trapping_rain_water_ii.rs)
 - [#445 Add Two Numbers II](src/leetcode/q445_add_two_numbers_ii.rs)
 - [#454 4Sum II](src/leetcode/q454_four_sum_ii.rs)
+- [#543 Diameter of Binary Tree](src/leetcode/q543_diameter_of_binary_tree.rs)
 - [#844 Backspace String Compare](src/leetcode/q844_backspace_string_compare.rs)
 
 ### 30 Day Leetcoding Challenge
 Some problems can only be found in "30 Day Leetcoding Challenge".
-(Questions are missing from "problems" page, there are no stanard question IDs for these problems.)
+(Questions are missing from "problems" page, there are no standard question IDs for these problems.)
 
 - [Counting Elements](src/leetcode/day_30_leetcoding_challenge/counting_elements.rs)
