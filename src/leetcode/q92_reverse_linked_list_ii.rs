@@ -1,4 +1,7 @@
 /**
+ * 92. Reverse Linked List II
+ * https://leetcode.com/problems/reverse-linked-list-ii/
+ *
  * Reverse a linked list from position m to n. Do it in one-pass.
  *
  * Note: 1 ≤ m ≤ n ≤ length of list.
@@ -11,15 +14,13 @@
 use super::*;
 
 fn reverse_between(head: Option<Box<ListNode>>, m: i32, n: i32) -> Option<Box<ListNode>> {
-  use std::mem::swap;
-
-  let mut nodes = nodes_to_node_vec(head);
   let mut result = None;
-  let mut node = &mut result;
+  let (mut node, mut nodes) = (&mut result, nodes_to_node_vec(head));
+
   for i in 1..=nodes.len() {
     let (m, n) = (m as usize, n as usize);
     let index = if i > n || i < m { i } else { n - i + m };
-    swap(node, &mut nodes[index - 1]);
+    std::mem::swap(node, &mut nodes[index - 1]);
     if let Some(v) = node {
       node = &mut v.next;
     }

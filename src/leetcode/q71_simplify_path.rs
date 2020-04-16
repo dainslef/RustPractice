@@ -40,34 +40,28 @@
  */
 
 fn simplify_path(path: String) -> String {
-  use std::iter::FromIterator;
+  macro_rules! update {
+    ($paths: expr, $dir: expr) => {
+      use std::iter::FromIterator;
+      match $dir.as_slice() {
+        ['.', '.'] => drop($paths.pop()),
+        ['.'] | [] => {}
+        _ => $paths.push(String::from_iter($dir)),
+      };
+    };
+  }
 
-  let mut paths: Vec<String> = vec![];
-  let mut dir: Vec<char> = vec![];
-
+  let (mut paths, mut dir): (Vec<String>, Vec<char>) = (vec![], vec![]);
   for c in path.chars() {
     if c == '/' {
-      match dir.as_slice() {
-        ['.', '.'] => drop(paths.pop()),
-        ['.'] | [] => {}
-        _ => {
-          paths.push(String::from_iter(dir));
-        }
-      };
+      update!(paths, dir);
       dir = vec![];
     } else {
       dir.push(c);
     }
   }
 
-  match dir.as_slice() {
-    ['.', '.'] => drop(paths.pop()),
-    ['.'] | [] => {}
-    _ => {
-      paths.push(String::from_iter(dir));
-    }
-  };
-
+  update!(paths, dir);
   if paths.is_empty() {
     "/".into()
   } else {
