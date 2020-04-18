@@ -61,8 +61,8 @@ use std::{cell::RefCell, rc::Rc};
 #[derive(Debug, PartialEq, Eq)]
 struct TreeNode {
   pub val: i32,
-  pub left: Option<Rc<RefCell<TreeNode>>>,
-  pub right: Option<Rc<RefCell<TreeNode>>>,
+  pub left: Option<Rc<RefCell<Self>>>,
+  pub right: Option<Rc<RefCell<Self>>>,
 }
 
 impl TreeNode {
@@ -76,8 +76,8 @@ impl TreeNode {
   }
 
   #[inline]
-  pub fn new_option(val: Option<i32>) -> Option<Rc<RefCell<TreeNode>>> {
-    val.map(|v| Rc::new(RefCell::new(TreeNode::new(v))))
+  pub fn new_option(val: Option<i32>) -> Option<Rc<RefCell<Self>>> {
+    val.map(|v| Rc::new(RefCell::new(Self::new(v))))
   }
 
   /**
@@ -98,11 +98,11 @@ impl TreeNode {
    *    \   \
    *     5   6
    */
-  pub fn from(vec: Vec<Option<i32>>) -> Option<Rc<RefCell<TreeNode>>> {
+  pub fn from(vec: Vec<Option<i32>>) -> Option<Rc<RefCell<Self>>> {
     use std::collections::VecDeque;
 
     let mut root = None; // save the root node
-    let mut nodes: VecDeque<*mut Option<Rc<RefCell<TreeNode>>>> = Default::default(); // save the pointer to child nodes
+    let mut nodes: VecDeque<*mut Option<Rc<RefCell<Self>>>> = Default::default(); // save the pointer to child nodes
 
     for v in vec {
       // use the macro to deal with child node
@@ -110,12 +110,12 @@ impl TreeNode {
         ($node: expr) => {
           if let Some(n) = &mut *$node {
             // add the pointer of child node, use raw pointer to avoid the ownership check
-            nodes.push_back(&mut n.borrow_mut().left as *mut Option<Rc<RefCell<TreeNode>>>);
-            nodes.push_back(&mut n.borrow_mut().right as *mut Option<Rc<RefCell<TreeNode>>>);
+            nodes.push_back(&mut n.borrow_mut().left as *mut Option<Rc<RefCell<Self>>>);
+            nodes.push_back(&mut n.borrow_mut().right as *mut Option<Rc<RefCell<Self>>>);
           }
         };
       }
-      let node = TreeNode::new_option(v); // new tree node
+      let node = Self::new_option(v); // new tree node
       unsafe {
         // save the raw pointer of child node of new tree node should under UNSAFE
         if root.is_none() {
@@ -226,6 +226,7 @@ mod q16_three_sum_closest;
 mod q17_letter_combinations_of_a_phone_number;
 mod q18_four_sum;
 mod q19_remove_nth_node_from_end_of_list;
+mod q200_number_of_islands;
 mod q22_generate_parentheses;
 mod q23_merge_k_sorted_lists;
 mod q24_swap_nodes_in_pairs;
@@ -276,6 +277,8 @@ mod q8_my_atoi;
 mod q92_reverse_linked_list_ii;
 mod q97_interleaving_string;
 
+// mod q678_valid_parenthesis_string;
+// mod q238_product_of_array_except_self;
 // mod q1046_last_stone_weight;
 // mod q155_min_stack;
 // mod q876_middle_of_the_linked_list;
