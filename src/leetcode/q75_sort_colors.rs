@@ -41,15 +41,18 @@ fn sort_colors_one_pass(nums: &mut Vec<i32>) {
   let (mut n0, mut n1, mut n2) = (0, 0, 0);
   for i in 0..length {
     let v = nums[i];
-    if v <= 2 {
+    if let 0 | 1 | 2 = v {
+      // number 2 should be placed to the end of Vec, so when all the type of numbers is inserted, the index should increase
       nums[n2] = 2;
       n2 += 1;
     }
-    if v <= 1 {
+    if let 0 | 1 = v {
+      // number 1 is placed to the middle of Vec, the index increase when number 1 or 2 is inserted
       nums[n1] = 1;
       n1 += 1;
     }
-    if v == 0 {
+    if let 0 = v {
+      // number 0 is placed to the start of Vec, the index inrease only if number 1 is inserted
       nums[n0] = 0;
       n0 += 1;
     }
@@ -86,29 +89,16 @@ fn sort_colors_one_pass_2(nums: &mut Vec<i32>) {
 #[test]
 fn q75_test() {
   fn test(sort_colors: impl Fn(&mut Vec<i32>)) {
-    let mut nums = vec![0];
-    sort_colors(&mut nums);
-    assert_eq!(nums, [0]);
-
-    let mut nums = vec![1];
-    sort_colors(&mut nums);
-    assert_eq!(nums, [1]);
-
-    let mut nums = vec![2];
-    sort_colors(&mut nums);
-    assert_eq!(nums, [2]);
-
-    let mut nums = vec![2, 2];
-    sort_colors(&mut nums);
-    assert_eq!(nums, [2, 2]);
-
-    let mut nums = vec![2, 0, 1];
-    sort_colors(&mut nums);
-    assert_eq!(nums, [0, 1, 2]);
-
-    let mut nums = vec![2, 0, 2, 1, 1, 0];
-    sort_colors(&mut nums);
-    assert_eq!(nums, [0, 0, 1, 1, 2, 2]);
+    let check = |mut nums, target: Vec<i32>| {
+      sort_colors(&mut nums);
+      assert_eq!(nums, target);
+    };
+    check(vec![0], vec![0]);
+    check(vec![1], vec![1]);
+    check(vec![2], vec![2]);
+    check(vec![2, 2], vec![2, 2]);
+    check(vec![2, 0, 1], vec![0, 1, 2]);
+    check(vec![2, 0, 2, 1, 1, 0], vec![0, 0, 1, 1, 2, 2]);
   }
 
   test(sort_colors);
