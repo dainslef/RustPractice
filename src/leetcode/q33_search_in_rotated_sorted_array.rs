@@ -1,4 +1,7 @@
 /**
+ * 33. Search in Rotated Sorted Array
+ * https://leetcode.com/problems/search-in-rotated-sorted-array/
+ *
  * Suppose an array sorted in ascending order is rotated at some pivot unknown to you beforehand.
  *
  * (i.e., [0,1,2,4,5,6,7] might become [4,5,6,7,0,1,2]).
@@ -19,8 +22,18 @@
  * Output: -1
  */
 
-// need to add comments
+// O(n) solution
 fn search(nums: Vec<i32>, target: i32) -> i32 {
+  for i in 0..nums.len() {
+    if nums[i] == target {
+      return i as i32;
+    }
+  }
+  -1
+}
+
+// O(log n) solution, use binary search
+fn search_binary(nums: Vec<i32>, target: i32) -> i32 {
 
   // check the range of nums, return if target isn't match the range
   if nums.first().map(|v| target < *v).unwrap_or(true)
@@ -39,20 +52,14 @@ fn search(nums: Vec<i32>, target: i32) -> i32 {
       (_, _, right) if right == target => break i_right as i32,
       _ if i_left + 1 == i_right || i_left == i_right => break -1,
       (left, center, right) => {
-        let mut update_index = |change_left| {
-          // check condition and update the index
-          if change_left {
-            i_left = i_center;
-          } else {
-            i_right = i_center;
-          }
-        };
-        if center > target {
-          // if center is larger than target, only should make center index as new left index when center and target in different side
-          update_index(center > right && target < right);
+        // if center is larger than target, only should make center index as new left index when center and target in different side
+        let condition1 = center > target && center > right && target < right;
+        // if center is smaller than target, make center index as new left index when when center and target in same side
+        let condition2 = center < target && (center > left || target < right);
+        if condition1 || condition2 {
+          i_left = i_center;
         } else {
-          // if center is smaller than target, make center index as new left index when when center and target in same side
-          update_index(center > left || target < right);
+          i_right = i_center;
         }
       }
     }
@@ -61,22 +68,27 @@ fn search(nums: Vec<i32>, target: i32) -> i32 {
 
 #[test]
 fn q33_test() {
-  assert_eq!(search(vec![7, 8, 9, 1, 2], 5), -1);
-  assert_eq!(search(vec![3, 6, 9, 10], 8), -1);
-  assert_eq!(search(vec![1, 3], 2), -1);
-  assert_eq!(search(vec![1, 2], 2), 1);
-  assert_eq!(search(vec![1], 0), -1);
-  assert_eq!(search(vec![], 5), -1);
-  assert_eq!(search(vec![0, 1, 2, 4, 5, 6, 7], 6), 5);
-  assert_eq!(search(vec![0, 1, 2, 4, 5, 6, 7], 4), 3);
-  assert_eq!(search(vec![4, 5, 6, 7, 0, 1, 2], 0), 4);
-  assert_eq!(search(vec![4, 5, 6, 7, 0, 1, 2], 1), 5);
-  assert_eq!(search(vec![4, 5, 6, 7, 0, 1, 2], 2), 6);
-  assert_eq!(search(vec![4, 5, 6, 7, 0, 1, 2], 3), -1);
-  assert_eq!(search(vec![4, 5, 6, 7, 0, 1, 2], 4), 0);
-  assert_eq!(search(vec![4, 5, 6, 7, 0, 1, 2], 5), 1);
-  assert_eq!(search(vec![4, 5, 6, 7, 0, 1, 2], 6), 2);
-  assert_eq!(search(vec![4, 5, 6, 7, 0, 1, 2], 7), 3);
-  assert_eq!(search(vec![4, 5, 6, 7, 0, 1, 2], 8), -1);
-  assert_eq!(search(vec![4, 5, 6, 7, 0, 1, 2], 9), -1);
+  fn test(search: impl Fn(Vec<i32>, i32) -> i32) {
+    assert_eq!(search(vec![7, 8, 9, 1, 2], 5), -1);
+    assert_eq!(search(vec![3, 6, 9, 10], 8), -1);
+    assert_eq!(search(vec![1, 3], 2), -1);
+    assert_eq!(search(vec![1, 2], 2), 1);
+    assert_eq!(search(vec![1], 0), -1);
+    assert_eq!(search(vec![], 5), -1);
+    assert_eq!(search(vec![0, 1, 2, 4, 5, 6, 7], 6), 5);
+    assert_eq!(search(vec![0, 1, 2, 4, 5, 6, 7], 4), 3);
+    assert_eq!(search(vec![4, 5, 6, 7, 0, 1, 2], 0), 4);
+    assert_eq!(search(vec![4, 5, 6, 7, 0, 1, 2], 1), 5);
+    assert_eq!(search(vec![4, 5, 6, 7, 0, 1, 2], 2), 6);
+    assert_eq!(search(vec![4, 5, 6, 7, 0, 1, 2], 3), -1);
+    assert_eq!(search(vec![4, 5, 6, 7, 0, 1, 2], 4), 0);
+    assert_eq!(search(vec![4, 5, 6, 7, 0, 1, 2], 5), 1);
+    assert_eq!(search(vec![4, 5, 6, 7, 0, 1, 2], 6), 2);
+    assert_eq!(search(vec![4, 5, 6, 7, 0, 1, 2], 7), 3);
+    assert_eq!(search(vec![4, 5, 6, 7, 0, 1, 2], 8), -1);
+    assert_eq!(search(vec![4, 5, 6, 7, 0, 1, 2], 9), -1);
+  }
+
+  test(search);
+  test(search_binary);
 }
