@@ -108,20 +108,21 @@ impl TreeNode {
       // use the macro to deal with child node
       macro_rules! deal {
         ($node: expr) => {
-          if let Some(n) = &mut *$node {
+          if let Some(n) = &*$node {
             // add the pointer of child node, use raw pointer to avoid the ownership check
-            nodes.push_back(&mut n.borrow_mut().left as *mut Option<Rc<RefCell<Self>>>);
-            nodes.push_back(&mut n.borrow_mut().right as *mut Option<Rc<RefCell<Self>>>);
+            nodes.push_back(&mut n.borrow_mut().left);
+            nodes.push_back(&mut n.borrow_mut().right);
           }
         };
       }
       let node = Self::new_option(v); // new tree node
-      unsafe {
-        // save the raw pointer of child node of new tree node should under UNSAFE
-        if root.is_none() {
-          root = node;
-          deal!(&mut root);
-        } else if let Some(current) = nodes.pop_front() {
+      // save the raw pointer of child node of new tree node dosn't need UNSAFE
+      if root.is_none() {
+        root = node;
+        deal!(&root);
+      } else if let Some(current) = nodes.pop_front() {
+        unsafe {
+          // only dereference raw pointer should under UNSAFE
           *current = node;
           deal!(current);
         }
@@ -278,6 +279,10 @@ mod q8_my_atoi;
 mod q92_reverse_linked_list_ii;
 mod q97_interleaving_string;
 
+// mod q201_bitwise_and_of_numbers_range;
+// mod q1008_construct_binary_search_tree_from_preorder_traversal;
+
+// mod q560_subarray_sum_equals_k;
 // mod q678_valid_parenthesis_string;
 // mod q238_product_of_array_except_self;
 // mod q1046_last_stone_weight;
