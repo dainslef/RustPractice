@@ -110,13 +110,13 @@ impl TreeNode {
         ($node: expr) => {
           if let Some(n) = &*$node {
             // add the pointer of child node, use raw pointer to avoid the ownership check
+            // save the raw pointer of child node of new tree node dosn't need UNSAFE
             nodes.push_back(&mut n.borrow_mut().left);
             nodes.push_back(&mut n.borrow_mut().right);
           }
         };
       }
       let node = Self::new_option(v); // new tree node
-      // save the raw pointer of child node of new tree node dosn't need UNSAFE
       if root.is_none() {
         root = node;
         deal!(&root);
@@ -218,6 +218,7 @@ macro_rules! string_vec {
 
 mod day_30_leetcoding_challenge;
 
+mod q1008_construct_binary_search_tree_from_preorder_traversal;
 mod q10_regular_expression_matching;
 mod q11_container_with_most_water;
 mod q126_word_ladder_ii;
@@ -279,9 +280,9 @@ mod q8_my_atoi;
 mod q92_reverse_linked_list_ii;
 mod q97_interleaving_string;
 
+// mod q1143_longest_common_subsequence;
+// mod q146_lru_cache;
 // mod q201_bitwise_and_of_numbers_range;
-// mod q1008_construct_binary_search_tree_from_preorder_traversal;
-
 // mod q560_subarray_sum_equals_k;
 // mod q678_valid_parenthesis_string;
 // mod q238_product_of_array_except_self;
