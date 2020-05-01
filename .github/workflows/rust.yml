@@ -1,19 +1,17 @@
-name: Rust
-
-on:
-  push:
-    branches: [ dev ]
-  pull_request:
-    branches: [ dev ]
+name: Rust CI
+on: [push]
 
 jobs:
-  build:
-
-    runs-on: ubuntu-latest
-
+  test:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest, macOS-latest]
+        rust: [stable]
     steps:
-    - uses: actions/checkout@v2
-    - name: Build
-      run: cargo build --verbose
+    - uses: hecrj/setup-rust-action@v1
+      with:
+        rust-version: ${{ matrix.rust }}
+    - uses: actions/checkout@master
     - name: Run tests
       run: cargo test --verbose
