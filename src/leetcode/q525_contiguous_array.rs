@@ -15,23 +15,23 @@
  * Note: The length of the given binary array will not exceed 50,000.
  */
 
- // solution explanation see https://leetcode.com/problems/contiguous-array/discuss/99655/Python-O(n)-Solution-with-Visual-Explanation
+// solution explanation see https://leetcode.com/problems/contiguous-array/discuss/99655/Python-O(n)-Solution-with-Visual-Explanation
 fn find_max_length(nums: Vec<i32>) -> i32 {
   use std::collections::HashMap;
 
-  let mut sum = 0;
+  let (mut sum, mut max_length) = (0, 0);
+  // use map to save all the indexes grouped by sum
   let mut indexes_count: HashMap<i32, Vec<usize>> = Default::default();
 
+  // add the first index
   indexes_count.entry(sum).or_default().push(0);
+
   for i in 0..nums.len() {
-    sum += if nums[i] == 0 { -1 } else { 1 };
-    indexes_count.entry(sum).or_default().push(i + 1);
-  }
-
-  let mut max_length = 0;
-
-  for (_, v) in indexes_count {
-    if let (Some(first), Some(last)) = (v.first(), v.last()) {
+    sum += if nums[i] == 0 { -1 } else { 1 }; // compute the sum (0 => -1, 1 => 1)
+    let indexes = indexes_count.entry(sum).or_default();
+    indexes.push(i + 1); // add the corrent position
+    if let (Some(first), Some(last)) = (indexes.first(), indexes.last()) {
+      // the max length is the distance from the first position to the last position
       max_length = (last - first).max(max_length);
     }
   }
