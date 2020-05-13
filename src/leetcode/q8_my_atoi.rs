@@ -1,4 +1,6 @@
 /**
+ * 8. String to Integer (atoi)
+ * https://leetcode.com/problems/string-to-integer-atoi/
  * Implement atoi which converts a string to an integer.
  *
  * The function first discards as many whitespace characters as necessary until the first non-whitespace character is found. Then, starting from this character, takes an optional initial plus or minus sign followed by as many numerical digits as possible, and interprets them as a numerical value.
@@ -49,7 +51,7 @@ fn my_atoi(s: String) -> i32 {
   if let Some(num_str) = s.split_whitespace().next() {
     let mut not_zero = false;
     for (i, c) in num_str.char_indices() {
-      if i == 0 && (c == '+' || c == '-') {
+      if i == 0 && matches!(c, '+' | '-') {
         // check the first char
         if c == '-' {
           is_negative = true;
@@ -68,31 +70,12 @@ fn my_atoi(s: String) -> i32 {
 
   for i in 0..nums.len() {
     let num = nums[nums.len() - i - 1];
-    let checked_pow = || {
-      let (mut exp, mut base, mut acc) = (i, 10, 1_i32);
-      while exp > 1 {
-        if (exp & 1) == 1 {
-          acc = acc.checked_mul(base)?;
-        }
-        exp /= 2;
-        base = base.checked_mul(base)?;
-      }
-      if exp == 1 {
-        acc = acc.checked_mul(base)?;
-      }
-      Some(acc)
-    };
-
-    temp = { || checked_pow()?.checked_mul(num)?.checked_add(temp?) }();
+    temp = { || 10_i32.checked_pow(i as u32)?.checked_mul(num)?.checked_add(temp?) }();
   }
 
   temp
     .map(|v| if is_negative { 0 - v } else { v })
-    .unwrap_or(if is_negative {
-      std::i32::MIN
-    } else {
-      std::i32::MAX
-    })
+    .unwrap_or(if is_negative { i32::MIN } else { i32::MAX })
 }
 
 #[test]

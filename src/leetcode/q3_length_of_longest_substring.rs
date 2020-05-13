@@ -1,4 +1,7 @@
 /**
+ * 3. Longest Substring Without Repeating Characters
+ * https://leetcode.com/problems/longest-substring-without-repeating-characters/
+ *
  * Given a string, find the length of the longest substring without repeating characters.
  *
  * Example 1:
@@ -23,7 +26,6 @@ fn length_of_longest_substring(s: String) -> i32 {
   use std::collections::VecDeque;
 
   let (mut count, mut temp) = (0, VecDeque::new());
-
   for c in s.chars() {
     while temp.contains(&c) {
       temp.pop_front();

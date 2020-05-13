@@ -1,4 +1,7 @@
 /**
+ * 2. Add Two Numbers
+ * https://leetcode.com/problems/add-two-numbers/
+ *
  * You are given two non-empty linked lists representing two non-negative integers. The digits are stored in reverse order and each of their nodes contain a single digit. Add the two numbers and return it as a linked list.
  *
  * You may assume the two numbers do not contain any leading zero, except the number 0 itself.
@@ -18,7 +21,6 @@ fn add_two_numbers(l1: Option<Box<ListNode>>, l2: Option<Box<ListNode>>) -> Opti
   let mut deal_result = |num| {
     // compute the result by carry
     let result = num + carry as i32;
-
     // if the result is larger than 10, set the carry
     carry = result >= 10;
     temp.push(if carry { result - 10 } else { result });
