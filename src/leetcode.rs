@@ -284,6 +284,7 @@ mod q8_my_atoi;
 mod q92_reverse_linked_list_ii;
 mod q97_interleaving_string;
 
+mod q73_set_matrix_zeroes;
 // mod q72_edit_distance;
 // mod q124_binary_tree_maximum_path_sum;
 // mod q221_maximal_square;
