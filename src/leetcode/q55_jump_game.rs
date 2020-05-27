@@ -30,7 +30,7 @@ fn can_jump(nums: Vec<i32>) -> bool {
       can_jump = false;
       break;
     }
-    last_reach = std::cmp::max(last_reach, v as usize + i);
+    last_reach = last_reach.max(v as usize + i);
   }
 
   can_jump

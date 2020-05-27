@@ -44,39 +44,28 @@ fn set_zeroes(matrix: &mut Vec<Vec<i32>>) {
     return;
   }
 
-  let (mut zero_in_first_row, mut zero_in_first_column) = (false, false);
+  let mut zero_in_first_row = false;
   for y in 0..matrix.len() {
+    let mut has_zero = false;
     for x in 0..matrix[y].len() {
       if matrix[y][x] == 0 {
+        matrix[0][x] = 0; // use the first row to record which cloumn should set zeros
         if y == 0 {
-          // record if the first row should set zeros
-          zero_in_first_row = true;
+          zero_in_first_row = true; // record if the first row should set zeros
+        } else {
+          has_zero = true;
         }
-        if x == 0 {
-          // record if the first column should set zeros
-          zero_in_first_column = true;
+      }
+      // if the current row is the last row, set zeros for record columns
+      if y == matrix.len() - 1 && matrix[0][x] == 0 {
+        for i in 0..matrix.len() {
+          matrix[i][x] = 0; // set zeros for record column
         }
-        // use the first row and first column to record which row/cloumn should set zeros
-        matrix[y][0] = 0;
-        matrix[0][x] = 0;
       }
     }
-  }
-
-  for y in 1..matrix.len() {
-    if matrix[y][0] == 0 {
-      // set zeros for record row
-      for x in 0..matrix[y].len() {
-        matrix[y][x] = 0;
-      }
-    }
-  }
-
-  for x in 1..matrix[0].len() {
-    if matrix[0][x] == 0 {
-      // set zeros for record column
-      for y in 0..matrix.len() {
-        matrix[y][x] = 0;
+    if has_zero {
+      for i in 0..matrix[y].len() {
+        matrix[y][i] = 0; // set the zreos for the target row
       }
     }
   }
@@ -84,12 +73,6 @@ fn set_zeroes(matrix: &mut Vec<Vec<i32>>) {
   if zero_in_first_row {
     for x in 0..matrix[0].len() {
       matrix[0][x] = 0;
-    }
-  }
-
-  if zero_in_first_column {
-    for y in 0..matrix.len() {
-      matrix[y][0] = 0;
     }
   }
 }
@@ -107,4 +90,8 @@ fn q73_test() {
   let mut matrix = vec![vec![0, 1, 2, 0], vec![3, 4, 5, 2], vec![1, 3, 1, 5]];
   set_zeroes(&mut matrix);
   assert_eq!(matrix, [[0, 0, 0, 0], [0, 4, 5, 0], [0, 3, 1, 0]]);
+
+  let mut matrix = vec![vec![0, 1, 2, 1], vec![3, 0, 2, 0], vec![1, 3, 1, 5]];
+  set_zeroes(&mut matrix);
+  assert_eq!(matrix, [[0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 1, 0]]);
 }
