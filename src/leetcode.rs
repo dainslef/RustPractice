@@ -277,6 +277,7 @@ mod q65_valid_number;
 mod q68_text_justification;
 mod q6_zipzag_conversion;
 mod q71_simplify_path;
+mod q72_edit_distance;
 mod q73_set_matrix_zeroes;
 mod q75_sort_colors;
 mod q76_minimum_window_substring;
@@ -287,7 +288,6 @@ mod q92_reverse_linked_list_ii;
 mod q97_interleaving_string;
 
 // mod q74_search_a_2d_matrix;
-// mod q72_edit_distance;
 // mod q124_binary_tree_maximum_path_sum;
 // mod q221_maximal_square;
 // mod q1143_longest_common_subsequence;
