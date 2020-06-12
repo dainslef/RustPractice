@@ -1,4 +1,7 @@
 /**
+ * 72. Edit Distance
+ * https://leetcode.com/problems/edit-distance/
+ *
  * Given two words word1 and word2, find the minimum number of operations required to convert word1 to word2.
  *
  * You have the following 3 operations permitted on a word:
@@ -32,7 +35,8 @@ fn min_distance(word1: String, word2: String) -> i32 {
   let (chars1, chars2): (Vec<char>, Vec<char>) = (word1.chars().collect(), word2.chars().collect());
   let mut temp: Vec<Vec<i32>> = (0..=length1)
     .map(|y| {
-      (0..=length2).map(|x| if y == 0 { x } else if x == 0 { y } else { 0 } as i32).collect()
+      let init = |x| if y == 0 { x } else if x == 0 { y } else { 0 } as i32;
+      (0..=length2).map(init).collect()
     })
     .collect();
 
