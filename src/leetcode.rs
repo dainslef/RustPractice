@@ -216,8 +216,7 @@ macro_rules! string_vec {
   }}
 }
 
-mod day_30_leetcoding_challenge;
-
+// normal problems
 mod q1008_construct_binary_search_tree_from_preorder_traversal;
 mod q10_regular_expression_matching;
 mod q11_container_with_most_water;
@@ -279,6 +278,7 @@ mod q6_zipzag_conversion;
 mod q71_simplify_path;
 mod q72_edit_distance;
 mod q73_set_matrix_zeroes;
+mod q74_search_a_2d_matrix;
 mod q75_sort_colors;
 mod q76_minimum_window_substring;
 mod q7_reverse_integer;
@@ -287,7 +287,13 @@ mod q8_my_atoi;
 mod q92_reverse_linked_list_ii;
 mod q97_interleaving_string;
 
-// mod q74_search_a_2d_matrix;
+// some extra problems can only be found in "30-Day LeetCoding Challenge"
+mod day_30_leetcoding_challenge;
+
+// mod q212_word_search_ii;
+
+// mod q79_word_search;
+// mod q78_subsets;
 // mod q124_binary_tree_maximum_path_sum;
 // mod q221_maximal_square;
 // mod q1143_longest_common_subsequence;
