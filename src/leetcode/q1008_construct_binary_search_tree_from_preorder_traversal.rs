@@ -22,6 +22,39 @@
  */
 use super::*;
 
+fn bst_from_preorder_loop(preorder: Vec<i32>) -> Option<Rc<RefCell<TreeNode>>> {
+  let mut root = None;
+  let mut nodes: Vec<Rc<RefCell<TreeNode>>> = Default::default();
+
+  for v in preorder {
+    let tree_node = Rc::new(RefCell::new(TreeNode::new(v)));
+    if root.is_none() {
+      root = Some(tree_node.clone());
+    }
+    let mut match_index = nodes.len();
+    for i in 0..nodes.len() {
+      if nodes[i].borrow().val > tree_node.borrow().val {
+        match_index = i;
+        break;
+      }
+    }
+    if !nodes.is_empty() {
+      if match_index == nodes.len() {
+        nodes[match_index - 1].borrow_mut().right = Some(tree_node.clone());
+      } else if match_index == 0 {
+        nodes[0].borrow_mut().left = Some(tree_node.clone());
+      } else if nodes[match_index - 1].borrow().right.is_none() {
+        nodes[match_index - 1].borrow_mut().right = Some(tree_node.clone());
+      } else if nodes[match_index].borrow().left.is_none() {
+        nodes[match_index].borrow_mut().left = Some(tree_node.clone());
+      }
+    }
+    nodes.insert(match_index, tree_node);
+  }
+
+  root
+}
+
 fn bst_from_preorder(preorder: Vec<i32>) -> Option<Rc<RefCell<TreeNode>>> {
   fn recurse(preorder: &Vec<i32>, max: i32, i: &mut usize) -> Option<Rc<RefCell<TreeNode>>> {
     if *i == preorder.len() || preorder[*i] > max {
@@ -39,7 +72,26 @@ fn bst_from_preorder(preorder: Vec<i32>) -> Option<Rc<RefCell<TreeNode>>> {
 #[test]
 fn q1008_test() {
   assert_eq!(
-    bst_from_preorder(vec![8, 5, 1, 7, 10, 12]),
+    bst_from_preorder(vec![8, 7, 6, 5, 4, 100, 0, 32]),
+    TreeNode::from(vec![
+      Some(8),
+      Some(7),
+      Some(32),
+      Some(6),
+      None,
+      None,
+      None,
+      Some(5),
+      None,
+      Some(4),
+      Some(100),
+      None,
+      None,
+      Some(0)
+    ])
+  );
+  assert_eq!(
+    bst_from_preorder_loop(vec![8, 5, 1, 7, 10, 12]),
     TreeNode::from(vec![
       Some(8),
       Some(5),
