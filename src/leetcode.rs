@@ -85,18 +85,20 @@ impl TreeNode {
    * for example:
    *
    * [Some(1), Some(2), Some(3), Some(4), Some(5), Some(6)] will be transformed to:
-   *     1
-   *    / \
-   *   3   4
-   *  / \
-   * 5  6
+   *      1
+   *    /   \
+   *   2     3
+   *  / \   /
+   * 4   5 6
    *
    * [Some(1), Some(2), Some(3), Some(4), None, Some(5), None, Some(6)] will be transformed to:
-   *     1
-   *    / \
-   *   3   4
-   *    \   \
-   *     5   6
+   *        1
+   *      /   \
+   *     2     3
+   *    / \   / \
+   *   4     5
+   *  /
+   * 6
    */
   pub fn from(vec: Vec<Option<i32>>) -> Option<Rc<RefCell<Self>>> {
     use std::collections::VecDeque;
@@ -228,6 +230,7 @@ mod q17_letter_combinations_of_a_phone_number;
 mod q18_four_sum;
 mod q19_remove_nth_node_from_end_of_list;
 mod q200_number_of_islands;
+mod q212_word_search_ii;
 mod q22_generate_parentheses;
 mod q23_merge_k_sorted_lists;
 mod q24_swap_nodes_in_pairs;
@@ -289,8 +292,6 @@ mod q97_interleaving_string;
 
 // some extra problems can only be found in "30-Day LeetCoding Challenge"
 mod day_30_leetcoding_challenge;
-
-// mod q212_word_search_ii;
 
 // mod q79_word_search;
 // mod q78_subsets;
