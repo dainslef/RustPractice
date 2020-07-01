@@ -284,6 +284,7 @@ mod q73_set_matrix_zeroes;
 mod q74_search_a_2d_matrix;
 mod q75_sort_colors;
 mod q76_minimum_window_substring;
+mod q79_word_search;
 mod q7_reverse_integer;
 mod q844_backspace_string_compare;
 mod q8_my_atoi;
@@ -293,7 +294,6 @@ mod q97_interleaving_string;
 // some extra problems can only be found in "30-Day LeetCoding Challenge"
 mod day_30_leetcoding_challenge;
 
-// mod q79_word_search;
 // mod q78_subsets;
 // mod q124_binary_tree_maximum_path_sum;
 // mod q221_maximal_square;
