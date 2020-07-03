@@ -24,32 +24,38 @@ use super::*;
 
 fn bst_from_preorder_loop(preorder: Vec<i32>) -> Option<Rc<RefCell<TreeNode>>> {
   let mut root = None;
-  let mut nodes: Vec<Rc<RefCell<TreeNode>>> = Default::default();
+  let mut nodes: Vec<Rc<RefCell<TreeNode>>> = vec![];
 
   for v in preorder {
     let mut match_index = nodes.len();
     let tree_node = Rc::new(RefCell::new(TreeNode::new(v)));
+
     if root.is_none() {
+      // set the root node
       root = Some(tree_node.clone());
     }
+
     for i in 0..nodes.len() {
-      if nodes[i].borrow().val > tree_node.borrow().val {
+      if nodes[i].borrow().val > v {
+        // find the first index of value which larger than target value in the node list
         match_index = i;
         break;
       }
     }
+
     if !nodes.is_empty() {
-      if match_index < nodes.len()
+      if match_index < nodes.len() // check the index range and if the left child node is empty
         && (match_index == 0 || nodes[match_index].borrow().left.is_none())
       {
         nodes[match_index].borrow_mut().left = Some(tree_node.clone());
-      } else if match_index > 0
+      } else if match_index > 0 // if the left child of the match value isn't empty, then set the target to the right child node of the last node
         && (match_index == nodes.len() || nodes[match_index - 1].borrow().right.is_none())
       {
         nodes[match_index - 1].borrow_mut().right = Some(tree_node.clone());
       }
     }
-    nodes.insert(match_index, tree_node);
+
+    nodes.insert(match_index, tree_node); // place the new node in correct place
   }
 
   root
@@ -58,14 +64,18 @@ fn bst_from_preorder_loop(preorder: Vec<i32>) -> Option<Rc<RefCell<TreeNode>>> {
 fn bst_from_preorder(preorder: Vec<i32>) -> Option<Rc<RefCell<TreeNode>>> {
   fn recurse(preorder: &Vec<i32>, max: i32, i: &mut usize) -> Option<Rc<RefCell<TreeNode>>> {
     if *i == preorder.len() || preorder[*i] > max {
+      // check if the index and value match the condition (less than max value)
       return None;
     }
+
     let mut n = TreeNode::new(preorder[*i]);
-    *i += 1;
+    *i += 1; // update the index in preorder, use reference can influence the outside
     n.left = recurse(preorder, n.val, i);
     n.right = recurse(preorder, max, i);
+
     Some(Rc::new(RefCell::new(n)))
   }
+
   recurse(&preorder, i32::MAX, &mut 0)
 }
 
