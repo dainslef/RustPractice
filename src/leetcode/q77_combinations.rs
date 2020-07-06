@@ -42,6 +42,32 @@ fn combine(n: i32, k: i32) -> Vec<Vec<i32>> {
   temp
 }
 
+/**
+ * recursion version, avoid the unnecessary copy
+ *
+ * Runtime: 12 ms
+ * Memory Usage: 3.2 MB
+ */
+fn combine_recursion(n: i32, k: i32) -> Vec<Vec<i32>> {
+  fn recursion(nums: &mut Vec<i32>, max: i32, length: i32, out: &mut Vec<Vec<i32>>) {
+    if nums.len() == length as usize {
+      out.push(nums.clone());
+    } else {
+      let last = nums.last().unwrap_or(&0);
+      for v in *last + 1..=max {
+        nums.push(v);
+        recursion(nums, max, length, out);
+        nums.pop();
+      }
+    }
+  }
+
+  let mut out = vec![];
+  recursion(&mut vec![], n, k, &mut out);
+
+  out
+}
+
 #[test]
 fn q77_test() {
   fn test(combine: impl Fn(i32, i32) -> Vec<Vec<i32>>) {
@@ -78,4 +104,5 @@ fn q77_test() {
   }
 
   test(combine);
+  test(combine_recursion);
 }
