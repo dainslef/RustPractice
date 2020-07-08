@@ -57,11 +57,13 @@ fn exist(board: Vec<Vec<char>>, word: String) -> bool {
 
         let (row, column) = (board.len(), board[0].len());
         if let Some((y, x)) = index {
+          // check the points around the current index
           check!(y - 1, x, y > 0);
           check!(y, x - 1, x > 0);
           check!(y + 1, x, y + 1 < row);
           check!(y, x + 1, x + 1 < column);
         } else {
+          // if the current index doesn't be initialized, find a new index
           for y in 0..row {
             for x in 0..column {
               check!(y, x);
@@ -96,7 +98,7 @@ fn exist_loop(board: Vec<Vec<char>>, word: String) -> bool {
 
   let (row, column) = (board.len(), board[0].len());
   let chars: Vec<char> = word.chars().collect();
-  let mut cache: HashMap<usize, Vec<(usize, usize)>> = vec![(
+  let mut state: HashMap<usize, Vec<(usize, usize)>> = vec![(
     0,
     (0..row)
       .flat_map(|y| (0..column).map(move |x| (y, x)))
@@ -104,43 +106,37 @@ fn exist_loop(board: Vec<Vec<char>>, word: String) -> bool {
       .collect(),
   )]
   .into_iter()
-  .collect();
+  .collect(); // record the state for the index with the char match status
 
   let mut index = 0;
   let mut indexes: Vec<(usize, usize)> = vec![];
 
   loop {
-    if (word.len() > 1 && index + 1 == word.len())
-      || word
-        == indexes
-          .iter()
-          .map(|(y, x)| board[*y][*x])
-          .collect::<String>()
-    {
+    if word.len() == 1 {
+      return !state[&0].is_empty(); // deal with the word only has one char
+    } else if index + 1 == word.len() {
       return true;
-    } else if let Some((y, x)) = cache.entry(index).or_default().pop() {
+    } else if let Some((y, x)) = state.entry(index).or_default().pop() {
       indexes.push((y, x));
-      let next = cache.entry(index + 1).or_default();
+      let next = state.entry(index + 1).or_default();
 
       macro_rules! check {
         ($y: expr, $x: expr, $condition: expr) => {
-          if $condition
-            && chars.get(index + 1) == Some(&board[$y][$x])
-            && !indexes.contains(&($y, $x))
-          {
+          if $condition && chars[index + 1] == board[$y][$x] && !indexes.contains(&($y, $x)) {
             next.push(($y, $x));
           }
         };
       }
+      // check the points around the current index
       check!(y - 1, x, y > 0);
       check!(y, x - 1, x > 0);
       check!(y + 1, x, y + 1 < row);
       check!(y, x + 1, x + 1 < column);
 
-      if !next.is_empty() {
+      if next.is_empty() {
+        indexes.pop(); // remove the char which has no matched next char
+      } else {
         index += 1; // update index only if there are valid chars in next position
-      } else if word.len() > 1 {
-        indexes.pop();
       }
     } else if index > 0 {
       indexes.pop();
