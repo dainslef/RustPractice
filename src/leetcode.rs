@@ -287,6 +287,7 @@ mod q76_minimum_window_substring;
 mod q77_combinations;
 mod q79_word_search;
 mod q7_reverse_integer;
+mod q82_remove_duplicates_from_sorted_list_ii;
 mod q844_backspace_string_compare;
 mod q8_my_atoi;
 mod q92_reverse_linked_list_ii;
