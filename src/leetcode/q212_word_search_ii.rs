@@ -23,81 +23,65 @@
  */
 
 /**
- * Runtime: 1064 ms, faster than 11.11% of Rust online submissions for Word Search II.
- * Memory Usage: 14.2 MB, less than 50.00% of Rust online submissions for Word Search II.
+ * Runtime: 80 ms, faster than 16.28% of Rust online submissions for Word Search II.
+ * Memory Usage: 22.8 MB, less than 100.00% of Rust online submissions for Word Search II.
  */
 fn find_words(board: Vec<Vec<char>>, words: Vec<String>) -> Vec<String> {
-  if words.is_empty() || words[0].is_empty() {
+  if board.is_empty() || board[0].is_empty() {
     return vec![];
   }
 
   use std::collections::HashMap;
 
   let mut out = vec![];
-  let mut caches: HashMap<String, Option<Vec<Vec<(usize, usize)>>>> = HashMap::new();
+  let mut caches: HashMap<String, Vec<Vec<(usize, usize)>>> = HashMap::new();
   let (row, column) = (board.len(), board[0].len());
 
   for word in words {
-    let mut state: Vec<Vec<(usize, usize)>> = vec![];
     let mut current_str = String::new();
-
     for c in word.chars() {
+      let mut next: Vec<Vec<(usize, usize)>> = vec![];
+      let last_str = current_str.clone();
       current_str += &c.to_string();
-      if let Some(v) = caches.get(&current_str).cloned().flatten() {
-        state = v;
-        continue;
-      }
 
-      if state.is_empty() {
-        for y in 0..row {
-          for x in 0..column {
-            if board[y][x] == c {
-              state.push(vec![(y, x)]);
+      match (caches.get(&last_str), caches.get(&current_str)) {
+        (_, Some(_)) => continue,
+        (Some(last_state), None) => {
+          for indexes in last_state {
+            macro_rules! check {
+              ($y: expr, $x: expr, $condition: expr) => {
+                // check if the target char match the word's next char
+                // check if the index has been used
+                if $condition && !indexes.contains(&($y, $x)) && board[$y][$x] == c {
+                  let mut next_indexes = indexes.clone();
+                  next_indexes.push(($y, $x));
+                  next.push(next_indexes);
+                }
+              };
+            }
+            if let Some((y, x)) = indexes.last() {
+              check!(*y - 1, *x, *y > 0);
+              check!(*y, *x - 1, *x > 0);
+              check!(*y + 1, *x, *y + 1 < row);
+              check!(*y, *x + 1, *x + 1 < column);
             }
           }
         }
-      } else {
-        let mut next: Vec<Vec<(usize, usize)>> = vec![];
-        for indexes in state {
-          if let Some((y, x)) = indexes.last() {
-            // check if the target char match the word's next char
-            // check if the index has been used
-            if *y > 0 && !indexes.contains(&(*y - 1, *x)) && board[*y - 1][*x] == c {
-              let mut indexes = indexes.clone();
-              indexes.push((*y - 1, *x));
-              next.push(indexes);
-            }
-            if *x > 0 && !indexes.contains(&(*y, *x - 1)) && board[*y][*x - 1] == c {
-              let mut indexes = indexes.clone();
-              indexes.push((*y, *x - 1));
-              next.push(indexes);
-            }
-            if *y + 1 < row && !indexes.contains(&(*y + 1, *x)) && board[*y + 1][*x] == c {
-              let mut indexes = indexes.clone();
-              indexes.push((*y + 1, *x));
-              next.push(indexes);
-            }
-            if *x + 1 < column && !indexes.contains(&(*y, *x + 1)) && board[*y][*x + 1] == c {
-              let mut indexes = indexes.clone();
-              indexes.push((*y, *x + 1));
-              next.push(indexes);
+        (None, _) => {
+          for y in 0..row {
+            for x in 0..column {
+              if board[y][x] == c {
+                next.push(vec![(y, x)]);
+              }
             }
           }
         }
-
-        state = next;
       }
 
-      if state.is_empty() {
-        caches.insert(current_str.clone(), None);
-        // break if the no char match the target
-        break;
-      } else {
-        caches.insert(current_str.clone(), Some(state.clone()));
-      }
+      caches.insert(current_str.clone(), next);
     }
 
-    if !state.is_empty() {
+    if caches.get(&word).map(|v| !v.is_empty()).unwrap_or(false) {
       out.push(word);
     }
   }
@@ -108,6 +92,35 @@ fn find_words(board: Vec<Vec<char>>, words: Vec<String>) -> Vec<String> {
 #[test]
 fn q212_test() {
   use super::check_element_eq;
+  assert_eq!(
+    check_element_eq(
+      find_words(
+        vec![
+          vec!['A', 'B', 'C', 'E'],
+          vec!['S', 'F', 'C', 'S'],
+          vec!['A', 'D', 'E', 'E']
+        ],
+        string_vec!["EECCBA", "ABCCED", "SEE"],
+      ),
+      string_vec!["EECCBA", "ABCCED", "SEE"],
+    ),
+    true
+  );
+  assert_eq!(
+    check_element_eq(
+      find_words(
+        vec![
+          vec!['o', 'a', 'a', 'n'],
+          vec!['e', 't', 'a', 'e'],
+          vec!['i', 'h', 'k', 'r'],
+          vec!['i', 'f', 'l', 'v'],
+        ],
+        string_vec!["oath", "pea", "eat", "rain"],
+      ),
+      string_vec!["eat", "oath"],
+    ),
+    true
+  );
   assert_eq!(
     check_element_eq(
       find_words(
@@ -820,35 +833,6 @@ fn q212_test() {
         "aaaaaaaaaaaaaabc",
         "aaaaaaaaaaaaaade"
       ],
-    ),
-    true
-  );
-  assert_eq!(
-    check_element_eq(
-      find_words(
-        vec![
-          vec!['A', 'B', 'C', 'E'],
-          vec!['S', 'F', 'C', 'S'],
-          vec!['A', 'D', 'E', 'E']
-        ],
-        string_vec!["EECCBA", "ABCCED", "SEE"],
-      ),
-      string_vec!["EECCBA", "ABCCED", "SEE"],
-    ),
-    true
-  );
-  assert_eq!(
-    check_element_eq(
-      find_words(
-        vec![
-          vec!['o', 'a', 'a', 'n'],
-          vec!['e', 't', 'a', 'e'],
-          vec!['i', 'h', 'k', 'r'],
-          vec!['i', 'f', 'l', 'v'],
-        ],
-        string_vec!["oath", "pea", "eat", "rain"],
-      ),
-      string_vec!["eat", "oath"],
     ),
     true
   );
