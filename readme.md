@@ -58,6 +58,7 @@ Solutions for normal problems.
 - [#72 Edit Distance](src/leetcode/q72_edit_distance.rs)
 - [#75 Sort Colors](src/leetcode/q75_sort_colors.rs)
 - [#76 Minimum Window Substring](src/leetcode/q76_minimum_window_substring.rs)
+- [#77 Combinations](src/leetcode/q77_combinations.rs)
 - [#92 Reverse Linked List II](src/leetcode/q92_reverse_linked_list_ii.rs)
 - [#97 Interleaving String](src/leetcode/q97_interleaving_string.rs)
 - [#407 Trapping Rain Water II](src/leetcode/q407_trapping_rain_water_ii.rs)
@@ -70,4 +71,7 @@ Solutions for normal problems.
 Some problems can only be found in "30 Day Leetcoding Challenge".
 (Questions are missing from "problems" page, there are no standard question IDs for these problems.)
 
+- [Check if a String is a Valid Sequence from Root to Leaves Path in a Binary Tree](src/leetcode/day_30_leetcoding_challenge/check_if_a_string_is_a_valid_sequence_from_root_to_leaves_path_in_a_binary_tree.rs)
 - [Counting Elements](src/leetcode/day_30_leetcoding_challenge/counting_elements.rs)
+- [First Unique Number](src/leetcode/day_30_leetcoding_challenge/first_unique_number.rs)
+- [Perform String Shifts](src/leetcode/day_30_leetcoding_challenge/perform_string_shifts.rs)
