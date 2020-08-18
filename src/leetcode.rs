@@ -289,6 +289,7 @@ mod q79_word_search;
 mod q7_reverse_integer;
 mod q82_remove_duplicates_from_sorted_list_ii;
 mod q844_backspace_string_compare;
+mod q84_largest_rectangle_in_histogram;
 mod q8_my_atoi;
 mod q92_reverse_linked_list_ii;
 mod q97_interleaving_string;
@@ -296,6 +297,7 @@ mod q97_interleaving_string;
 // some extra problems can only be found in "30-Day LeetCoding Challenge"
 mod day_30_leetcoding_challenge;
 
+// mod q85_maximal_rectangle;
 // mod q80_remove_duplicates_from_sorted_array_ii;
 // mod q78_subsets;
 // mod q124_binary_tree_maximum_path_sum;

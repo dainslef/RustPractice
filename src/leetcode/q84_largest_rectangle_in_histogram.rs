@@ -1,4 +1,7 @@
 /**
+ * 84. Largest Rectangle in Histogram
+ * https://leetcode.com/problems/largest-rectangle-in-histogram/
+ *
  * Given n non-negative integers representing the histogram's bar height where the width of each bar is 1, find the area of largest rectangle in the histogram.
  *
  *
@@ -19,7 +22,7 @@
  * Output: 10
  */
 
-// TLE when the input arguement "heights" has a large size (greator than 10k)
+// TLE when the input arguement "heights" has a large size (when greator than 10k)
 fn largest_rectangle_area_tle(heights: Vec<i32>) -> i32 {
   use std::collections::BTreeMap;
 
@@ -82,40 +85,40 @@ fn largest_rectangle_area(heights: Vec<i32>) -> i32 {
   let mut index_record = VecDeque::new();
   let (mut i, mut max_area) = (0, 0);
 
-  while i < heights.len() || !index_record.is_empty() {
-    if index_record.is_empty()
-      || i < heights.len()
-        && index_record
-          .front()
-          .map(|l| heights[i] >= heights[*l])
-          .unwrap_or(false)
+  loop {
+    if i < heights.len()
+      && index_record
+        .front()
+        .map(|l| heights[i] > heights[*l])
+        .unwrap_or(index_record.is_empty())
     {
-      index_record.push_front(i);
+      index_record.push_front(i); // only add the greater index to the top of the stack
       i += 1;
     } else if let Some(l) = index_record.pop_front() {
-      let back = index_record.front().map(|v| v + 1).unwrap_or(0);
-      max_area = max_area.max((i - back) * heights[l] as usize);
+      // when the current value is less than the top of the stack, pop the top out
+      let start = index_record.front().map(|v| v + 1).unwrap_or(0); // caculate the start index
+      max_area = max_area.max((i - start) * heights[l] as usize); // compare the max area
+    } else {
+      break max_area as i32;
     }
   }
-
-  max_area as i32
 }
 
 #[test]
 fn q84_test() {
-  assert_eq!(
-    largest_rectangle_area(vec![2, 1, 5, 6, 2, 3, 3, 1, 11, 1, 6, 3, 4]),
-    13
-  );
   assert_eq!(largest_rectangle_area(vec![10, 9, 9, 6, 9, 5, 4, 1, 2]), 30);
   assert_eq!(largest_rectangle_area(vec![3, 6, 5, 7, 4, 8, 1, 0]), 20);
-  assert_eq!(
-    largest_rectangle_area(vec![3, 2, 8, 9, 1, 0, 0, 8, 6, 4, 8, 0, 7, 9, 5]),
-    16
-  );
   assert_eq!(largest_rectangle_area(vec![5, 4, 1, 2]), 8);
   assert_eq!(largest_rectangle_area(vec![1]), 1);
   assert_eq!(largest_rectangle_area(vec![1, 1]), 2);
   assert_eq!(largest_rectangle_area(vec![1, 1, 2]), 3);
   assert_eq!(largest_rectangle_area(vec![2, 1, 5, 6, 2, 3]), 10);
+  assert_eq!(
+    largest_rectangle_area(vec![2, 1, 5, 6, 2, 3, 3, 1, 11, 1, 6, 3, 4]),
+    13
+  );
+  assert_eq!(
+    largest_rectangle_area(vec![3, 2, 8, 9, 1, 0, 0, 8, 6, 4, 8, 0, 7, 9, 5]),
+    16
+  );
 }
