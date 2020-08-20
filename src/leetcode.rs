@@ -285,6 +285,7 @@ mod q74_search_a_2d_matrix;
 mod q75_sort_colors;
 mod q76_minimum_window_substring;
 mod q77_combinations;
+mod q78_subsets;
 mod q79_word_search;
 mod q7_reverse_integer;
 mod q82_remove_duplicates_from_sorted_list_ii;
@@ -299,7 +300,6 @@ mod day_30_leetcoding_challenge;
 
 // mod q85_maximal_rectangle;
 // mod q80_remove_duplicates_from_sorted_array_ii;
-// mod q78_subsets;
 // mod q124_binary_tree_maximum_path_sum;
 // mod q221_maximal_square;
 // mod q1143_longest_common_subsequence;
