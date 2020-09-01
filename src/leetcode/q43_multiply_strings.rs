@@ -27,9 +27,7 @@ fn multiply(num1: String, num2: String) -> String {
   // use 2-dimensional arrays to save the product of each of the two numbers
   // size: the length of num1 multiply the length of num2
   let (column_size, row_size) = (num1.len(), num2.len());
-  let mut nums = (0..row_size)
-    .map(|_| (0..column_size).map(|_| 0).collect())
-    .collect::<Vec<Vec<u32>>>();
+  let mut nums: Vec<Vec<u32>> = vec![vec![0; column_size]; row_size];
 
   // save the product of each of the two numbers
   for (x, c1) in num1.char_indices() {

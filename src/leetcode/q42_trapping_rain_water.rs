@@ -40,7 +40,7 @@ fn trap(height: Vec<i32>) -> i32 {
     // find the first index after height stop grow
     if last_is_up && !is_up {
       // save the filled height during the indexes
-      record_height!(std::cmp::min(last_top, last));
+      record_height!(last_top.min(last));
       if last > last_top {
         last_top = last;
         last_top_index = i;
@@ -50,7 +50,7 @@ fn trap(height: Vec<i32>) -> i32 {
     // check if the index is the last
     if i == height.len() - 1 && is_up {
       // save the filled height before the last
-      record_height!(std::cmp::min(last_top, current));
+      record_height!(last_top.min(current));
     };
 
     last_is_up = is_up;
@@ -72,21 +72,18 @@ fn trap_two_side(height: Vec<i32>) -> i32 {
   }
 
   let length = height.len();
-  let (mut left_max, mut right_max) = (
-    (0..length).map(|_| 0).collect::<Vec<i32>>(),
-    (0..length).map(|_| 0).collect::<Vec<i32>>(),
-  );
+  let (mut left_max, mut right_max) = (vec![0; length], vec![0; length]);
   left_max[0] = height[0];
   right_max[length - 1] = height[length - 1];
 
   for l in 1..length - 1 {
-    left_max[l] = std::cmp::max(left_max[l - 1], height[l]);
+    left_max[l] = left_max[l - 1].max(height[l]);
     let r = length - l - 1;
-    right_max[r] = std::cmp::max(right_max[r + 1], height[r]);
+    right_max[r] = right_max[r + 1].max(height[r]);
   }
 
   for i in 1..length - 1 {
-    let min = std::cmp::min(left_max[i], right_max[i]);
+    let min = left_max[i].min(right_max[i]);
     if min > height[i] {
       water += min - height[i];
     }

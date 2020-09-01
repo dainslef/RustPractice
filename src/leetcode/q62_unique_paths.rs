@@ -30,12 +30,12 @@
 
 // fast solution, use the sum of adjacent nodes
 fn unique_paths(m: i32, n: i32) -> i32 {
-  let (row, column) = (m as usize, n as usize);
-  let mut temp: Vec<Vec<i32>> = (0..column).map(|_| (0..row).map(|_| 0).collect()).collect();
+  let (column, row) = (m as usize, n as usize);
+  let mut temp: Vec<Vec<i32>> = vec![vec![0; column]; row];
   temp[0][0] = 1;
 
-  for y in 0..column {
-    for x in 0..row {
+  for y in 0..row {
+    for x in 0..column {
       // The number of unique paths to each square on the left border would be 1.
       // The number of unique paths to each square on the top border would be 1.
       // The number of unique paths to other squares on the left border would be the sum of the number of unique paths to its previous left square and top square.
@@ -50,7 +50,7 @@ fn unique_paths(m: i32, n: i32) -> i32 {
     }
   }
 
-  temp[column - 1][row - 1]
+  temp[row - 1][column - 1]
 }
 
 // too slow, TLE when m = 19, n = 13

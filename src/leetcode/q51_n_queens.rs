@@ -25,7 +25,7 @@
 // use recursion
 fn solve_n_queens(n: i32) -> Vec<Vec<String>> {
   // use a vec to record queen index in each row
-  let mut records = Vec::new();
+  let mut records = vec![];
 
   fn recurse(record: Vec<i32>, records: &mut Vec<Vec<i32>>, n: i32) {
     let next_row = record.len() as i32;

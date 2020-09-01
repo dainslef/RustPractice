@@ -28,7 +28,7 @@
 fn convert(s: String, num_rows: i32) -> String {
   match num_rows as usize {
     n if n > 1 => {
-      let mut zipzag_rows = (0..n).map(|_| vec![]).collect::<Vec<Vec<char>>>();
+      let mut zipzag_rows: Vec<Vec<char>> = vec![vec![]; n];
       let unit_size = (n - 1) * 2;
 
       for (i, c) in s.char_indices() {
@@ -39,8 +39,7 @@ fn convert(s: String, num_rows: i32) -> String {
         zipzag_rows[zipzag_index].push(c);
       }
 
-      use std::iter::FromIterator;
-      String::from_iter(zipzag_rows.into_iter().flat_map(|v| v).collect::<Vec<char>>())
+      zipzag_rows.into_iter().flat_map(|v| v).collect::<String>()
     }
     _ => s,
   }
