@@ -28,6 +28,8 @@ fn largest_rectangle_area_tle(heights: Vec<i32>) -> i32 {
 
   let mut min_height = i32::MAX;
   let size = heights.len();
+
+  // use Map to save the indexes of each height: <key, (index, current_size, all_size)>
   let mut height_to_index: BTreeMap<i32, (usize, usize, usize)> = Default::default();
 
   for i in 0..size {
@@ -38,16 +40,17 @@ fn largest_rectangle_area_tle(heights: Vec<i32>) -> i32 {
       min_height = height;
     }
 
+    // count the size info by key
     for key in height_to_index.keys().map(|v| *v).collect::<Vec<i32>>() {
       if i > 0 && height >= key {
         let mut state = height_to_index.entry(key).or_default();
         if state.0 == i - 1 {
-          state.1 += 1;
+          state.1 += 1; // update the current size
         } else {
           state.1 = 1;
         }
         state.0 = i;
-        state.2 = state.1.max(state.2);
+        state.2 = state.1.max(state.2); // compare and record the max size
       }
       if back_up.is_none() && height < key && height_to_index[&key].0 == i - 1 {
         back_up = Some(height_to_index.entry(key).or_default().clone());
@@ -80,24 +83,20 @@ fn largest_rectangle_area_tle(heights: Vec<i32>) -> i32 {
  * Memory Usage: 2.6 MB
  */
 fn largest_rectangle_area(heights: Vec<i32>) -> i32 {
-  use std::collections::VecDeque;
-
-  let mut index_record = VecDeque::new();
-  let (mut i, mut max_area) = (0, 0);
-
+  let (mut i, mut max_area, mut index_records) = (0, 0, vec![]);
   loop {
     if i < heights.len()
-      && index_record
-        .front()
-        .map(|l| heights[i] > heights[*l])
-        .unwrap_or(index_record.is_empty())
+      && index_records
+        .last()
+        .map(|last| heights[i] > heights[*last])
+        .unwrap_or(index_records.is_empty())
     {
-      index_record.push_front(i); // only add the greater index to the top of the stack
-      i += 1;
-    } else if let Some(l) = index_record.pop_front() {
+      index_records.push(i); // only add the greater index to the top of the stack
+      i += 1; // update the current index
+    } else if let Some(last) = index_records.pop() {
       // when the current value is less than the top of the stack, pop the top out
-      let start = index_record.front().map(|v| v + 1).unwrap_or(0); // caculate the start index
-      max_area = max_area.max((i - start) * heights[l] as usize); // compare the max area
+      let start = index_records.last().map(|v| v + 1).unwrap_or(0); // caculate the start index
+      max_area = max_area.max((i - start) * heights[last] as usize); // compare the max area
     } else {
       break max_area as i32;
     }
@@ -106,6 +105,7 @@ fn largest_rectangle_area(heights: Vec<i32>) -> i32 {
 
 #[test]
 fn q84_test() {
+  assert_eq!(largest_rectangle_area(vec![1, 0, 1, 0, 0]), 1);
   assert_eq!(largest_rectangle_area(vec![10, 9, 9, 6, 9, 5, 4, 1, 2]), 30);
   assert_eq!(largest_rectangle_area(vec![3, 6, 5, 7, 4, 8, 1, 0]), 20);
   assert_eq!(largest_rectangle_area(vec![5, 4, 1, 2]), 8);
