@@ -21,28 +21,29 @@
  */
 
 struct Trie {
-  as_end: bool,
-  chars: Vec<Option<Self>>,
+  is_end: bool,             // mark if this node can be used as the end of a word
+  chars: Vec<Option<Self>>, // save the info of next chars, use Vec index to represent the ascii of char
 }
 
+// check the word with custom operate
 macro_rules! check_word {
-  ($self: ident, $word: expr) => {{
+  ($self: ident, $word: expr, $operate: expr) => {{
     let mut current: &Trie = &$self;
     for b in $word.bytes() {
       let index = b as usize - Trie::OFFSET;
       if let Some(c) = &current.chars[index] {
-        current = c;
+        current = c; // check if the current char has been record
       } else {
         return false;
       }
     }
-    current
+    $operate(current)
   }};
 }
 
 /**
- * `&self` means the method takes an immutable reference.
- * If you need a mutable reference, change it to `&mut self` instead.
+ * Runtime: 32 ms, faster than 32.56% of Rust online submissions for Implement Trie (Prefix Tree).
+ * Memory Usage: 32.1 MB, less than 6.98% of Rust online submissions for Implement Trie (Prefix Tree).
  */
 impl Trie {
   const OFFSET: usize = 97;
@@ -50,36 +51,29 @@ impl Trie {
   /** Initialize your data structure here. */
   fn new() -> Self {
     Trie {
-      as_end: false,
+      is_end: false,
       chars: (0..26).map(|_| None).collect(),
     }
   }
 
   /** Inserts a word into the trie. */
   fn insert(&mut self, word: String) {
-    let mut current: Option<&mut Trie> = None;
+    let mut current: &mut Trie = self;
     for b in word.bytes() {
       let index = b as usize - Trie::OFFSET;
-      current = Some(if let Some(v) = current {
-        v.chars[index].get_or_insert(Self::new())
-      } else {
-        self.chars[index].get_or_insert(Self::new())
-      });
+      current = current.chars[index].get_or_insert(Self::new());
     }
-    if let Some(v) = current {
-      v.as_end = true; // mark this node as be used as whole word
-    }
+    current.is_end = true; // mark this node as be used as whole word
   }
 
   /** Returns if the word is in the trie. */
   fn search(&self, word: String) -> bool {
-    check_word!(self, word).as_end
+    check_word!(self, word, |v: &Trie| v.is_end)
   }
 
   /** Returns if there is any word in the trie that starts with the given prefix. */
   fn starts_with(&self, prefix: String) -> bool {
-    check_word!(self, prefix);
-    true
+    check_word!(self, prefix, |_| true)
   }
 }
 
