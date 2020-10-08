@@ -21,7 +21,7 @@ use super::*;
  * Runtime: 0 ms, faster than 100.00% of Rust online submissions for Remove Duplicates from Sorted List II.
  * Memory Usage: 2.1 MB, less than 75.00% of Rust online submissions for Remove Duplicates from Sorted List II.
  */
-fn delete_duplicates(head: Option<Box<ListNode>>) -> Option<Box<ListNode>> {
+fn delete_duplicates_by_value(head: Option<Box<ListNode>>) -> Option<Box<ListNode>> {
   use std::collections::HashSet;
 
   let (mut nums, mut next, mut same) = (vec![], head, HashSet::new());
@@ -46,26 +46,81 @@ fn delete_duplicates(head: Option<Box<ListNode>>) -> Option<Box<ListNode>> {
   next
 }
 
+/**
+ * Runtime: 0 ms, faster than 100.00% of Rust online submissions for Remove Duplicates from Sorted List II.
+ * Memory Usage: 2 MB, less than 71.43% of Rust online submissions for Remove Duplicates from Sorted List II.
+ */
+fn delete_duplicates(mut head: Option<Box<ListNode>>) -> Option<Box<ListNode>> {
+  // use Option::take() to take the value out of the Option, and then leaving a None in its place.
+
+  let mut last = &mut None as *mut Option<Box<ListNode>>;
+  let mut current = &mut head as *mut Option<Box<ListNode>>;
+  let mut same: Option<i32> = None;
+
+  unsafe {
+    while let Some(c) = &mut *current {
+      match (&mut *last, &mut c.next, same) {
+        (Some(l), _, Some(s)) if c.val == s => {
+          l.next = c.next.take();
+          current = &mut l.next;
+        }
+        (None, _, Some(s)) if c.val == s => {
+          head = c.next.take();
+          current = &mut head;
+        }
+        (Some(l), Some(n), _) if c.val == n.val => {
+          same = Some(c.val);
+          l.next = n.next.take();
+          current = &mut l.next;
+        }
+        (None, Some(n), _) if c.val == n.val => {
+          same = Some(c.val);
+          head = n.next.take();
+          current = &mut head;
+        }
+        _ => {
+          last = current;
+          current = &mut c.next;
+        }
+      }
+    }
+
+    head
+  }
+}
+
 #[test]
 fn q82_test() {
-  assert_eq!(
-    delete_duplicates(num_vec_to_nodes(vec![], false)),
-    num_vec_to_nodes(vec![], false)
-  );
-  assert_eq!(
-    delete_duplicates(num_vec_to_nodes(vec![1], false)),
-    num_vec_to_nodes(vec![1], false)
-  );
-  assert_eq!(
-    delete_duplicates(num_vec_to_nodes(vec![1, 1], false)),
-    num_vec_to_nodes(vec![], false)
-  );
-  assert_eq!(
-    delete_duplicates(num_vec_to_nodes(vec![1, 1, 2], false)),
-    num_vec_to_nodes(vec![2], false)
-  );
-  assert_eq!(
-    delete_duplicates(num_vec_to_nodes(vec![1, 2, 3, 3, 3, 4, 4, 5], false)),
-    num_vec_to_nodes(vec![1, 2, 5], false)
-  );
+  fn test(delete_duplicates: impl Fn(Option<Box<ListNode>>) -> Option<Box<ListNode>>) {
+    assert_eq!(
+      delete_duplicates(num_vec_to_nodes(vec![1, 2, 3, 3, 3, 4, 4, 5], false)),
+      num_vec_to_nodes(vec![1, 2, 5], false)
+    );
+    assert_eq!(
+      delete_duplicates(num_vec_to_nodes(
+        vec![1, 1, 1, 2, 2, 3, 3, 3, 4, 4, 5],
+        false
+      )),
+      num_vec_to_nodes(vec![5], false)
+    );
+    assert_eq!(
+      delete_duplicates(num_vec_to_nodes(vec![], false)),
+      num_vec_to_nodes(vec![], false)
+    );
+    assert_eq!(
+      delete_duplicates(num_vec_to_nodes(vec![1], false)),
+      num_vec_to_nodes(vec![1], false)
+    );
+    assert_eq!(
+      delete_duplicates(num_vec_to_nodes(vec![1, 1], false)),
+      num_vec_to_nodes(vec![], false)
+    );
+    assert_eq!(
+      delete_duplicates(num_vec_to_nodes(vec![1, 1, 2], false)),
+      num_vec_to_nodes(vec![2], false)
+    );
+  }
+
+  test(delete_duplicates);
+  test(delete_duplicates_by_value);
 }
