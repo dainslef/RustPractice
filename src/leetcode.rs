@@ -52,7 +52,9 @@ fn nodes_to_num_vec(node: Option<Box<ListNode>>) -> Vec<i32> {
 fn nodes_to_node_vec(node: Option<Box<ListNode>>) -> Vec<Option<Box<ListNode>>> {
   let (mut vec, mut current) = (vec![], node);
   while let Some(v) = current.as_mut() {
-    let node = std::mem::replace(&mut v.next, None);
+    // use Option::take() to take the value out of the Option, and then leaving a None in its place.
+    // let node = std::mem::replace(&mut v.next, None);
+    let node = v.next.take();
     vec.push(current);
     current = node;
   }
@@ -297,6 +299,7 @@ mod q82_remove_duplicates_from_sorted_list_ii;
 mod q844_backspace_string_compare;
 mod q84_largest_rectangle_in_histogram;
 mod q85_maximal_rectangle;
+mod q87_scramble_string;
 mod q8_my_atoi;
 mod q92_reverse_linked_list_ii;
 mod q97_interleaving_string;
@@ -304,6 +307,7 @@ mod q97_interleaving_string;
 // some extra problems can only be found in "30-Day LeetCoding Challenge"
 mod day_30_leetcoding_challenge;
 
+// mod q86_partition_list;
 // mod q80_remove_duplicates_from_sorted_array_ii;
 // mod q124_binary_tree_maximum_path_sum;
 // mod q221_maximal_square;
