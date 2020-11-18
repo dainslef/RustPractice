@@ -34,7 +34,10 @@ fn rotate_right(head: Option<Box<ListNode>>, k: i32) -> Option<Box<ListNode>> {
   num_vec_to_nodes(out, false)
 }
 
-fn rotate_right_with_move_pointer(mut head: Option<Box<ListNode>>, k: i32) -> Option<Box<ListNode>> {
+fn rotate_right_with_move_pointer(
+  mut head: Option<Box<ListNode>>,
+  k: i32,
+) -> Option<Box<ListNode>> {
   let (mut count, mut next) = (0, &mut head);
   while let Some(v) = next {
     next = &mut v.next;
@@ -42,7 +45,9 @@ fn rotate_right_with_move_pointer(mut head: Option<Box<ListNode>>, k: i32) -> Op
   }
 
   // check if the data need to be processed (size == 0 or move size == 0 doesn't need to be processed)
-  if count == 0 || k as usize % count == 0 { return head; }
+  if count == 0 || k as usize % count == 0 {
+    return head;
+  }
 
   // compute the rotate index
   let i = count - k as usize % count;

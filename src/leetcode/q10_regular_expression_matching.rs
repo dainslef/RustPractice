@@ -95,19 +95,13 @@ fn is_match(s: String, p: String) -> bool {
 
 #[test]
 fn q10_test() {
-  assert_eq!(is_match("abb".into(), "bbb*".into()), false);
-  assert_eq!(is_match("ab".into(), ".*c".into()), false);
-  assert_eq!(
-    is_match("mississippi".into(), "mis*is*ip*.".into()),
-    true
-  );
-  assert_eq!(is_match("abaa".into(), "a*a".into()), false);
-  assert_eq!(is_match("abaa".into(), "a*aa".into()), false);
-  assert_eq!(is_match("abaa".into(), "ab*a".into()), false);
-  assert_eq!(is_match("abaa".into(), "aba*".into()), true);
-  assert_eq!(is_match("abaabb".into(), "a*ba*b*".into()), true);
-  assert_eq!(
-    is_match("abaabb".into(), "a*.*b.*a*b*".into()),
-    true
-  );
+  assert!(!is_match("abb".into(), "bbb*".into()));
+  assert!(!is_match("ab".into(), ".*c".into()));
+  assert!(is_match("mississippi".into(), "mis*is*ip*.".into()));
+  assert!(!is_match("abaa".into(), "a*a".into()));
+  assert!(!is_match("abaa".into(), "a*aa".into()));
+  assert!(!is_match("abaa".into(), "ab*a".into()));
+  assert!(is_match("abaa".into(), "aba*".into()));
+  assert!(is_match("abaabb".into(), "a*ba*b*".into()));
+  assert!(is_match("abaabb".into(), "a*.*b.*a*b*".into()));
 }

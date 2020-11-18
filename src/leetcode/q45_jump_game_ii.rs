@@ -18,12 +18,7 @@
 
 // TLE, use DFS cost a lot of time
 fn jump_recursion(nums: Vec<i32>) -> i32 {
-  fn recurse(
-    nums: &Vec<i32>,
-    index: usize,
-    step: usize,
-    min_step: Option<usize>,
-  ) -> Option<usize> {
+  fn recurse(nums: &Vec<i32>, index: usize, step: usize, min_step: Option<usize>) -> Option<usize> {
     use std::{cmp::Reverse, collections::BinaryHeap};
 
     let mut mins = BinaryHeap::new();

@@ -34,7 +34,6 @@ fn search(nums: Vec<i32>, target: i32) -> i32 {
 
 // O(log n) solution, use binary search
 fn search_binary(nums: Vec<i32>, target: i32) -> i32 {
-
   // check the range of nums, return if target isn't match the range
   if nums.first().map(|v| target < *v).unwrap_or(true)
     && nums.last().map(|v| target > *v).unwrap_or(true)

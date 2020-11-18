@@ -57,10 +57,7 @@ fn q17_test() {
     letter_combinations("23".into()),
     string_vec!["ad", "ae", "af", "bd", "be", "bf", "cd", "ce", "cf"]
   ));
-  assert!(check_element_eq(
-    letter_combinations("".into()),
-    vec![]
-  ));
+  assert!(check_element_eq(letter_combinations("".into()), vec![]));
   assert!(check_element_eq(
     letter_combinations("01".into()),
     string_vec![" *"]

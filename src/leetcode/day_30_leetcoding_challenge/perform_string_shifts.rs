@@ -69,7 +69,10 @@ fn string_shift(mut s: String, shift: Vec<Vec<i32>>) -> String {
 
 #[test]
 fn string_shift_test() {
-  assert_eq!(string_shift("abc".into(), vec![vec![0, 1], vec![1, 2]]), "cab");
+  assert_eq!(
+    string_shift("abc".into(), vec![vec![0, 1], vec![1, 2]]),
+    "cab"
+  );
   assert_eq!(
     string_shift(
       "abcdefg".into(),

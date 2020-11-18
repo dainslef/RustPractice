@@ -70,7 +70,14 @@ fn my_atoi(s: String) -> i32 {
 
   for i in 0..nums.len() {
     let num = nums[nums.len() - i - 1];
-    temp = { || 10_i32.checked_pow(i as u32)?.checked_mul(num)?.checked_add(temp?) }();
+    temp = {
+      || {
+        10_i32
+          .checked_pow(i as u32)?
+          .checked_mul(num)?
+          .checked_add(temp?)
+      }
+    }();
   }
 
   temp
