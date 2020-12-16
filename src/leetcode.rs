@@ -303,6 +303,7 @@ mod q84_largest_rectangle_in_histogram;
 mod q85_maximal_rectangle;
 mod q87_scramble_string;
 mod q8_my_atoi;
+mod q91_decode_ways;
 mod q92_reverse_linked_list_ii;
 mod q97_interleaving_string;
 
