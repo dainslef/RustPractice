@@ -58,16 +58,19 @@ fn num_decodings(s: String) -> i32 {
   for i in 0..s.len() {
     let n = codes[i];
     let mut count = if n == 0 {
-      0
+      0 // if the current number is 0, means current index can't direct use as a valid char, so count is 0
     } else if counts.is_empty() {
-      1
+      1 // if the last count is not exist (and current number is not 0), set the init count
     } else {
-      counts[i - 1]
+      counts[i - 1] // or get the last count
     };
     if i > 0 {
+      // if current index is larger than 0,
+      // check weaher the last number and the current number can combine to a char
       let last_n = codes[i - 1];
+      // the sum must between 1 to 26, and the mode "0 n" is invalid (last number can't be 0)
       if last_n != 0 && last_n * 10 + n <= 26 {
-        count += if i > 1 { counts[i - 2] } else { 1 }
+        count += if i == 1 { 1 } else { counts[i - 2] }
       }
     }
     counts.push(count);
