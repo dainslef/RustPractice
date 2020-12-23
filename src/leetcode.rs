@@ -301,6 +301,7 @@ mod q82_remove_duplicates_from_sorted_list_ii;
 mod q844_backspace_string_compare;
 mod q84_largest_rectangle_in_histogram;
 mod q85_maximal_rectangle;
+mod q86_partition_list;
 mod q87_scramble_string;
 mod q8_my_atoi;
 mod q91_decode_ways;
@@ -310,9 +311,9 @@ mod q97_interleaving_string;
 // some extra problems can only be found in "30-Day LeetCoding Challenge"
 mod day_30_leetcoding_challenge;
 
+// mod q639_decode_ways_ii;
 // mod q90_subsets_ii;
 // mod q89_gray_code;
-// mod q86_partition_list;
 // mod q124_binary_tree_maximum_path_sum;
 // mod q221_maximal_square;
 // mod q1143_longest_common_subsequence;
