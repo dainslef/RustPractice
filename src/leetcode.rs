@@ -307,6 +307,7 @@ mod q89_gray_code;
 mod q8_my_atoi;
 mod q91_decode_ways;
 mod q92_reverse_linked_list_ii;
+mod q93_restore_ip_addresses;
 mod q97_interleaving_string;
 
 // some extra problems can only be found in "30-Day LeetCoding Challenge"
