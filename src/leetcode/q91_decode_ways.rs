@@ -52,31 +52,26 @@
  * too much recursion operations may cause the "stack overflow" excception.
  */
 fn num_decodings(s: String) -> i32 {
+  // convert the chars to numbers
   let codes: Vec<_> = s.chars().map(|v| v.to_digit(10).unwrap()).collect();
-  let mut counts = vec![];
+  // set the init count, check if the current number is valid
+  let mut counts = vec![if codes[0] == 0 { 0 } else { 1 }];
 
-  for i in 0..s.len() {
+  for i in 1..s.len() {
     let n = codes[i];
-    let mut count = if n == 0 {
-      0 // if the current number is 0, means current index can't direct use as a valid char, so count is 0
-    } else if counts.is_empty() {
-      1 // if the last count is not exist (and current number is not 0), set the init count
-    } else {
-      counts[i - 1] // or get the last count
-    };
-    if i > 0 {
-      // if current index is larger than 0,
-      // check weaher the last number and the current number can combine to a char
-      let last_n = codes[i - 1];
-      // the sum must between 1 to 26, and the mode "0 n" is invalid (last number can't be 0)
-      if last_n != 0 && last_n * 10 + n <= 26 {
-        count += if i == 1 { 1 } else { counts[i - 2] }
-      }
+    // if the current number is 0, means current index can't direct use as a valid char, so count is 0
+    // or get the last count
+    let mut count = if n == 0 { 0 } else { counts[i - 1] };
+    // check weaher the last number and the current number can combine to a char
+    let last = codes[i - 1] * 10 + n;
+    // the sum must between 1 to 26, and the mode "0 n" is invalid (last number can't be 0)
+    if last >= 10 && last <= 26 {
+      count += if i == 1 { 1 } else { counts[i - 2] }
     }
     counts.push(count);
   }
 
-  *counts.last().unwrap_or(&0) as i32
+  *counts.last().unwrap_or(&0)
 }
 
 #[test]
