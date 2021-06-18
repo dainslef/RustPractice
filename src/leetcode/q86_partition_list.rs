@@ -18,7 +18,7 @@ use super::*;
  * Memory Usage: 2.1 MB, less than 100.00% of Rust online submissions for Partition List.
  */
 fn partition(head: Option<Box<ListNode>>, x: i32) -> Option<Box<ListNode>> {
-  let nums = nodes_to_num_vec(head);
+  let nums = head.to_num_vec();
   let (mut less, mut great) = (vec![], vec![]);
 
   for v in nums {
@@ -26,20 +26,17 @@ fn partition(head: Option<Box<ListNode>>, x: i32) -> Option<Box<ListNode>> {
   }
 
   less.append(&mut great);
-  num_vec_to_nodes(less, false)
+  less.to_list_node(false)
 }
 
 #[test]
 fn q86_test() {
   assert_eq!(
-    partition(num_vec_to_nodes(vec![1, 4, 3, 2, 5, 2], false), 3),
-    num_vec_to_nodes(vec![1, 2, 2, 4, 3, 5], false)
+    partition(vec![1, 4, 3, 2, 5, 2].to_list_node(false), 3),
+    vec![1, 2, 2, 4, 3, 5].to_list_node(false)
   );
   assert_eq!(
-    partition(
-      num_vec_to_nodes(vec![1, 4, 3, 2, 5, 2, 1, 7, 6, 9, 8], false),
-      3
-    ),
-    num_vec_to_nodes(vec![1, 2, 2, 1, 4, 3, 5, 7, 6, 9, 8], false)
+    partition(vec![1, 4, 3, 2, 5, 2, 1, 7, 6, 9, 8].to_list_node(false), 3),
+    vec![1, 2, 2, 1, 4, 3, 5, 7, 6, 9, 8].to_list_node(false)
   );
 }

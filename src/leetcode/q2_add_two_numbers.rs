@@ -46,7 +46,7 @@ fn add_two_numbers(l1: Option<Box<ListNode>>, l2: Option<Box<ListNode>>) -> Opti
         if carry {
           temp.push(carry as i32);
         }
-        break num_vec_to_nodes(temp, false);
+        break temp.to_list_node(false);
       }
     }
   }
@@ -55,11 +55,11 @@ fn add_two_numbers(l1: Option<Box<ListNode>>, l2: Option<Box<ListNode>>) -> Opti
 #[test]
 fn q2_test() {
   assert_eq!(
-    add_two_numbers(num_to_nodes(1234, true), num_to_nodes(11111, true)),
-    num_to_nodes(12345, true)
+    add_two_numbers(1234.to_list_node(true), 11111.to_list_node(true)),
+    12345.to_list_node(true)
   );
   assert_eq!(
-    add_two_numbers(num_to_nodes(9, true), num_to_nodes(999999991, true)),
-    num_to_nodes(1000000000, true)
+    add_two_numbers(9.to_list_node(true), 999999991.to_list_node(true)),
+    1000000000.to_list_node(true)
   );
 }

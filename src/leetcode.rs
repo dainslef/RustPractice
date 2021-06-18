@@ -3,8 +3,8 @@
  */
 #[derive(PartialEq, Eq, Debug)]
 struct ListNode {
-  pub val: i32,
-  pub next: Option<Box<Self>>,
+  pub(crate) val: i32,
+  pub(crate) next: Option<Box<Self>>,
 }
 
 impl ListNode {
@@ -14,51 +14,66 @@ impl ListNode {
   }
 }
 
-// convert a number to the list of every bit of the number
-fn num_to_nodes(mut num: i32, reverse: bool) -> Option<Box<ListNode>> {
-  let mut vec = vec![];
-  while num / 10 > 0 {
-    vec.push(num % 10);
-    num /= 10;
-  }
-  vec.push(num % 10);
-  // the sequence of the vec is opposite of the number
-  num_vec_to_nodes(vec, !reverse)
+trait ToListNode {
+  fn to_list_node(self, reverse: bool) -> Option<Box<ListNode>>;
 }
 
-// build list node from the vector of the numbers
-fn num_vec_to_nodes(mut vec: Vec<i32>, reverse: bool) -> Option<Box<ListNode>> {
-  let mut next = None;
-  if !reverse {
-    vec.reverse();
+impl ToListNode for i32 {
+  // convert a number to the list of every bit of the number
+  fn to_list_node(mut self, reverse: bool) -> Option<Box<ListNode>> {
+    let mut vec = vec![];
+    while self / 10 > 0 {
+      vec.push(self % 10);
+      self /= 10;
+    }
+    vec.push(self % 10);
+    // the sequence of the vec is opposite of the number
+    vec.to_list_node(!reverse)
   }
-  for val in vec {
-    next = Some(Box::new(ListNode { val, next }));
-  }
-  next
 }
 
-// build the vector of the numbers from the a list node
-fn nodes_to_num_vec(node: Option<Box<ListNode>>) -> Vec<i32> {
-  let (mut vec, mut temp) = (vec![], &node);
-  while let Some(n) = temp {
-    vec.push(n.val);
-    temp = &n.next;
+impl ToListNode for Vec<i32> {
+  // build list node from the vector of the numbers
+  fn to_list_node(mut self, reverse: bool) -> Option<Box<ListNode>> {
+    let mut next = None;
+    if !reverse {
+      self.reverse();
+    }
+    for val in self {
+      next = Some(Box::new(ListNode { val, next }));
+    }
+    next
   }
-  vec
 }
 
-// build the vector of the node from the a list node
-fn nodes_to_node_vec(node: Option<Box<ListNode>>) -> Vec<Option<Box<ListNode>>> {
-  let (mut vec, mut current) = (vec![], node);
-  while let Some(v) = current.as_mut() {
-    // use Option::take() to take the value out of the Option, and then leaving a None in its place.
-    // let node = std::mem::replace(&mut v.next, None);
-    let node = v.next.take();
-    vec.push(current);
-    current = node;
+trait ToVec {
+  fn to_num_vec(self) -> Vec<i32>;
+  fn to_node_vec(self) -> Vec<Option<Box<ListNode>>>;
+}
+
+impl ToVec for Option<Box<ListNode>> {
+  // build the vector of the numbers from the a list node
+  fn to_num_vec(self) -> Vec<i32> {
+    let (mut vec, mut temp) = (vec![], &self);
+    while let Some(n) = temp {
+      vec.push(n.val);
+      temp = &n.next;
+    }
+    vec
   }
-  vec
+
+  // build the vector of the node from the a list node
+  fn to_node_vec(self) -> Vec<Option<Box<ListNode>>> {
+    let (mut vec, mut current) = (vec![], self);
+    while let Some(v) = current.as_mut() {
+      // use Option::take() to take the value out of the Option, and then leaving a None in its place.
+      // let node = std::mem::replace(&mut v.next, None);
+      let node = v.next.take();
+      vec.push(current);
+      current = node;
+    }
+    vec
+  }
 }
 
 use std::{cell::RefCell, rc::Rc};
@@ -66,14 +81,14 @@ use std::{cell::RefCell, rc::Rc};
 // Definition for a binary tree node.
 #[derive(Debug, PartialEq, Eq)]
 struct TreeNode {
-  pub val: i32,
-  pub left: Option<Rc<RefCell<Self>>>,
-  pub right: Option<Rc<RefCell<Self>>>,
+  pub(crate) val: i32,
+  pub(crate) left: Option<Rc<RefCell<Self>>>,
+  pub(crate) right: Option<Rc<RefCell<Self>>>,
 }
 
 impl TreeNode {
   #[inline]
-  pub fn new(val: i32) -> Self {
+  pub(crate) fn new(val: i32) -> Self {
     TreeNode {
       val,
       left: None,
@@ -82,7 +97,7 @@ impl TreeNode {
   }
 
   #[inline]
-  pub fn new_option(val: Option<i32>) -> Option<Rc<RefCell<Self>>> {
+  pub(crate) fn new_option(val: Option<i32>) -> Option<Rc<RefCell<Self>>> {
     val.map(|v| Rc::new(RefCell::new(Self::new(v))))
   }
 
@@ -106,7 +121,7 @@ impl TreeNode {
    *  /
    * 6
    */
-  pub fn from(vec: Vec<Option<i32>>) -> Option<Rc<RefCell<Self>>> {
+  pub(crate) fn from(vec: Vec<Option<i32>>) -> Option<Rc<RefCell<Self>>> {
     use std::collections::VecDeque;
 
     let mut root = None; // save the root node
@@ -315,6 +330,7 @@ mod q97_interleaving_string;
 // some extra problems can only be found in "30-Day LeetCoding Challenge"
 mod day_30_leetcoding_challenge;
 
+// mod q95_unique_binary_search_trees_ii;
 // mod q639_decode_ways_ii; // need explain
 // mod q124_binary_tree_maximum_path_sum;
 // mod q221_maximal_square;

@@ -24,14 +24,14 @@
 use super::*;
 
 fn rotate_right(head: Option<Box<ListNode>>, k: i32) -> Option<Box<ListNode>> {
-  let mut nodes = nodes_to_num_vec(head);
+  let mut nodes = head.to_num_vec();
   if nodes.is_empty() {
     return None;
   }
   let i = nodes.len() - k as usize % nodes.len(); // compute the offset
   let mut out: Vec<i32> = nodes.drain(i..).collect();
   out.append(&mut nodes);
-  num_vec_to_nodes(out, false)
+  out.to_list_node(false)
 }
 
 fn rotate_right_with_move_pointer(
@@ -77,28 +77,28 @@ fn rotate_right_with_move_pointer(
 fn q61_test() {
   fn test(rotate_right: impl Fn(Option<Box<ListNode>>, i32) -> Option<Box<ListNode>>) {
     assert_eq!(
-      rotate_right(num_to_nodes(12345, false), 2),
-      num_to_nodes(45123, false)
+      rotate_right(12345.to_list_node(false), 2),
+      45123.to_list_node(false)
     );
     assert_eq!(
-      rotate_right(num_to_nodes(312, false), 4),
-      num_to_nodes(231, false)
+      rotate_right(312.to_list_node(false), 4),
+      231.to_list_node(false)
     );
     assert_eq!(
-      rotate_right(num_vec_to_nodes(vec![], false), 2),
-      num_vec_to_nodes(vec![], false)
+      rotate_right(vec![].to_list_node(false), 2),
+      vec![].to_list_node(false)
     );
     assert_eq!(
-      rotate_right(num_vec_to_nodes(vec![1, 2], false), 3),
-      num_vec_to_nodes(vec![2, 1], false)
+      rotate_right(vec![1, 2].to_list_node(false), 3),
+      vec![2, 1].to_list_node(false)
     );
     assert_eq!(
-      rotate_right(num_vec_to_nodes(vec![1, 2], false), 4),
-      num_vec_to_nodes(vec![1, 2], false)
+      rotate_right(vec![1, 2].to_list_node(false), 4),
+      vec![1, 2].to_list_node(false)
     );
     assert_eq!(
-      rotate_right(num_vec_to_nodes(vec![1], false), 4),
-      num_vec_to_nodes(vec![1], false)
+      rotate_right(vec![1].to_list_node(false), 4),
+      vec![1].to_list_node(false)
     );
   }
 

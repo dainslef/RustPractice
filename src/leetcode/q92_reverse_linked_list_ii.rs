@@ -15,7 +15,7 @@ use super::*;
 
 fn reverse_between(head: Option<Box<ListNode>>, m: i32, n: i32) -> Option<Box<ListNode>> {
   let mut result = None;
-  let (mut node, mut nodes) = (&mut result, nodes_to_node_vec(head));
+  let (mut node, mut nodes) = (&mut result, head.to_node_vec());
 
   for i in 1..=nodes.len() {
     let (m, n) = (m as usize, n as usize);
@@ -32,11 +32,11 @@ fn reverse_between(head: Option<Box<ListNode>>, m: i32, n: i32) -> Option<Box<Li
 #[test]
 fn test_reverse_between() {
   assert_eq!(
-    reverse_between(num_to_nodes(123456, false), 2, 4),
-    num_to_nodes(143256, false)
+    reverse_between(123456.to_list_node(false), 2, 4),
+    143256.to_list_node(false)
   );
   assert_eq!(
-    reverse_between(num_to_nodes(12345, false), 1, 4),
-    num_to_nodes(43215, false)
+    reverse_between(12345.to_list_node(false), 1, 4),
+    43215.to_list_node(false)
   );
 }

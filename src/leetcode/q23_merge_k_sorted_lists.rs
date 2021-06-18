@@ -17,11 +17,11 @@ fn merge_k_lists(lists: Vec<Option<Box<ListNode>>>) -> Option<Box<ListNode>> {
   let mut temp = vec![];
 
   for v in lists {
-    temp.append(&mut nodes_to_num_vec(v));
+    temp.append(&mut v.to_num_vec());
   }
   temp.sort();
 
-  num_vec_to_nodes(temp, false)
+  temp.to_list_node(false)
 }
 
 #[test]
@@ -29,10 +29,10 @@ fn q23_test() {
   assert_eq!(merge_k_lists(vec![None, None, None]), None);
   assert_eq!(
     merge_k_lists(vec![
-      num_to_nodes(145, false),
-      num_to_nodes(134, false),
-      num_to_nodes(26, false),
+      145.to_list_node(false),
+      134.to_list_node(false),
+      26.to_list_node(false),
     ]),
-    num_to_nodes(11234456, false)
+    11234456.to_list_node(false)
   );
 }

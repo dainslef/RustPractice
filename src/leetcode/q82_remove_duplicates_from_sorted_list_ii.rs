@@ -85,31 +85,28 @@ fn delete_duplicates(mut head: Option<Box<ListNode>>) -> Option<Box<ListNode>> {
 fn q82_test() {
   fn test(delete_duplicates: impl Fn(Option<Box<ListNode>>) -> Option<Box<ListNode>>) {
     assert_eq!(
-      delete_duplicates(num_vec_to_nodes(vec![1, 2, 3, 3, 3, 4, 4, 5], false)),
-      num_vec_to_nodes(vec![1, 2, 5], false)
+      delete_duplicates(vec![1, 2, 3, 3, 3, 4, 4, 5].to_list_node(false)),
+      vec![1, 2, 5].to_list_node(false)
     );
     assert_eq!(
-      delete_duplicates(num_vec_to_nodes(
-        vec![1, 1, 1, 2, 2, 3, 3, 3, 4, 4, 5],
-        false
-      )),
-      num_vec_to_nodes(vec![5], false)
+      delete_duplicates(vec![1, 1, 1, 2, 2, 3, 3, 3, 4, 4, 5].to_list_node(false)),
+      vec![5].to_list_node(false)
     );
     assert_eq!(
-      delete_duplicates(num_vec_to_nodes(vec![], false)),
-      num_vec_to_nodes(vec![], false)
+      delete_duplicates(vec![].to_list_node(false)),
+      vec![].to_list_node(false)
     );
     assert_eq!(
-      delete_duplicates(num_vec_to_nodes(vec![1], false)),
-      num_vec_to_nodes(vec![1], false)
+      delete_duplicates(vec![1].to_list_node(false)),
+      vec![1].to_list_node(false)
     );
     assert_eq!(
-      delete_duplicates(num_vec_to_nodes(vec![1, 1], false)),
-      num_vec_to_nodes(vec![], false)
+      delete_duplicates(vec![1, 1].to_list_node(false)),
+      vec![].to_list_node(false)
     );
     assert_eq!(
-      delete_duplicates(num_vec_to_nodes(vec![1, 1, 2], false)),
-      num_vec_to_nodes(vec![2], false)
+      delete_duplicates(vec![1, 1, 2].to_list_node(false)),
+      vec![2].to_list_node(false)
     );
   }
 
