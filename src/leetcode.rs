@@ -1,6 +1,7 @@
 /**
- * The definition of ListNode, used by many problems
- */
+The definition of ListNode, used by many problems
+*/
+
 #[derive(PartialEq, Eq, Debug)]
 struct ListNode {
   pub(crate) val: i32,
@@ -102,25 +103,30 @@ impl TreeNode {
   }
 
   /**
-   * Building binary tree from Vec<Option<i32>>, Some means valued node, None means empty node.
-   * for example:
-   *
-   * [Some(1), Some(2), Some(3), Some(4), Some(5), Some(6)] will be transformed to:
-   *      1
-   *    /   \
-   *   2     3
-   *  / \   /
-   * 4   5 6
-   *
-   * [Some(1), Some(2), Some(3), Some(4), None, Some(5), None, Some(6)] will be transformed to:
-   *        1
-   *      /   \
-   *     2     3
-   *    / \   / \
-   *   4     5
-   *  /
-   * 6
-   */
+  Building binary tree from Vec<Option<i32>>, Some means valued node, None means empty node.
+
+  for example:
+
+  [Some(1), Some(2), Some(3), Some(4), Some(5), Some(6)] will be transformed to:
+  ```
+       1
+     /   \
+    2     3
+   / \   /
+  4   5 6
+  ```
+
+  [Some(1), Some(2), Some(3), Some(4), None, Some(5), None, Some(6)] will be transformed to:
+  ```
+         1
+       /   \
+      2     3
+     / \   / \
+    4     5
+   /
+  6
+  ```
+  */
   pub(crate) fn from(vec: Vec<Option<i32>>) -> Option<Rc<RefCell<Self>>> {
     use std::collections::VecDeque;
 
@@ -227,10 +233,10 @@ where
 }
 
 /**
- * Unlike everything else in the languages, macros will remain visible in sub-modules.
- * Also, unlike everything else in the language, macros are only accessible after their definition.
- * Or use #[macro_export] to export the macro, then use macro with code "crate::xxx_macro_name!".
- */
+Unlike everything else in the languages, macros will remain visible in sub-modules.
+Also, unlike everything else in the language, macros are only accessible after their definition.
+Or use #[macro_export] to export the macro, then use macro with code "crate::xxx_macro_name!".
+*/
 macro_rules! string_vec {
   ($($content:expr),*) => {{
     let mut temp = Vec::new();
@@ -326,12 +332,12 @@ mod q92_reverse_linked_list_ii;
 mod q93_restore_ip_addresses;
 mod q94_binary_tree_inorder_traversal;
 mod q95_unique_binary_search_trees_ii;
+mod q96_unique_binary_search_trees;
 mod q97_interleaving_string;
 
 // some extra problems can only be found in "30-Day LeetCoding Challenge"
 mod day_30_leetcoding_challenge;
 
-// mod q96_unique_binary_search_trees;
 // mod q639_decode_ways_ii; // need explain
 // mod q124_binary_tree_maximum_path_sum;
 // mod q221_maximal_square;
