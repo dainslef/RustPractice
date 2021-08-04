@@ -103,12 +103,12 @@ impl TreeNode {
   }
 
   /**
-  Building binary tree from Vec<Option<i32>>, Some means valued node, None means empty node.
+  Building binary tree from `Vec<Option<i32>>`, Some means valued node, None means empty node.
 
   for example:
 
-  [Some(1), Some(2), Some(3), Some(4), Some(5), Some(6)] will be transformed to:
-  ```
+  `[Some(1), Some(2), Some(3), Some(4), Some(5), Some(6)]` will be transformed to:
+  ```txt
        1
      /   \
     2     3
@@ -116,8 +116,8 @@ impl TreeNode {
   4   5 6
   ```
 
-  [Some(1), Some(2), Some(3), Some(4), None, Some(5), None, Some(6)] will be transformed to:
-  ```
+  `[Some(1), Some(2), Some(3), Some(4), None, Some(5), None, Some(6)]` will be transformed to:
+  ```txt
          1
        /   \
       2     3
