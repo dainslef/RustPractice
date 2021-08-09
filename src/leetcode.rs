@@ -1,7 +1,8 @@
-/**
-The definition of ListNode, used by many problems
-*/
+//! The common data structure definition for leetcode problems.
 
+/**
+The definition of `ListNode`, used by many problems
+*/
 #[derive(PartialEq, Eq, Debug)]
 struct ListNode {
   pub(crate) val: i32,
@@ -20,7 +21,7 @@ trait ToListNode {
 }
 
 impl ToListNode for i32 {
-  // convert a number to the list of every bit of the number
+  /// convert a number to the list of every bit of the number
   fn to_list_node(mut self, reverse: bool) -> Option<Box<ListNode>> {
     let mut vec = vec![];
     while self / 10 > 0 {
@@ -34,7 +35,7 @@ impl ToListNode for i32 {
 }
 
 impl ToListNode for Vec<i32> {
-  // build list node from the vector of the numbers
+  /// build list node from the vector of the numbers
   fn to_list_node(mut self, reverse: bool) -> Option<Box<ListNode>> {
     let mut next = None;
     if !reverse {
@@ -53,7 +54,7 @@ trait ToVec {
 }
 
 impl ToVec for Option<Box<ListNode>> {
-  // build the vector of the numbers from the a list node
+  /// build the vector of the numbers from the a list node
   fn to_num_vec(self) -> Vec<i32> {
     let (mut vec, mut temp) = (vec![], &self);
     while let Some(n) = temp {
@@ -63,7 +64,7 @@ impl ToVec for Option<Box<ListNode>> {
     vec
   }
 
-  // build the vector of the node from the a list node
+  /// build the vector of the node from the a list node
   fn to_node_vec(self) -> Vec<Option<Box<ListNode>>> {
     let (mut vec, mut current) = (vec![], self);
     while let Some(v) = current.as_mut() {
@@ -79,7 +80,7 @@ impl ToVec for Option<Box<ListNode>> {
 
 use std::{cell::RefCell, rc::Rc};
 
-// Definition for a binary tree node.
+/// The definition of a binary tree node (`ListNode`), used by many problems
 #[derive(Debug, PartialEq, Eq)]
 struct TreeNode {
   pub(crate) val: i32,
@@ -105,10 +106,10 @@ impl TreeNode {
   /**
   Building binary tree from `Vec<Option<i32>>`, Some means valued node, None means empty node.
 
-  for example:
+  For example:
 
   `[Some(1), Some(2), Some(3), Some(4), Some(5), Some(6)]` will be transformed to:
-  ```txt
+  ```html
        1
      /   \
     2     3
@@ -117,14 +118,25 @@ impl TreeNode {
   ```
 
   `[Some(1), Some(2), Some(3), Some(4), None, Some(5), None, Some(6)]` will be transformed to:
-  ```txt
+  ```html
          1
        /   \
       2     3
      / \   / \
-    4     5
+    4  N   5  N
    /
   6
+  ```
+
+  `[Some(7), Some(5), Some(11), Some(4), None, Some(8), Some(13), Some(2), None, None, None, Some(12)]` will be transformed to:
+  ```html
+         7
+       /  \
+      5    11
+     / \  / \
+    4  N 8   13
+   / \  / \  /
+  2  N N  N 12
   ```
   */
   pub(crate) fn from(vec: Vec<Option<i32>>) -> Option<Rc<RefCell<Self>>> {
@@ -162,7 +174,7 @@ impl TreeNode {
   }
 }
 
-// for q15 and q18, check if the target is included in the "vec_list"
+/// for `q15` and `q18`, check if the target is included in the **vec_list**
 fn check_vecs_contain_target(vec_list: &Vec<Vec<i32>>, target: &Vec<i32>) -> bool {
   for old_vec in vec_list {
     let mut new_vec = target.clone();
@@ -183,7 +195,7 @@ fn check_vecs_contain_target(vec_list: &Vec<Vec<i32>>, target: &Vec<i32>) -> boo
   false
 }
 
-// for q126 and q127, check if two words differ by only one character
+/// for `q126` and `q127`, check if two words differ by only one character
 fn check_diff_one_char(old_word: &String, new_word: &String) -> bool {
   let mut count = 0;
   let (old_u8s, new_u8s): (&[u8], &[u8]) = (old_word.as_ref(), new_word.as_ref());
@@ -200,7 +212,7 @@ fn check_diff_one_char(old_word: &String, new_word: &String) -> bool {
   count == 1
 }
 
-// check element content equivalence without element order
+/// check element content equivalence without element order
 fn check_element_eq<T>(v1: T, v2: T) -> bool
 where
   T: IntoIterator,
@@ -273,6 +285,7 @@ mod q34_find_first_and_last_position_of_element_in_sorted_array;
 mod q35_valid_sudoku;
 mod q37_sudoku_solver;
 mod q39_combination_sum;
+mod q3_length_of_longest_substring;
 mod q407_trapping_rain_water_ii;
 mod q40_combination_sum_ii;
 mod q41_first_missing_positive;
@@ -334,6 +347,7 @@ mod q94_binary_tree_inorder_traversal;
 mod q95_unique_binary_search_trees_ii;
 mod q96_unique_binary_search_trees;
 mod q97_interleaving_string;
+mod q98_validate_binary_search_tree;
 
 // some extra problems can only be found in "30-Day LeetCoding Challenge"
 mod day_30_leetcoding_challenge;
