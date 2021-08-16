@@ -41,34 +41,38 @@ Runtime: 0 ms, faster than 100.00% of Rust online submissions for Validate Binar
 Memory Usage: 3 MB, less than 78.05% of Rust online submissions for Validate Binary Search Tree.
 */
 fn is_valid_bst(root: Option<Rc<RefCell<TreeNode>>>) -> bool {
-  fn recurse(root: &Option<Rc<RefCell<TreeNode>>>, min: Option<i32>, max: Option<i32>) -> bool {
-    if let Some(v) = root {
-      let v = v.borrow();
-      let (left, right) = (&v.left, &v.right);
-      let is_left_valid = left
-        .as_ref()
-        .map(|l| {
-          let val = l.borrow().val;
-          val < v.val && min.map(|min| val > min).unwrap_or(true)
-        })
-        .unwrap_or(true);
-      let is_right_valid = right
-        .as_ref()
-        .map(|r| {
-          let val = r.borrow().val;
-          val > v.val && max.map(|max| val < max).unwrap_or(true)
-        })
-        .unwrap_or(true);
-      is_left_valid
-        && is_right_valid
-        && recurse(left, min, Some(v.val))
-        && recurse(right, Some(v.val), max)
-    } else {
-      true
-    }
+  /**
+  Check each node by recurison. Need record the min/max range limit,
+  to avoid sub left tree in right part less than parent value,
+  or right sub tree in left part greater than parent value
+  */
+  fn recurse(node: &Option<Rc<RefCell<TreeNode>>>, min: Option<i32>, max: Option<i32>) -> bool {
+    node
+      .as_ref()
+      .map(|v| {
+        let v = v.borrow();
+        let (left, right) = (&v.left, &v.right);
+        macro_rules! check {
+          // use 'tt' for single token
+          ($child: ident, $target: ident, $left_op: tt, $right_op: tt) => {{
+            $child.as_ref().map(|child| {
+              let val = child.borrow().val;
+              // compare both child node value and range limit value
+              // compare range limit only if limit is exist (Option type)
+              val $left_op v.val && $target.map(|target| val $right_op target).unwrap_or(true)
+            })
+            .unwrap_or(true)
+          }};
+        }
+        check!(left, min, <, >) // check the child node value, left child node should less than current node value, but greator than min size limit (when in right part)
+          && check!(right, max, >, <) // check the right child node value, same as left node
+          && recurse(left, min, Some(v.val))
+          && recurse(right, Some(v.val), max) // update the range limit to child node
+      })
+      .unwrap_or(true)
   }
 
-  recurse(&root, None, None)
+  recurse(&root, None, None) // root node have no range limit
 }
 
 #[test]
