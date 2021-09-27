@@ -1,6 +1,5 @@
-/**
-96. Unique Binary Search Trees
-https://leetcode.com/problems/unique-binary-search-trees/
+/*!
+[96. Unique Binary Search Trees](https://leetcode.com/problems/unique-binary-search-trees/)
 
 Given an integer n, return the number of structurally unique BST's (binary search trees) which has exactly n nodes of unique values from 1 to n.
 
@@ -31,16 +30,29 @@ count the small tree and save data for reuse.
 */
 fn num_trees(n: i32) -> i32 {
   use std::collections::HashMap;
+
+  /*
+  Same range size with different rang size have same count,
+  so we don't need save the start/end index for each range,
+  just save range size for reuse.
+  */
   let mut bst_count: HashMap<i32, i32> = vec![(1, 1)].into_iter().collect();
 
-  // "range size" means how many elements the sub tree can hold
+  /*
+  "range size" means how many elements the sub tree can hold,
+  compute and save the count of each range size, then reuse it.
+  The count of last range size(n) will be the answer.
+  */
   for range_size in 2..=n {
     let mut count = 0;
     for i in 1..=range_size {
+      // get count of the left sub tree (start: 1, end: i - 1)
       let left = bst_count.get(&(i - 1)).unwrap_or(&1);
+      // get count of the left sub tree (start: i + 1, end: rang size)
       let right = bst_count.get(&(range_size - i)).unwrap_or(&1);
       count += left * right;
     }
+    // save the range size into hash map
     bst_count.entry(range_size).or_insert(count);
   }
 
