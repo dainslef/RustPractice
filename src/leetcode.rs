@@ -147,7 +147,7 @@ impl TreeNode {
 
     for v in vec {
       // use the macro to deal with child node
-      macro_rules! deal {
+      macro_rules! update {
         ($node: expr) => {
           if let Some(n) = &*$node {
             // add the pointer of child node, use raw pointer to avoid the ownership check
@@ -160,12 +160,12 @@ impl TreeNode {
       let node = Self::new_option(v); // new tree node
       if root.is_none() {
         root = node;
-        deal!(&root);
+        update!(&root);
       } else if let Some(current) = nodes.pop_front() {
         unsafe {
           // only dereference raw pointer should under UNSAFE
           *current = node;
-          deal!(current);
+          update!(current);
         }
       }
     }
@@ -247,7 +247,7 @@ where
 /**
 Unlike everything else in the languages, macros will remain visible in sub-modules.
 Also, unlike everything else in the language, macros are only accessible after their definition.
-Or use #[macro_export] to export the macro, then use macro with code "crate::xxx_macro_name!".
+Or use `#[macro_export]` to export the macro, then use macro with code "crate::xxx_macro_name!".
 */
 macro_rules! string_vec {
   ($($content:expr),*) => {{
@@ -348,10 +348,13 @@ mod q95_unique_binary_search_trees_ii;
 mod q96_unique_binary_search_trees;
 mod q97_interleaving_string;
 mod q98_validate_binary_search_tree;
+mod q99_recover_binary_search_tree;
 
 // some extra problems can only be found in "30-Day LeetCoding Challenge"
 mod day_30_leetcoding_challenge;
 
+// mod q834_sum_of_distances_in_tree;
+// mod q958_check_completeness_of_a_binary_tree;
 // mod q639_decode_ways_ii; // need explain
 // mod q124_binary_tree_maximum_path_sum;
 // mod q221_maximal_square;
