@@ -39,6 +39,8 @@
 /**
  * Runtime: 0 ms, faster than 100.00% of Rust online submissions for Restore IP Addresses.
  * Memory Usage: 2.1 MB, less than 80.00% of Rust online submissions for Restore IP Addresses.
+ *
+ * Tips: Don't try to split the input string, just save the index.
  */
 fn restore_ip_addresses(s: String) -> Vec<String> {
   if s.len() < 4 || s.len() > 12 {
@@ -47,7 +49,6 @@ fn restore_ip_addresses(s: String) -> Vec<String> {
 
   let mut temp: Vec<Vec<usize>> = vec![];
   let chars: Vec<char> = s.chars().collect();
-
   let check = |r| {
     s.get(r)
       .map(|v: &str| {
@@ -58,61 +59,50 @@ fn restore_ip_addresses(s: String) -> Vec<String> {
   };
 
   for _ in 0..4 {
+    let mut next = vec![];
     if temp.is_empty() {
-      temp.push(vec![0]);
-      if chars[0] == '0' {
-        continue;
-      }
-      temp.push(vec![1]);
-      if check(0..=2) {
-        temp.push(vec![2]);
-      }
-    } else {
-      let mut next = vec![];
-      for v in temp {
-        if v.len() <= 3 {
-          if let Some(last) = v.last() {
-            if last + 1 < s.len() && (v.len() == 3 && s.len() - last == 2 || v.len() < 3) {
-              let mut v = v.clone();
-              v.push(last + 1);
-              next.push(v);
-            }
-            if chars.get(last + 1) == Some(&'0') {
-              continue;
-            }
-            if last + 2 < s.len() && (v.len() == 3 && s.len() - last == 3 || v.len() < 3) {
-              let mut v = v.clone();
-              v.push(last + 2);
-              next.push(v);
-            }
-            if last + 3 < s.len()
-              && check(last + 1..=last + 3)
-              && (v.len() == 3 && s.len() - last == 4 || v.len() < 3)
-            {
-              let mut v = v.clone();
-              v.push(last + 3);
-              next.push(v);
-            }
-          }
+      // init content
+      next.push(vec![0]);
+      if chars[0] != '0' {
+        next.push(vec![1]);
+        if check(0..=2) {
+          next.push(vec![2]);
         }
       }
-      temp = next;
     }
+    for v in temp {
+      let last = v.last().unwrap();
+      let mut add = |offset: usize| {
+        let current = last + offset;
+        if current < s.len()
+              && (offset < 2 || chars.get(last + 1) != Some(&'0')) // each integer of ip can't start with 0
+              && (offset < 3 || check(last + 1..=last + 3)) // each integer of ip should between 0 ~ 255
+              && (v.len() < 3 || v.len() == 3 && s.len() - current == 1)
+        // last index should match the size of input string
+        {
+          let mut v = v.clone();
+          v.push(current);
+          next.push(v);
+        }
+      };
+      add(1);
+      add(2);
+      add(3); // add the next ip integer with different offset
+    }
+    temp = next;
   }
 
   temp
     .into_iter()
-    .filter(|v| v.len() == 4)
     .map(|v| {
-      let (i1, i2, i3, i4) = (v[0], v[1], v[2], v[3]);
       let get = |i| s.get(i).unwrap_or_default();
-      let (s1, s2, s3, s4) = (
-        get(0..=i1),
-        get(i1 + 1..=i2),
-        get(i2 + 1..=i3),
-        get(i3 + 1..=i4),
-      );
-      "".to_string() + s1 + "." + s2 + "." + s3 + "." + s4
+      get(0..=v[0]).to_string()
+        + "."
+        + get(v[0] + 1..=v[1])
+        + "."
+        + get(v[1] + 1..=v[2])
+        + "."
+        + get(v[2] + 1..=v[3])
     })
     .collect()
 }
