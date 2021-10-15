@@ -257,6 +257,29 @@ macro_rules! string_vec {
   }}
 }
 
+// provide a macro to build TreeNode which can directly use the test case syntax in LeetCode
+macro_rules! build_tree_node {
+  () => { None };
+  // macro matcher type 'tt' means "a single token tree",
+  // which allow a independent sub token tree for other macro usage,
+  // until the current rust version (1.55), only positive number or zero will be treated as a single token, a negative number won't be treated as it
+  ($($t:tt),*) => {{
+    let mut temp = Vec::new();
+    $(temp.push(covert_tree_node!($t));)*
+    TreeNode::from(temp)
+  }};
+}
+
+// use macro to transform the input content
+macro_rules! covert_tree_node {
+  (null) => {
+    None
+  };
+  ($l:literal) => {
+    Some($l)
+  };
+}
+
 // normal problems
 mod q1008_construct_binary_search_tree_from_preorder_traversal;
 mod q10_regular_expression_matching;
@@ -353,7 +376,8 @@ mod q99_recover_binary_search_tree;
 // some extra problems can only be found in "30-Day LeetCoding Challenge"
 mod day_30_leetcoding_challenge;
 
-// mod q834_sum_of_distances_in_tree;
+// mod q102_binary_tree_level_order_traversal;
+// mod q834_sum_of_distances_in_tree; // DNF
 // mod q958_check_completeness_of_a_binary_tree;
 // mod q639_decode_ways_ii; // need explain
 // mod q124_binary_tree_maximum_path_sum;
