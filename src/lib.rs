@@ -12,3 +12,12 @@ Macro has similar problem, use "#[allow(unused_macros)]" to disable warning of u
 */
 #[allow(dead_code, unused_macros)]
 mod leetcode;
+
+extern crate proc_macro; // proc_macro need extern crate
+use proc_macro::TokenStream;
+
+// #[proc_macro] can only place in module's root path
+#[proc_macro]
+pub fn test_proc_macro(_: TokenStream) -> TokenStream {
+  "{}".parse().unwrap()
+}

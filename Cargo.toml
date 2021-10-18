@@ -2,6 +2,8 @@
 name = "rust_practice"
 version = "0.1.0"
 authors = ["dainslef <dainslef@outlook.com>"]
-edition = "2018"
+
+[lib]
+proc-macro = true
 
 [dependencies]

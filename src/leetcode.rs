@@ -4,9 +4,9 @@
 The definition of `ListNode`, used by many problems
 */
 #[derive(PartialEq, Eq, Debug)]
-struct ListNode {
-  pub(crate) val: i32,
-  pub(crate) next: Option<Box<Self>>,
+pub(crate) struct ListNode {
+  val: i32,
+  next: Option<Box<Self>>,
 }
 
 impl ListNode {
@@ -82,15 +82,15 @@ use std::{cell::RefCell, rc::Rc};
 
 /// The definition of a binary tree node (`ListNode`), used by many problems
 #[derive(Debug, PartialEq, Eq)]
-struct TreeNode {
-  pub(crate) val: i32,
-  pub(crate) left: Option<Rc<RefCell<Self>>>,
-  pub(crate) right: Option<Rc<RefCell<Self>>>,
+pub(crate) struct TreeNode {
+  val: i32,
+  left: Option<Rc<RefCell<Self>>>,
+  right: Option<Rc<RefCell<Self>>>,
 }
 
 impl TreeNode {
   #[inline]
-  pub(crate) fn new(val: i32) -> Self {
+  fn new(val: i32) -> Self {
     TreeNode {
       val,
       left: None,
@@ -99,7 +99,7 @@ impl TreeNode {
   }
 
   #[inline]
-  pub(crate) fn new_option(val: Option<i32>) -> Option<Rc<RefCell<Self>>> {
+  fn new_option(val: Option<i32>) -> Option<Rc<RefCell<Self>>> {
     val.map(|v| Rc::new(RefCell::new(Self::new(v))))
   }
 
@@ -139,7 +139,7 @@ impl TreeNode {
   2  N N  N 12
   ```
   */
-  pub(crate) fn from(vec: Vec<Option<i32>>) -> Option<Rc<RefCell<Self>>> {
+  fn from(vec: Vec<Option<i32>>) -> Option<Rc<RefCell<Self>>> {
     use std::collections::VecDeque;
 
     let mut root = None; // save the root node
@@ -257,12 +257,14 @@ macro_rules! string_vec {
   }}
 }
 
-// provide a macro to build TreeNode which can directly use the test case syntax in LeetCode
+/// provide a macro to build TreeNode which can directly use the test case syntax in LeetCode
 macro_rules! build_tree_node {
   () => { None };
   // macro matcher type 'tt' means "a single token tree",
   // which allow a independent sub token tree for other macro usage,
-  // until the current rust version (1.55), only positive number or zero will be treated as a single token, a negative number won't be treated as it
+  // until the current rust version (1.55),
+  // only positive number or zero will be treated as a single token,
+  // a negative number won't be treated as it
   ($($t:tt),*) => {{
     let mut temp = Vec::new();
     $(temp.push(covert_tree_node!($t));)*
@@ -377,7 +379,9 @@ mod q99_recover_binary_search_tree;
 // some extra problems can only be found in "30-Day LeetCoding Challenge"
 mod day_30_leetcoding_challenge;
 
+// mod q173_binary_search_tree_iterator;
 // mod q834_sum_of_distances_in_tree; // DNF
+// mod q107_binary_tree_level_order_traversal_ii;
 // mod q958_check_completeness_of_a_binary_tree;
 // mod q639_decode_ways_ii; // need explain
 // mod q124_binary_tree_maximum_path_sum;
