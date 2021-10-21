@@ -79,22 +79,19 @@ fn generate_trees(n: i32) -> Vec<Option<Rc<RefCell<TreeNode>>>> {
 
 #[test]
 fn q95_test() {
-  assert_eq!(generate_trees(1), vec![TreeNode::from(vec![Some(1)])]);
+  assert_eq!(generate_trees(1), vec![build_tree_node![1]]);
   assert_eq!(
     generate_trees(2),
-    vec![
-      TreeNode::from(vec![Some(1), None, Some(2)]),
-      TreeNode::from(vec![Some(2), Some(1)])
-    ]
+    vec![build_tree_node![1, null, 2], build_tree_node![2, 1]]
   );
   assert_eq!(
     generate_trees(3),
     vec![
-      TreeNode::from(vec![Some(1), None, Some(2), None, Some(3)]),
-      TreeNode::from(vec![Some(1), None, Some(3), Some(2)]),
-      TreeNode::from(vec![Some(2), Some(1), Some(3)]),
-      TreeNode::from(vec![Some(3), Some(1), None, None, Some(2)]),
-      TreeNode::from(vec![Some(3), Some(2), None, Some(1)])
+      build_tree_node![1, null, 2, null, 3],
+      build_tree_node![1, null, 3, 2],
+      build_tree_node![2, 1, 3],
+      build_tree_node![3, 1, null, null, 2],
+      build_tree_node![3, 2, null, 1]
     ]
   );
 }

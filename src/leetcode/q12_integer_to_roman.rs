@@ -72,7 +72,7 @@ fn int_to_roman(num: i32) -> String {
     };
     while re / step > 0 {
       match re / step {
-        n @ 4 | n @ 9 => temp.push(char_to_value[&(n * step)]),
+        n @ (4 | 9) => temp.push(char_to_value[&(n * step)]),
         n if n < 5 => add_chars(&mut temp, 0, n),
         n => {
           temp.push(char_to_value[&(5 * step)]);
