@@ -43,7 +43,6 @@ fn generate_parenthesis(n: i32) -> Vec<String> {
     temp = next;
   }
 
-  use std::iter::FromIterator;
   temp.into_iter().map(|v| String::from_iter(v.0)).collect()
 }
 

@@ -109,7 +109,7 @@ impl TreeNode {
   For example:
 
   `[Some(1), Some(2), Some(3), Some(4), Some(5), Some(6)]` will be transformed to:
-  ```html
+  ```
        1
      /   \
     2     3
@@ -118,7 +118,7 @@ impl TreeNode {
   ```
 
   `[Some(1), Some(2), Some(3), Some(4), None, Some(5), None, Some(6)]` will be transformed to:
-  ```html
+  ```
          1
        /   \
       2     3
@@ -129,7 +129,7 @@ impl TreeNode {
   ```
 
   `[Some(7), Some(5), Some(11), Some(4), None, Some(8), Some(13), Some(2), None, None, None, Some(12)]` will be transformed to:
-  ```html
+  ```
          7
        /  \
       5    11
@@ -234,11 +234,8 @@ where
 
   let eq = content1 == content2 && length1 == length2;
   if !eq {
-    println!(
-      "Elements are different!\nLength 1: {}, Length 2: {}",
-      length1, length2
-    );
-    println!("Content 1: {:?}\nContent 2: {:?}", content1, content2);
+    println!("Elements are different!\nLength 1: {length1}, Length 2: {length2}");
+    println!("Content 1: {content1:?}\nContent 2: {content2:?}");
   }
 
   eq
@@ -262,7 +259,7 @@ macro_rules! build_tree_node {
   () => { None };
   // macro matcher type 'tt' means "a single token tree",
   // which allow a independent sub token tree for other macro usage,
-  // until the current rust version (1.55),
+  // until the current rust version (1.58),
   // only positive number or zero will be treated as a single token,
   // a negative number won't be treated as it
   ($($t:tt),*) => {{
@@ -380,6 +377,7 @@ mod q99_recover_binary_search_tree;
 mod day_30_leetcoding_challenge;
 
 // mod q834_sum_of_distances_in_tree; // DNF
+// mod q105_construct_binary_tree_from_preorder_and_inorder_traversal; // DNF
 
 // mod q814_binary_tree_pruning;
 // mod q103_binary_tree_zipzag_level_order_traversal;
