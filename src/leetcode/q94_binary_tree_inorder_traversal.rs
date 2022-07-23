@@ -5,35 +5,35 @@ Given the root of a binary tree, return the inorder traversal of its nodes' valu
 
 Example 1:
 
-```
+```html
 Input: root = [1,null,2,3]
 Output: [1,3,2]
 ```
 
 Example 2:
 
-```
+```html
 Input: root = []
 Output: []
 ```
 
 Example 3:
 
-```
+```html
 Input: root = [1]
 Output: [1]
 ```
 
 Example 4:
 
-```
+```html
 Input: root = [1,2]
 Output: [2,1]
 ```
 
 Example 5:
 
-```
+```html
 Input: root = [1,null,2]
 Output: [1,2]
 ```
@@ -53,7 +53,7 @@ Solution based on recursion.
 
 Depth First Traversals:
 
-```
+```html
 Inorder (Left, Root, Right)
 Preorder (Root, Left, Right)
 Postorder (Left, Right, Root)
