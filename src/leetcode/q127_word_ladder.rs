@@ -36,7 +36,6 @@ use super::*;
 
 fn ladder_length(begin_word: String, end_word: String, word_list: Vec<String>) -> i32 {
   use std::collections::HashSet;
-  use std::iter::FromIterator;
 
   let mut word_set: HashSet<&String> = HashSet::from_iter(&word_list);
   let mut currents = HashSet::new();

@@ -109,7 +109,7 @@ impl TreeNode {
   For example:
 
   `[Some(1), Some(2), Some(3), Some(4), Some(5), Some(6)]` will be transformed to:
-  ```
+  ```html
        1
      /   \
     2     3
@@ -118,7 +118,7 @@ impl TreeNode {
   ```
 
   `[Some(1), Some(2), Some(3), Some(4), None, Some(5), None, Some(6)]` will be transformed to:
-  ```
+  ```html
          1
        /   \
       2     3
@@ -129,7 +129,7 @@ impl TreeNode {
   ```
 
   `[Some(7), Some(5), Some(11), Some(4), None, Some(8), Some(13), Some(2), None, None, None, Some(12)]` will be transformed to:
-  ```
+  ```html
          7
        /  \
       5    11

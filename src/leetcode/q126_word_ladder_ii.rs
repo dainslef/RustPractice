@@ -100,7 +100,6 @@ fn find_ladders_dfs(
 
 fn find_ladders(begin_word: String, end_word: String, word_list: Vec<String>) -> Vec<Vec<String>> {
   use std::collections::{HashSet, VecDeque};
-  use std::iter::FromIterator;
 
   // save all of the target paths which match the condition
   let mut results: Vec<Vec<String>> = vec![];
