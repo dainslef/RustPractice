@@ -1,28 +1,32 @@
 /*!
 [96. Unique Binary Search Trees](https://leetcode.com/problems/unique-binary-search-trees/)
 
-Given an integer n, return the number of structurally unique BST's (binary search trees) which has exactly n nodes of unique values from 1 to n.
-
-
+Given an integer n, return the number of structurally unique BST's (binary search trees)
+which has exactly n nodes of unique values from 1 to n.
 
 Example 1:
 
-
+```html
 Input: n = 3
 Output: 5
+```
+
 Example 2:
 
+```html
 Input: n = 1
 Output: 1
-
+```
 
 Constraints:
 
+```html
 1 <= n <= 19
+```
 */
 
 /**
-Runtime: 0 ms, faster than 100.00% of Rust online submissions for Unique Binary Search Trees.
+Runtime: 0 ms, faster than 100.00% of Rust online submissions for Unique Binary Search Trees.<br>
 Memory Usage: 2 MB, less than 62.50% of Rust online submissions for Unique Binary Search Trees.
 
 Use dynamic programming, split the big BST tree into small tree,

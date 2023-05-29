@@ -1,17 +1,24 @@
-/**
- * Given s1, s2, s3, find whether s3 is formed by the interleaving of s1 and s2.
- *
- * Example 1:
- *
- * Input: s1 = "aabcc", s2 = "dbbca", s3 = "aadbbcbcac"
- * Output: true
- * Example 2:
- *
- * Input: s1 = "aabcc", s2 = "dbbca", s3 = "aadbbbaccc"
- * Output: false
- */
+/*!
+[97. Interleaving String](https://leetcode.com/problems/interleaving-string/)
 
-// use recursion
+Given s1, s2, s3, find whether s3 is formed by the interleaving of s1 and s2.
+
+Example 1:
+
+```html
+Input: s1 = "aabcc", s2 = "dbbca", s3 = "aadbbcbcac"
+Output: true
+```
+
+Example 2:
+
+```html
+Input: s1 = "aabcc", s2 = "dbbca", s3 = "aadbbbaccc"
+Output: false
+```
+*/
+
+/// use recursion
 fn is_interleave(s1: String, s2: String, s3: String) -> bool {
   fn check(u1s: Vec<u8>, u2s: Vec<u8>, mut u3s: Vec<u8>) -> bool {
     if u1s.len() == 0 && u2s.len() == 0 && u3s.len() == 0 {
@@ -37,7 +44,7 @@ fn is_interleave(s1: String, s2: String, s3: String) -> bool {
   }
 }
 
-// use a HashMap to record the interleave status of the word
+/// use a HashMap to record the interleave status of the word
 fn is_interleave_map(s1: String, s2: String, s3: String) -> bool {
   let (len1, len2, len3) = (s1.len(), s2.len(), s3.len());
 
