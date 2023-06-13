@@ -1,7 +1,7 @@
 //! The common data structure definition for leetcode problems.
 
 /**
-The definition of `ListNode`, used by many problems
+The definition of `ListNode`, used by many problems.
 */
 #[derive(PartialEq, Eq, Debug)]
 pub(crate) struct ListNode {
@@ -21,7 +21,7 @@ trait ToListNode {
 }
 
 impl ToListNode for i32 {
-  /// convert a number to the list of every bit of the number
+  /// Convert a number to the list of every bit of the number.
   fn to_list_node(mut self, reverse: bool) -> Option<Box<ListNode>> {
     let mut vec = vec![];
     while self / 10 > 0 {
@@ -35,7 +35,7 @@ impl ToListNode for i32 {
 }
 
 impl ToListNode for Vec<i32> {
-  /// build list node from the vector of the numbers
+  /// Build list node from the vector of the numbers.
   fn to_list_node(mut self, reverse: bool) -> Option<Box<ListNode>> {
     let mut next = None;
     if !reverse {
@@ -54,7 +54,7 @@ trait ToVec {
 }
 
 impl ToVec for Option<Box<ListNode>> {
-  /// build the vector of the numbers from the a list node
+  /// Build the vector of the numbers from the a list node.
   fn to_num_vec(self) -> Vec<i32> {
     let (mut vec, mut temp) = (vec![], &self);
     while let Some(n) = temp {
@@ -64,7 +64,7 @@ impl ToVec for Option<Box<ListNode>> {
     vec
   }
 
-  /// build the vector of the node from the a list node
+  /// Build the vector of the node from the a list node.
   fn to_node_vec(self) -> Vec<Option<Box<ListNode>>> {
     let (mut vec, mut current) = (vec![], self);
     while let Some(v) = current.as_mut() {
@@ -80,7 +80,7 @@ impl ToVec for Option<Box<ListNode>> {
 
 use std::{cell::RefCell, rc::Rc};
 
-/// The definition of a binary tree node (`ListNode`), used by many problems
+/// The definition of a binary tree node (`ListNode`), used by many problems.
 #[derive(Debug, PartialEq, Eq)]
 pub(crate) struct TreeNode {
   val: i32,
@@ -174,7 +174,7 @@ impl TreeNode {
   }
 }
 
-/// for `q15` and `q18`, check if the target is included in the **vec_list**
+/// For `q15` and `q18`, check if the target is included in the **vec_list**.
 fn check_vecs_contain_target(vec_list: &Vec<Vec<i32>>, target: &Vec<i32>) -> bool {
   for old_vec in vec_list {
     let mut new_vec = target.clone();
@@ -195,7 +195,7 @@ fn check_vecs_contain_target(vec_list: &Vec<Vec<i32>>, target: &Vec<i32>) -> boo
   false
 }
 
-/// for `q126` and `q127`, check if two words differ by only one character
+/// For `q126` and `q127`, check if two words differ by only one character.
 fn check_diff_one_char(old_word: &String, new_word: &String) -> bool {
   let mut count = 0;
   let (old_u8s, new_u8s): (&[u8], &[u8]) = (old_word.as_ref(), new_word.as_ref());
@@ -212,7 +212,7 @@ fn check_diff_one_char(old_word: &String, new_word: &String) -> bool {
   count == 1
 }
 
-/// check element content equivalence without element order
+/// Check element content equivalence without element order.
 fn check_element_eq<T>(v1: T, v2: T) -> bool
 where
   T: IntoIterator,
@@ -254,7 +254,7 @@ macro_rules! string_vec {
   }}
 }
 
-/// provide a macro to build TreeNode which can directly use the test case syntax in LeetCode
+/// Provide a macro to build TreeNode which can directly use the test case syntax in LeetCode.
 macro_rules! build_tree_node {
   () => { None };
   // macro matcher type 'tt' means "a single token tree",
@@ -269,7 +269,7 @@ macro_rules! build_tree_node {
   }};
 }
 
-// use macro to transform the input content
+// Use macro to transform the input content.
 macro_rules! covert_tree_node {
   (null) => {
     None
@@ -282,6 +282,7 @@ macro_rules! covert_tree_node {
 // normal problems
 mod q1008_construct_binary_search_tree_from_preorder_traversal;
 mod q102_binary_tree_level_order_traversal;
+mod q103_binary_tree_zipzag_level_order_traversal;
 mod q10_regular_expression_matching;
 mod q11_container_with_most_water;
 mod q126_word_ladder_ii;
@@ -376,11 +377,9 @@ mod q99_recover_binary_search_tree;
 // some extra problems can only be found in "30-Day LeetCoding Challenge"
 mod day_30_leetcoding_challenge;
 
-// mod q834_sum_of_distances_in_tree; // DNF
 // mod q105_construct_binary_tree_from_preorder_and_inorder_traversal; // DNF
-
+// mod q834_sum_of_distances_in_tree; // DNF
 // mod q814_binary_tree_pruning;
-// mod q103_binary_tree_zipzag_level_order_traversal;
 // mod q173_binary_search_tree_iterator;
 // mod q107_binary_tree_level_order_traversal_ii;
 // mod q958_check_completeness_of_a_binary_tree;
