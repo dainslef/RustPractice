@@ -1,26 +1,33 @@
-/**
- * 84. Largest Rectangle in Histogram
- * https://leetcode.com/problems/largest-rectangle-in-histogram/
- *
- * Given n non-negative integers representing the histogram's bar height where the width of each bar is 1, find the area of largest rectangle in the histogram.
- *
- *
- *
- *
- * Above is a histogram where width of each bar is 1, given height = [2,1,5,6,2,3].
- *
- *
- *
- *
- * The largest rectangle is shown in the shaded area, which has area = 10 unit.
- *
- *
- *
- * Example:
- *
- * Input: [2,1,5,6,2,3]
- * Output: 10
- */
+/*!
+[84. Largest Rectangle in Histogram](https://leetcode.com/problems/largest-rectangle-in-histogram)
+
+Given an array of integers heights representing the histogram's bar height where the width of each bar is 1, return the area of the largest rectangle in the histogram.
+
+Example 1:
+
+![Example 1](https://assets.leetcode.com/uploads/2021/01/04/histogram.jpg)
+
+```html
+Input: heights = [2,1,5,6,2,3]
+Output: 10
+Explanation: The above is a histogram where width of each bar is 1.
+The largest rectangle is shown in the red area, which has an area = 10 units.
+```
+
+Example 2:
+
+![Example 2](https://assets.leetcode.com/uploads/2021/01/04/histogram-1.jpg)
+
+```html
+Input: heights = [2,4]
+Output: 4
+```
+
+Constraints:
+
+- `1 <= heights.length <= 10^5`
+- `0 <= heights[i] <= 10^4`
+*/
 
 // TLE when the input arguement "heights" has a large size (when greator than 10k)
 fn largest_rectangle_area_tle(heights: Vec<i32>) -> i32 {
@@ -43,7 +50,7 @@ fn largest_rectangle_area_tle(heights: Vec<i32>) -> i32 {
     // count the size info by key
     for key in height_to_index.keys().map(|v| *v).collect::<Vec<i32>>() {
       if i > 0 && height >= key {
-        let mut state = height_to_index.entry(key).or_default();
+        let state = height_to_index.entry(key).or_default();
         if state.0 == i - 1 {
           state.1 += 1; // update the current size
         } else {
@@ -79,9 +86,9 @@ fn largest_rectangle_area_tle(heights: Vec<i32>) -> i32 {
 }
 
 /**
- * Runtime: 0 ms
- * Memory Usage: 2.6 MB
- */
+Runtime: 0 ms<br>
+Memory Usage: 2.6 MB
+*/
 fn largest_rectangle_area(heights: Vec<i32>) -> i32 {
   let (mut i, mut max_area, mut index_records) = (0, 0, vec![]);
   loop {

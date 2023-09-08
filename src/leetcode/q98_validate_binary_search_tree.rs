@@ -37,7 +37,7 @@ Constraints:
 use super::*;
 
 /**
-Runtime: 0 ms, faster than 100.00% of Rust online submissions for Validate Binary Search Tree.
+Runtime: 0 ms, faster than 100.00% of Rust online submissions for Validate Binary Search Tree.<br>
 Memory Usage: 3 MB, less than 78.05% of Rust online submissions for Validate Binary Search Tree.
 */
 fn is_valid_bst(root: Option<Rc<RefCell<TreeNode>>>) -> bool {
